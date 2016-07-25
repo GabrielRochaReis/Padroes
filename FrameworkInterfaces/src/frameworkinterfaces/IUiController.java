@@ -5,6 +5,8 @@
  */
 package frameworkinterfaces;
 
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 /**
@@ -13,4 +15,6 @@ import javax.swing.JMenuItem;
  */
 public interface IUiController {
     public JMenuItem addMenuItem(String menu, String menuItem);
+    public File fileOpen(ICore core, ArrayList<IPlugin> loadedPlugins);
+    public void createMenuItemFileOpen(final ICore core);
 }

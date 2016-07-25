@@ -5,7 +5,14 @@
  */
 package framework;
 
+import frameworkinterfaces.IAbstractFactory;
+import frameworkinterfaces.ICore;
+import frameworkinterfaces.IPlugin;
 import frameworkinterfaces.IUiController;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -52,5 +59,42 @@ public class UiController implements IUiController {
         return menuitem;
     }
     
+    @Override
+    public void createMenuItemFileOpen(final ICore core) {
+        ArrayList<IPlugin> loadedPlugins = core.getPluginController().getLoadedPlugins();
+        Iterator interator = loadedPlugins.iterator();
+        JMenuItem newItem = this.addMenuItem("File", "Open");
+        if (newItem != null)
+            newItem.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    file = fileOpen(core, loadedPlugins);
+                    for (IPlugin iplugin : core.getPluginController().getLoadedPlugins()) {
+                       if (iplugin instanceof IAbstractFactory) {
+                           IAbstractFactory factory = (IAbstractFactory) iplugin;
+                       }      
+                    }
+                }
+            });
+    }
+   
+    @Override
+    public File fileOpen(ICore core, ArrayList<IPlugin> loadedPlugins){
+        Iterator i = loadedPlugins.iterator();
+        JFileChooser jfc = new JFileChooser();
+	jfc.setDialogTitle("Open Document");
+	jfc.setDialogType(JFileChooser.OPEN_DIALOG);
+        while (i.hasNext()) {
+            IPlugin plugin = (IPlugin) i.next();
+            if (plugin instanceof IAbstractFactory) {
+                IAbstractFactory factoryPlugin = (IAbstractFactory) plugin;
+                FactoryFilter ff = new FactoryFilter(factoryPlugin.nameType(), factoryPlugin.extension());
+                jfc.addChoosableFileFilter(ff);
+            }
+        }
+        jfc.showDialog(null, "Ok");  
+        return jfc.getSelectedFile();
+    }
+    
+    private File file;
     private FrameworkMainWindow mainWindow;
 }

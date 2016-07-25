@@ -22,6 +22,7 @@ public class Core implements ICore {
         if (!pluginController.loadPlugins())
             System.out.println("Error when loading plugins!");
         documentController = new DocumentController();
+        uiController.createMenuItemFileOpen(this);
     }
 
     @Override
