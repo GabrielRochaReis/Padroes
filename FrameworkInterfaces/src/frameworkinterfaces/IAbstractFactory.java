@@ -16,4 +16,12 @@ public interface IAbstractFactory {
     ArrayList<String> extension();
   
     String nameType();
+    
+    IToolBox createtoolBox();
+  
+    ISerializer createSerializer();
+
+    Editor createEditor();
+
+    IVerifier createVerifier();
 }

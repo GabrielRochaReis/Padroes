@@ -64,17 +64,12 @@ public class UiController implements IUiController {
         ArrayList<IPlugin> loadedPlugins = core.getPluginController().getLoadedPlugins();
         Iterator interator = loadedPlugins.iterator();
         JMenuItem newItem = this.addMenuItem("File", "Open");
-        if (newItem != null)
+            if (newItem != null)
             newItem.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    file = fileOpen(core, loadedPlugins);
-                    for (IPlugin iplugin : core.getPluginController().getLoadedPlugins()) {
-                       if (iplugin instanceof IAbstractFactory) {
-                           IAbstractFactory factory = (IAbstractFactory) iplugin;
-                       }      
-                    }
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+               file = fileOpen(core, loadedPlugins);
+            }
+        });
     }
    
     @Override
