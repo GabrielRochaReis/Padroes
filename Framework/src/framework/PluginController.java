@@ -8,14 +8,11 @@ package framework;
 import frameworkinterfaces.IPlugin;
 import frameworkinterfaces.IPluginController;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -47,38 +44,24 @@ public class PluginController implements IPluginController {
 
         URLClassLoader ulc = new URLClassLoader(jars);
         for (i = 0; i < plugins.length; i++) {
-            String pluginName = plugins[i].split("\\.")[0];
-            Class clazz = null;
-            try {
+            try{
+                String pluginName = plugins[i].split("\\.")[0];
+                Class clazz = null;
                 clazz = Class.forName(pluginName.toLowerCase() + "." + pluginName, true, ulc);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Method method=null;
-            try {
+                Method method=null;
                 method = clazz.getDeclaredMethod("getInstance");
-            } catch (NoSuchMethodException ex) {
-                Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SecurityException ex) {
-                Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             IPlugin plugin = null;
-            if (method==null) {
-
-            } else {
-                try {
+                IPlugin plugin = null;
+                if (method==null) {
+                    plugin = (IPlugin) Class.forName(pluginName.toLowerCase() + "." + pluginName, true, ulc).newInstance();
+                } else {
                     plugin = (IPlugin) method.invoke(null);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvocationTargetException ex) {
-                    Logger.getLogger(PluginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            if (plugin != null) {
-                loadedPlugins.add(plugin);
-                plugin.initialize(core);
+                if (plugin != null) {
+                    loadedPlugins.add(plugin);
+                    plugin.initialize(core);
+                }
+            } catch (Exception e){
+                ret=false;
             }
         }
         return ret;
