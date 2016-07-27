@@ -20,6 +20,18 @@ import java.util.ArrayList;
  */
 public class EditorCodigoHtml implements IPlugin, IAbstractFactory{
 
+    private EditorCodigoHtml factory;
+    
+    private EditorCodigoHtml() {
+    }
+    
+    public EditorCodigoHtml getInstance(){
+        if(factory==null){
+            factory=new EditorCodigoHtml();
+        }
+        return factory;
+    }
+    
     @Override
     public boolean initialize(ICore core) {
         return true;

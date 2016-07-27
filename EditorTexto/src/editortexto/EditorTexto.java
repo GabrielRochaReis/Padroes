@@ -20,6 +20,18 @@ import java.util.ArrayList;
  */
 public class EditorTexto implements IAbstractFactory, IPlugin{
 
+    private static EditorTexto factory;
+    
+    private EditorTexto() {
+    }
+    
+    public static EditorTexto getInstance(){
+        if(factory==null){
+            factory=new EditorTexto();
+        }
+        return factory;
+    }
+    
     @Override
     public ArrayList<String> extension() {
         ArrayList<String> extensao = new ArrayList<String>();
