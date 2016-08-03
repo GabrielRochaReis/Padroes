@@ -3,11 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frameworkinterfaces;
+package editortexto;
+
+import frameworkinterfaces.Editor;
+import frameworkinterfaces.IDocument;
 
 /**
  *
  * @author aluno
  */
-public class Editor {
+public class TextEditor extends Editor {
+
+    IDocument document;
+    
 }
