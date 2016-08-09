@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -65,19 +64,16 @@ public class TextDocument implements IDocument{
     @Override
     public void deComprass(File arquivo) throws  FileNotFoundException,IOException{
         int cont;
- byte[] dados = new byte[TAMANHO_BUFFER];
-        FileInputStream input = new FileInputStream(arquivo);
-        FileOutputStream output = new FileOutputStream(new File(arquivo.getAbsolutePath().split("\\.")[0]+".txt"));
-        BufferedInputStream origem = new BufferedInputStream(input);
-        ZipInputStream saida = new ZipInputStream(origem);
-        ZipEntry entry = saida.getNextEntry();
-
+        byte[] dados = new byte[TAMANHO_BUFFER];
         
-        while((cont = saida.read(dados)) > -1) {
-                output.write(dados, cont, 0);
-            }
-        output.close();
-        saida.close();
+        FileInputStream fis = new FileInputStream(arquivo);
+        ZipInputStream zipIn = new ZipInputStream(fis);
+        FileOutputStream output = new FileOutputStream(new File(arquivo.getAbsolutePath().split("\\.")[0]+".txt"));
+        ZipEntry entry = zipIn.getNextEntry();
+
+        while((cont = zipIn.read(dados, 0, TAMANHO_BUFFER)) != -1) {
+              output.write(dados, 0, cont);
+          }
     }
     
 }
