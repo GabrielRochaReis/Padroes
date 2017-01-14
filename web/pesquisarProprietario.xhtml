@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Imobiliaria Figueiredo</title>
+    </h:head>
+    <h:body>
+        <p:fieldset id="legenda" legend="Pesquisar Proprietário">
+            <h:form id="pesquisa">
+                 <p:outputPanel>
+                <p:outputLabel value="Proprietário:" />&nbsp;
+                <p:autoComplete id="proprietario" value="#{pesquisarProprietarioController.proprietario}" completeMethod="#{pesquisarProprietarioController.proprietarios}"
+                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                 </p:outputPanel>
+                <br/>
+                <p:outputPanel>
+                    <p:commandButton  action="#{pesquisarProprietarioController.pesquisar()}" value="Pesquisar" update="legenda"/>&nbsp;&nbsp;
+                    <p:commandButton id="btCadastro" action="#{pesquisarProprietarioController.cadastrar()}" value="Novo" icon="ui-icon-circle-plus"/>
+                    <p:tooltip id="helpCadastro" for="btCadastro" value="Cadastrar um novo proprietário." position="top"/>
+                </p:outputPanel>
+            </h:form>
+            <br/>
+            <p:fieldset>
+                <h:form>
+                    <p:dataTable var="item" value="#{pesquisarProprietarioController.list}" paginator="true" scrollable="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                        <p:column headerText="Ação" style="width: 5%">
+                            <p:commandButton id="btEditar" action="#{pesquisarProprietarioController.editar(item)}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{cadastroProprietarioController.proprietario}" value="#{item}"/>
+                            </p:commandButton>
+                            <p:tooltip id="helpEditar" for="btEditar" value="Editar informações do proprietário." position="top"/>
+                        </p:column>
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{item.nome}"/>
+                        </p:column>
+                        <p:column headerText="Telefone">
+                            <h:outputText value="#{item.telefone}"/>
+                        </p:column>
+                        <p:column headerText="Ativo">
+                            <p:selectBooleanCheckbox value="#{item.ativo}" disabled="true">
+                            </p:selectBooleanCheckbox>
+                        </p:column>
+                     </p:dataTable>
+                </h:form>
+            </p:fieldset>
+                <br/>
+                <p:commandButton  action="#{pesquisarProprietarioController.voltar()}" value="Voltar" style="Float:right;"/>
+        </p:fieldset>
+    </h:body>
+</html>

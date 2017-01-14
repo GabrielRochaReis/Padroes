@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Imobiliaria Figueiredo</title>
+    </h:head>
+    <h:body>
+        <h:form>
+        <p:fieldset>
+            <p:outputLabel value="Apartamento : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.apartamento.numero}"/>&nbsp;&nbsp;
+            <br/><br/>
+            <p:outputPanel style="float:left;width: 45%;">
+                <p:outputLabel value="Proprietário : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.proprietario.nome}"/>&nbsp;&nbsp;
+                <p:commandButton id="btInfPro" onclick="PF('dialogProprietario').show()" icon="ui-icon-info" />
+                <p:tooltip id="helpInfPro" for="btInfPro" value="Informações do proprietário." position="top"/>
+            </p:outputPanel>
+            <p:outputPanel style="float: right; width: 45%;">
+                <p:outputLabel value="Inquilino : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.inquilino.nome}"/>&nbsp;&nbsp;
+                <p:commandButton id="btInfInq" onclick="PF('dialogInquilino').show()" icon="ui-icon-info" />
+                <p:tooltip id="helpInfInq" for="btInfInq" value="Cadastrar um novo pagamento." position="top"/>
+            </p:outputPanel>
+            <br/><br/>
+        </p:fieldset>
+        <br/>
+        <p:fieldset>
+            <p:outputLabel value="Mes pagamento"/><br/>
+            <p:outputLabel value="Inicio:"/>&nbsp;<p:calendar value="#{pagamentosController.filtro.mesInicial}" pattern="MM/yyyy"/>&nbsp;
+            <p:outputLabel value="Final:"/>&nbsp;<p:calendar value="#{pagamentosController.filtro.mesFinal}" pattern="MM/yyyy"/>&nbsp;
+            <br/> <br/>
+            <p:commandButton  action="#{pagamentosController.pesquisar()}" value="Pesquisar" icon="ui-icon-search" update="tablePagamento"/>&nbsp;
+        </p:fieldset>
+         <br/>
+        <p:commandButton id="btCadastro" action="#{pagamentosController.cadastrar()}" value="Novo" icon="ui-icon-circle-plus"/>
+            <p:tooltip id="helpCadastro" for="btCadastro" value="Cadastrar um novo pagamento." position="top"/>
+            &nbsp;&nbsp;
+            <p:commandButton id="btRelatorio" value="Relatorio" onclick="PF('dialogObs').show()" icon="ui-icon-arrowthickstop-1-s">
+            </p:commandButton>
+            <p:tooltip id="helpRelatorio" for="btRelatorio" value="Relatorio de pagamentos do Apartamento." position="top"/>
+        <br/><br/>
+        </h:form>
+        
+        <p:fieldset id="tablePagamento">
+                <h:form>
+                    <p:dataTable var="item" value="#{pagamentosController.pagamento}" paginator="true" scrollable="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                        <p:column headerText="Ação" style="width: 5%">
+                            <p:commandButton action="#{pagamentosController.editar(item)}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{pagamentosController.item}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Mes">
+                            <h:outputText value="#{item.mes}">
+                                <f:convertDateTime pattern="MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Data Pagamento">
+                            <h:outputText value="#{item.dataPagamento}"/>
+                        </p:column>
+                        <p:column headerText="Comprovante Pagamento">
+                            <p:commandButton ajax="false" rendered="#{item.comprovantePagamento != null}" icon="ui-icon-arrowthickstop-1-s">
+                                <p:fileDownload value="#{pagamentosController.imgComprovantePagamento(item)}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Data Deposito">
+                            <h:outputText value="#{item.dataDeposito}"/>
+                        </p:column>
+                        <p:column headerText="Comprovante Deposito" >
+                            <p:commandButton ajax="false" rendered="#{item.comprovanteDeposito != null}" icon="ui-icon-arrowthickstop-1-s">
+                                <p:fileDownload value="#{pagamentosController.imgComprovanteDeposito(item)}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Valor do Deposito" >
+                            <h:outputText value="#{item.valorDeposito}"/>
+                        </p:column>
+                     </p:dataTable>
+                    <br/>
+                <p:commandButton  action="#{pagamentosController.voltar()}" value="Voltar" style="Float:right;"/>
+                </h:form>
+            </p:fieldset>
+            
+        <p:dialog id="modalDialogPro" header="Informações do proprietario"  draggable="false"
+            widgetVar="dialogProprietario" modal="true">
+            <p:outputLabel value="Nome : "/><p:outputLabel value="#{pagamentosController.proprietario.nome}"/>
+            <br/>
+            <p:outputLabel value="Tel : "/><p:outputLabel value="#{pagamentosController.proprietario.telefone}"/>
+            <br/>
+            <p:outputLabel value="Email : "/><p:outputLabel value="#{pagamentosController.proprietario.email}"/>
+            <br/>
+            <p:outputLabel value="Endereço : "/><p:outputLabel value="#{pagamentosController.proprietario.endereco}"/>
+            <br/><br/>
+            <p:outputLabel value="Dados Bancarios"/>
+            <br/><br/>
+            <p:outputLabel value="Banco : "/><p:outputLabel value="#{pagamentosController.proprietario.instituicao}"/>
+            <br/>
+            <p:outputLabel value="Operação : "/><p:outputLabel value="#{pagamentosController.proprietario.operacao}"/>
+            <br/>
+            <p:outputLabel value="Agencia : "/><p:outputLabel value="#{pagamentosController.proprietario.agencia}"/>
+            <br/>
+            <p:outputLabel value="Conta : "/><p:outputLabel value="#{pagamentosController.proprietario.numConta}"/>
+        </p:dialog>
+            
+        
+        <p:dialog id="modalDialogInq" header="Informações do inquilino"  draggable="false"
+            widgetVar="dialogInquilino" modal="true">
+            <p:outputLabel value="Nome : "/><p:outputLabel value="#{pagamentosController.inquilino.nome}"/>
+            <br/>
+            <p:outputLabel value="Tel : "/><p:outputLabel value="#{pagamentosController.inquilino.telefone}"/>
+            <br/>
+            <p:outputLabel value="Email : "/><p:outputLabel value="#{pagamentosController.inquilino.email}"/>
+            <br/>
+            <p:outputLabel value="CPF : "/><p:outputLabel value="#{pagamentosController.inquilino.cpf}"/>
+             <br/>
+             <p:outputLabel value="RG : "/><p:outputLabel value="#{pagamentosController.inquilino.rg}"/>
+             <br/>
+             <p:outputLabel value="Data do Boleto : "/><p:outputLabel value="#{pagamentosController.inquilino.dataBoleto}"/>
+            <br/><br/>
+        </p:dialog>
+        
+        <p:dialog id="modalDialogObs" header="Observações"  draggable="false"
+                  widgetVar="dialogObs" modal="true" width="40%" resizable="false">
+            <h:form>
+            <p:outputLabel value="Observações : "/>
+            <br/>
+            <p:inputTextarea value="#{pagamentosController.obs}" style="width: 100%;height: 100%;"/>
+            <br/><br/>
+            <p:commandButton value="Gerar" ajax="false" onclick="PF('dialogObs').hide();">
+                <p:fileDownload value="#{pagamentosController.donwloadRelatorio()}"/>
+            </p:commandButton>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

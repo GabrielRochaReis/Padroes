@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Imobiliaria Figueiredo</title>
+    </h:head>
+    <h:body>
+        <h:form id="pagamento">
+            <p:fieldset legend="Cadastro de Pagamentos">
+                <br/>
+                <p:outputLabel value="Mes do pagamento:"/>&nbsp;<p:calendar label="Data do Pagamento:" pattern="MM/yyyy" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>&nbsp;&nbsp;
+                <br/><br/>
+                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar label="Data do Pagamento:" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
+                <br/><br/>
+                <p:outputLabel value="Comprovante de Pagamento:"/>
+                <br/>
+                <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}"/>
+                <br/><br/>
+                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
+                <br/><br/>
+                <p:outputLabel value="Comprovante de Deposito:"/>
+                <br/>
+                <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovanteDeposito}"/>
+                <br/><br/>
+                <p:outputLabel value="Valor do Deposito:"/>&nbsp;<p:inputNumber value="#{cadastroPagamentoController.pagamento.valorDeposito}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
+            </p:fieldset>
+            <p:commandButton  action="#{cadastroPagamentoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="pagamento"/>
+            <p:commandButton  action="#{cadastroPagamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+        </h:form>
+    </h:body>
+</html>

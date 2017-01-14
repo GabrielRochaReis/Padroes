@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3100c15c-ffa7-46d5-9e68-17c25de334be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1"/>
+	<parameter name="apartamento" class="java.lang.String"/>
+	<parameter name="inquilino" class="java.lang.String"/>
+	<parameter name="dataVencimento" class="java.lang.String"/>
+	<parameter name="valorAluguel" class="java.lang.String"/>
+	<parameter name="proprietario" class="java.lang.String"/>
+	<parameter name="telefone" class="java.lang.String"/>
+	<parameter name="vencimentoContrato" class="java.lang.String"/>
+	<parameter name="obs" class="java.lang.String"/>
+	<parameter name="dataDeposito" class="java.lang.String"/>
+	<field name="mes" class="java.util.Date"/>
+	<field name="dataPagamento" class="java.util.Date"/>
+	<field name="dataDeposito" class="java.util.Date"/>
+	<field name="valorDeposito" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="17a904de-aa6d-4c22-8d08-6cab697536d2" x="0" y="0" width="555" height="79"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="36"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{apartamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="114" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="669c3cbd-f66a-4533-bcd8-a897dec76220" x="72" y="1" width="283" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{proprietario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5c1b2356-74bf-454e-8702-f1c48a6d7e36" x="0" y="1" width="72" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Proprietário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54e269db-4ecc-4311-b5f4-0e0d44aa9cf2" x="325" y="74" width="114" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data de Vencimento:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a2e824b6-4905-47cd-9ee1-04b7d215b7be" x="439" y="74" width="116" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataVencimento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7306ceb3-eee1-4f7e-a20f-77ac9ab782e8" x="455" y="1" width="100" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{valorAluguel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bfc2983e-827c-4ae2-adea-295e2ea23338" x="355" y="1" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Valor do Aluguel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5757407d-cb37-4c57-986a-67292aa15d5b" x="0" y="54" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dados Inquilino:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b38e829-f540-4a9c-a298-157d878ddb67" x="0" y="74" width="51" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="da3e7248-9ebe-4665-bbb2-beb0f1d74f91" x="51" y="74" width="274" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inquilino}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1cd01a51-8022-4cf9-8d60-a1966e535df6" x="0" y="94" width="61" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="596d4d16-1198-453a-b4bd-9717475434c0" x="61" y="94" width="152" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telefone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8afd01a0-9fb1-436b-beed-4a52d3776b4b" x="325" y="94" width="140" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Vencimento do Contrato:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="43ff14ec-9774-4413-bb79-a834e0bd6912" x="465" y="94" width="90" height="20"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{vencimentoContrato}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e227108d-93ef-49ba-98a7-830df3838565" x="100" y="21" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataDeposito}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e4b6806c-0461-40ab-a45c-3dd32f3de57a" isPrintRepeatedValues="false" x="0" y="21" width="100" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$P{dataDeposito}.equals( "null" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data de Deposito:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0b9dc72b-df18-4032-9992-2a32048ee4c4" mode="Opaque" x="0" y="21" width="135" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ad20a0e-4836-43c7-9843-1ffd447a0ff9" mode="Opaque" x="135" y="21" width="145" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento do Inquilino]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4bd1105-06f2-4371-8a76-85902613104b" mode="Opaque" x="280" y="21" width="159" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento ao Proprietário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4bd1105-06f2-4371-8a76-85902613104b" mode="Opaque" x="439" y="21" width="116" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Depositado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement uuid="834096b6-affd-4b7a-b898-d3145add2cc2" x="0" y="0" width="135" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eca8339b-f617-43e6-b698-1aa77613443d" x="135" y="0" width="145" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataPagamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6db7c139-8320-4a79-81f2-4e41cbb46fde" x="280" y="0" width="159" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataDeposito}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4b68618c-b15b-4d7f-a515-87681ad35d6b" x="439" y="0" width="116" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="styled">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorDeposito}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d5cc4270-170c-44ff-a238-79341a741139" style="style1" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Observações:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fead2c9f-7002-4e0a-bfb7-0f0a026ffbc6" style="style1" x="100" y="0" width="455" height="45"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{obs}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
