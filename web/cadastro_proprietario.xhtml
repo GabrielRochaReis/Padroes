@@ -22,7 +22,7 @@
                 <br /><br />
                 <p:outputLabel value="Endereço:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:50%;"/>&nbsp;&nbsp;
                 <br /><br />
-                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="true" size="8"/> &nbsp;&nbsp;
+                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> &nbsp;&nbsp;
                 <p:outputLabel value="Ativo:"/>&nbsp;<p:selectBooleanCheckbox value="#{cadastroProprietarioController.proprietario.ativo}" /><br/>
                 <br/><br/>
                 <p:fieldset legend="Dados Bancarios">

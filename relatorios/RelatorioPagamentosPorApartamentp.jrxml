@@ -217,7 +217,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="eca8339b-f617-43e6-b698-1aa77613443d" x="135" y="0" width="145" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -230,7 +230,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataPagamento}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="6db7c139-8320-4a79-81f2-4e41cbb46fde" x="280" y="0" width="159" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>

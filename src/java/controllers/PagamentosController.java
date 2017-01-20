@@ -9,6 +9,7 @@ import DAO.ApartamentoDAO;
 import DAO.InquilinoDAO;
 import DAO.PagamentoDAO;
 import DAO.ProprietarioDAO;
+import Enum.MesesEnum;
 import Model.Apartamento;
 import Model.Inquilino;
 import Model.Pagamento;
@@ -160,11 +161,11 @@ public class PagamentosController implements Serializable{
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         parameters.put("apartamento", "Apartamento "+apartamento.getNumero());
         parameters.put("inquilino", inquilino.getNome());
-        parameters.put("dataVencimento", inquilino.getMesContrato().toString());
+        parameters.put("dataVencimento", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("valorAluguel", apartamento.getAluguel()+"");
         parameters.put("proprietario", proprietario.getNome());
         parameters.put("telefone", inquilino.getTelefone());
-        parameters.put("vencimentoContrato", inquilino.getMesContrato().toString());
+        parameters.put("vencimentoContrato", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("obs", obs);
         parameters.put("dataDeposito", proprietario.getDataDeposito()==null?null:fmt.format(proprietario.getDataDeposito()));
         

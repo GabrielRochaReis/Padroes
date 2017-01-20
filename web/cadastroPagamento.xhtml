@@ -11,15 +11,15 @@
         <h:form id="pagamento">
             <p:fieldset legend="Cadastro de Pagamentos">
                 <br/>
-                <p:outputLabel value="Mes do pagamento:"/>&nbsp;<p:calendar label="Data do Pagamento:" pattern="MM/yyyy" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Mes do pagamento:"/>&nbsp;<p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
-                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar label="Data do Pagamento:" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar showOn="button" mask="99/99/9999" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Pagamento:"/>
                 <br/>
                 <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}"/>
                 <br/><br/>
-                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button" mask="99/99/9999" value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Deposito:"/>
                 <br/>

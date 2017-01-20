@@ -77,10 +77,6 @@ public class Pagamento extends Entidade {
         return valorDeposito;
     }
 
-    public void setValorDeposito(Double valorDeposito) {
-        this.valorDeposito = valorDeposito;
-    }
-
     public String getNomeComprovantePagamento() {
         return nomeComprovantePagamento;
     }
@@ -97,8 +93,12 @@ public class Pagamento extends Entidade {
         this.nomeComprovanteDeposito = nomeComprovanteDeposito;
     }
 
-    public void setValorDeposito(double valorDeposito) {
-        this.valorDeposito = valorDeposito;
+    public void setValorDeposito(Double valorDeposito) {
+        if(valorDeposito==null){
+            this.valorDeposito =0;
+        } else{
+            this.valorDeposito = valorDeposito;
+        }
     }
     
     @Override

@@ -18,7 +18,7 @@ public abstract class BaseDao {
     
     public String setArq(byte[] arq){
         if(arq == null)
-            return arq.toString();
+            return null;
         else
             return "'"+arq+"'";
     }
