@@ -6,22 +6,35 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
-        <link href="theme.css" rel="stylesheet" type="text/css"/>
+        <link type="text/css" rel="stylesheet" href="default.css" />
+        <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
         <h:form>
         <p:fieldset>
             <p:outputLabel value="Apartamento : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.apartamento.numero}"/>&nbsp;&nbsp;
+            <br/>
+            <p:outputLabel value="Aluguel : R$"/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.apartamento.aluguel}"/>&nbsp;&nbsp;
             <br/><br/>
             <p:outputPanel style="float:left;width: 45%;">
                 <p:outputLabel value="Proprietário : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.proprietario.nome}"/>&nbsp;&nbsp;
                 <p:commandButton id="btInfPro" onclick="PF('dialogProprietario').show()" icon="ui-icon-info" />
                 <p:tooltip id="helpInfPro" for="btInfPro" value="Informações do proprietário." position="top"/>
+                <br/>
+                <p:outputLabel value="Data do Deposito : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.proprietario.dataDeposito}">
+                     <f:convertDateTime pattern="dd/MM/yyyy" />
+                </p:outputLabel>
             </p:outputPanel>
             <p:outputPanel style="float: right; width: 45%;">
                 <p:outputLabel value="Inquilino : "/>&nbsp;&nbsp;<p:outputLabel value="#{pagamentosController.inquilino.nome}"/>&nbsp;&nbsp;
                 <p:commandButton id="btInfInq" onclick="PF('dialogInquilino').show()" icon="ui-icon-info" />
                 <p:tooltip id="helpInfInq" for="btInfInq" value="Cadastrar um novo pagamento." position="top"/>
+                <br/>
+                <p:outputLabel value="Data do Boleto : "/>&nbsp;&nbsp;
+                <p:outputLabel value="#{pagamentosController.dataBoleto}" />
+                <br/>
+                <p:outputLabel value="Vencimento do Contrato : "/>&nbsp;&nbsp;
+                <p:outputLabel value="#{pagamentosController.venContrato}" />
             </p:outputPanel>
             <br/><br/>
         </p:fieldset>
@@ -58,7 +71,9 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Data Pagamento">
-                            <h:outputText value="#{item.dataPagamento}"/>
+                            <h:outputText value="#{item.dataPagamento}">
+                                <f:convertDateTime pattern="DD/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Comprovante Pagamento">
                             <p:commandButton ajax="false" rendered="#{item.comprovantePagamento != null}" icon="ui-icon-arrowthickstop-1-s">
@@ -66,7 +81,9 @@
                             </p:commandButton>
                         </p:column>
                         <p:column headerText="Data Deposito">
-                            <h:outputText value="#{item.dataDeposito}"/>
+                            <h:outputText value="#{item.dataDeposito}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Comprovante Deposito" >
                             <p:commandButton ajax="false" rendered="#{item.comprovanteDeposito != null}" icon="ui-icon-arrowthickstop-1-s">

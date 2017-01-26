@@ -58,27 +58,31 @@ public class PesquisarApartamentoController implements Serializable{
     }
     
     public String obterProprietario(String p){
+        if(!p.equals("0")){
             Proprietario prop;
-        try {
-            prop = proprietarioDAO.obterProprietarioPorId(p);
-        if(prop==null)
-            return null;
-        return prop.getNome();
-        } catch (SQLException ex) {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+            try {
+                prop = proprietarioDAO.obterProprietarioPorId(p);
+            if(prop==null)
+                return null;
+            return prop.getNome();
+            } catch (SQLException ex) {
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+            }
         }
         return null;
     }
     
     public String obterInquilino(String p){
-        Inquilino prop;
-        try {
-            prop = inquilinoDAO.obterInquilinoPorId(p);
-        if(prop==null)
-            return null;
-        return prop.getNome();
-        } catch (SQLException ex) {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+        if(!p.equals("0")){
+            Inquilino prop;
+            try {
+                prop = inquilinoDAO.obterInquilinoPorId(p);
+            if(prop==null)
+                return null;
+            return prop.getNome();
+            } catch (SQLException ex) {
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+            }
         }
         return null;
     }

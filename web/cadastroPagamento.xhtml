@@ -6,7 +6,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
-        <link href="theme.css" rel="stylesheet" type="text/css"/>
+        <link type="text/css" rel="stylesheet" href="default.css" />
+        <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
         <h:form id="pagamento">
@@ -14,13 +15,13 @@
                 <br/>
                 <p:outputLabel value="Mes do pagamento:"/>&nbsp;<p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
-                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar showOn="button" mask="99/99/9999" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar showOn="button" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Pagamento:"/>
                 <br/>
                 <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}"/>
                 <br/><br/>
-                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button" mask="99/99/9999" value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button"  value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Deposito:"/>
                 <br/>

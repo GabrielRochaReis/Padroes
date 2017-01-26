@@ -69,8 +69,12 @@ public class PagamentosController implements Serializable{
         if(apartamento!=null){
             try {
                 pagamento=pagamentoDAO.obterPagamentos(apartamento.getId());
-                proprietario=proprietarioDAO.obterProprietarioPorId(apartamento.getProprietario()+"");
-                inquilino=inquilinoDAO.obterInquilinoPorId(apartamento.getInquilino()+"");
+                if(apartamento.getProprietario()!=0){
+                    proprietario=proprietarioDAO.obterProprietarioPorId(apartamento.getProprietario()+"");
+                }
+                if(apartamento.getInquilino()!=0){
+                    inquilino=inquilinoDAO.obterInquilinoPorId(apartamento.getInquilino()+"");
+                }
             } catch (SQLException ex) {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao carregar as informações. ")); 
             }
@@ -85,6 +89,20 @@ public class PagamentosController implements Serializable{
     public StreamedContent imgComprovanteDeposito(){
         if(item!= null && item.getComprovanteDeposito()!= null)
             return new DefaultStreamedContent(new ByteArrayInputStream(item.getComprovanteDeposito()));
+        return null;
+    }
+    
+    public String getDataBoleto(){
+        if(inquilino!=null && inquilino.getDataBoleto()!=null){
+            return MesesEnum.getMes(inquilino.getDataBoleto());
+        }
+        return null;
+    }
+    
+    public String getVenContrato(){
+        if(inquilino!=null && inquilino.getMesContrato()!=null){
+            return MesesEnum.getMes(inquilino.getMesContrato());
+        }
         return null;
     }
     
@@ -161,7 +179,7 @@ public class PagamentosController implements Serializable{
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         parameters.put("apartamento", "Apartamento "+apartamento.getNumero());
         parameters.put("inquilino", inquilino.getNome());
-        parameters.put("dataVencimento", MesesEnum.getMes(inquilino.getMesContrato()));
+        parameters.put("dataVencimento", MesesEnum.getMes(inquilino.getDataBoleto()));
         parameters.put("valorAluguel", apartamento.getAluguel()+"");
         parameters.put("proprietario", proprietario.getNome());
         parameters.put("telefone", inquilino.getTelefone());

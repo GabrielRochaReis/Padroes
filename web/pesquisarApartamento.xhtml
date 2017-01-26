@@ -6,6 +6,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
+        <link type="text/css" rel="stylesheet" href="default.css" />
+        <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
         <p:fieldset id="legenda" legend="Pesquisar Apartamento">
@@ -34,10 +36,10 @@
                             </p:commandButton>
                             <p:tooltip id="helpPagamentos" for="btPagamentos" value="Pesquisar/Editar pagamentos do apartamento." position="top"/>
                         </p:column>
-                        <p:column headerText="Edificio">
+                        <p:column headerText="N° Apart">
                             <h:outputText value="#{item.numero}"/>
                         </p:column>
-                        <p:column headerText="N° Apart">
+                        <p:column headerText="Edificio">
                             <h:outputText value="#{item.edificio}"/>
                         </p:column>
                         <p:column headerText="Proprietario">

@@ -67,7 +67,10 @@ public class CadastroPagamentoController implements Serializable{
     }
     
     public String voltar(){
-        return "pagamentos";  
+        if(editar){
+            RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+        }
+            return "pagamentos"; 
     }
     
     private void limpar(){
