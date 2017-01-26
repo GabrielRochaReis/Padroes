@@ -1,29 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
+        <link type="text/css" rel="stylesheet" href="default.css" />
+        <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <h1 style="font-size: 40pt;text-align: center;border: outset;background-color: gainsboro;"><b>Figueiredo Imobiliária</b></h1>
-        <h:form>
-            <p:menu>
-                <p:submenu label="Relatorios" >
-                    <p:menuitem  value="Pagamentos" disabled="true"/>
-                </p:submenu>
-                <p:submenu label="Consultar" >
-                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
-                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
-                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
-                </p:submenu>
-            </p:menu>
-        </h:form>
+        <h1 style="font-size: 40pt;text-align: center;border: 1px solid #c4c4c4 ;background-color: #f5f3e5;padding: 0;margin: 0;"><b>Figueiredo Imobiliária</b></h1>
+        <p:panelGrid>
+            <p:column style="border: none;padding: 0;margin: 0;">
+                <h:form >
+                    <p:menu style="height: 500px;padding: 0;margin: 0;">
+                        <p:submenu label="Relatorios">
+                            <p:menuitem  value="Pagamentos" disabled="true" />
+                        </p:submenu>
+                        <p:submenu label="Consultar" >
+                            <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                            <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                            <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:column>
+            <p:column style="border: none;position:absolute;top:70px;">
+
+            </p:column>
+        </p:panelGrid>
     </h:body>
 </html>
