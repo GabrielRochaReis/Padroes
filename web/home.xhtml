@@ -10,23 +10,34 @@
     </h:head>
     <h:body>
         <h1 style="font-size: 40pt;text-align: center;"><b>Figueiredo Imobiliária</b></h1>
-        <h:form id="form_login" style="position: absolute;left: 37%;top: 30%;">
-            
-            <p:fieldset>
-            <p:growl autoUpdate="true"/>
-            <br/>
-            <table>
-                <tr>
-                    <td><p:outputLabel value="Usuário:"/></td><td><p:inputText value="#{indexController.usuario}" required="true"/></td>
-                </tr>
-                <tr>
-                <td><p:outputLabel value="Senha:"/></td><td><p:password id="senha" value="#{indexController.senha}" required="true"/></td>
-                </tr>
-            </table>
-            <br/>
-            </p:fieldset>   
-            <br/>
-            <p:commandButton  action="#{indexController.submit()}" value="Login" style="width: 100%"/>
-        </h:form>
+        <p:fieldset style="position: absolute;left: 37%;top: 30%;">
+            <h:form id="form_login" >
+                <p:growl autoUpdate="true"/>
+                <br/>
+                <p:panelGrid >
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Usuário:"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:inputText value="#{indexController.usuario}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Senha:"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:password id="senha" value="#{indexController.senha}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column colspan="2" style="border: none;">
+                            <p:commandButton  action="#{indexController.submit()}" value="Login" style="width: 100%"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>

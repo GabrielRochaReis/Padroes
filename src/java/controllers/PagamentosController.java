@@ -194,12 +194,17 @@ public class PagamentosController implements Serializable{
     }
     
     public DefaultStreamedContent donwloadRelatorio(){
+        if(pagamento!=null && !pagamento.isEmpty()){
             try {
                 return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()),"application/pdf","Relatorio.pdf");
             } catch (JRException ex) {
-                ex.printStackTrace();
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gerar o relatorio.")); 
                 return null;
             }
+        } else {
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Não existe pagamentos cadastrados para gerar o relatorio")); 
+            return null;
+        }
     }
     
     public void modalObs(){

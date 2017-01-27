@@ -1,33 +1,45 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-       <h:form id="form_apartamento">
-            <p:growl autoUpdate="true"/>
-            <p:fieldset legend="Cadastro de Apartamento">
-                <p:outputLabel value="Edificio:"/>&nbsp;<p:inputText label="Edificio:" value="#{cadastroApartamentoController.apartamento.edificio}" style="width:20%;"/>&nbsp;&nbsp;
-                <p:outputLabel value="Numero do Apartamento:"/>&nbsp;<p:inputText value="#{cadastroApartamentoController.apartamento.numero}" required="true" style="width:20%;"/>
-                <br/><br/>
-                <p:outputLabel value="Proprietario:" for="proprietario" />&nbsp;
-                <p:autoComplete id="proprietario" value="#{cadastroApartamentoController.proprietario}" completeMethod="#{cadastroApartamentoController.proprietarios}"
-                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />&nbsp;&nbsp;
-                <p:outputLabel value="Inquilino:" />&nbsp;
-                <p:autoComplete id="inquilino" value="#{cadastroApartamentoController.inquilino}" completeMethod="#{cadastroApartamentoController.inquilinos}"
-                        var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
-                <br/><br/>
-                <p:outputLabel value="Valor do Aluguel:"/>&nbsp;<p:inputNumber value="#{cadastroApartamentoController.apartamento.aluguel}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
-            </p:fieldset>
-            <br/>
-            <p:commandButton  action="#{cadastroApartamentoController.gravar()}" value="Gravar" update="form_apartamento"/>&nbsp;&nbsp;
-            <p:commandButton  action="#{cadastroApartamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
         </h:form>
+        <p:fieldset legend="Cadastro de Apartamento" style="margin-left: 15%;width: 70%;">
+            <h:form id="form_apartamento">
+                <p:growl autoUpdate="true"/>
+                <p:outputLabel value="Edificio:"/><p:inputText label="Edificio:" value="#{cadastroApartamentoController.apartamento.edificio}" style="width:20%;"/>
+                <p:outputLabel value="Numero do Apartamento:"/><p:inputText value="#{cadastroApartamentoController.apartamento.numero}" required="true" style="width:20%;"/>
+                <br/><br/>
+                <p:outputLabel value="Proprietario:" for="proprietario" />
+                <p:autoComplete id="proprietario" value="#{cadastroApartamentoController.proprietario}" completeMethod="#{cadastroApartamentoController.proprietarios}"
+                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                <p:outputLabel value="Inquilino:" />
+                <p:autoComplete id="inquilino" value="#{cadastroApartamentoController.inquilino}" completeMethod="#{cadastroApartamentoController.inquilinos}"
+                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                <br/><br/>
+                <p:outputLabel value="Valor do Aluguel:"/><p:inputNumber value="#{cadastroApartamentoController.apartamento.aluguel}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
+                <br/>
+                <p:commandButton  action="#{cadastroApartamentoController.gravar()}" value="Gravar" update="form_apartamento"/>
+                <p:commandButton  action="#{cadastroApartamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>

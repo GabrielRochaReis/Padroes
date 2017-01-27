@@ -35,18 +35,22 @@ public class ApartamentoDAO extends BaseDao{
         String query = "SELECT * FROM apartamento" ;
                     query+=" WHERE 1=1 ";
                 if(apartamento!=null){
-                    if(apartamento.getNumero()!=null){
-                                query+= " and (edificio like '%"+apartamento.getNumero()+"%' "
-                                + " or numero like '%"+apartamento.getNumero()+"%') ";
-                    }
-                    if(apartamento.getProprietario() !=null){
-                        query+= " and id_proprietario = "+apartamento.getProprietario()+"";
-                    }
-                    if(apartamento.getInquilino() !=null){
-                        query+= " and id_inquilino = "+apartamento.getInquilino()+"";
+                    if(apartamento.getId()==null || apartamento.getId()==0){
+                        if(apartamento.getNumero()!=null){
+                                    query+= " and (edificio like '"+apartamento.getNumero()+"%' "
+                                    + " or numero like '"+apartamento.getNumero()+"%') ";
+                        } 
+                        if(apartamento.getProprietario() !=null){
+                            query+= " and id_proprietario = "+apartamento.getProprietario()+"";
+                        }
+                        if(apartamento.getInquilino() !=null){
+                            query+= " and id_inquilino = "+apartamento.getInquilino()+"";
+                        }
+                    } else {
+                        query+= " and id = "+apartamento.getId();
                     }
                 }
-                query+=";";
+               query+=" order by numero;";
             PreparedStatement ps = data.getConection().prepareStatement(query);
             
             

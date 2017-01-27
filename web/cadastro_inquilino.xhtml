@@ -1,60 +1,110 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <h:form id="form_inquilino">
-            <p:growl autoUpdate="true"/>
-            <p:fieldset legend="Cadastro de Inquilino">
-                <p:outputLabel value="Nome:"/>&nbsp;<p:inputText value="#{cadastroInquilinoController.inquilino.nome}" required="true" style="width:35%;"/>&nbsp;&nbsp;
-                <p:outputLabel value="CPF:"/>&nbsp;<p:inputMask value="#{cadastroInquilinoController.inquilino.cpf}" mask="999.999.999-99" style="width:10%;"/>&nbsp;&nbsp;
-                <p:outputLabel value="RG:"/>&nbsp;<p:inputMask value="#{cadastroInquilinoController.inquilino.rg}" mask="99999999-99" style="width:10%;"/><br/>
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
 
-                <br/>
-
-                <p:outputLabel value="Email:"/>&nbsp;<p:inputText value="#{cadastroInquilinoController.inquilino.email}" size="30" validatorMessage="Formato de email invalido." >
-                    <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
-                    </p:inputText>&nbsp;&nbsp;
-                <p:outputLabel value="Telefone:"/>&nbsp;<p:inputMask value="#{cadastroInquilinoController.inquilino.telefone}" mask="(99)9999-9999" size="10"/>&nbsp;&nbsp;
-                <p:outputLabel value="Data do Boleto:"/>&nbsp;<p:inputMask value="#{cadastroInquilinoController.inquilino.dataBoleto}" mask="99" size="8"/><br/>
-                
-                <br/>
-                
-                <p:outputLabel value="Mes do Contrato" />&nbsp;
-                <p:selectOneMenu id="console" value="#{cadastroInquilinoController.inquilino.mesContrato}" style="width:125px">
-                    <f:selectItem itemLabel="Janeiro" itemValue="1" />
-                    <f:selectItem itemLabel="Fevereiro" itemValue="2" />
-                    <f:selectItem itemLabel="Março" itemValue="3" />
-                    <f:selectItem itemLabel="Abril" itemValue="4" />
-                    <f:selectItem itemLabel="Maio" itemValue="5" />
-                    <f:selectItem itemLabel="Junho" itemValue="6" />
-                    <f:selectItem itemLabel="Julho" itemValue="7" />
-                    <f:selectItem itemLabel="Agosto" itemValue="8" />
-                    <f:selectItem itemLabel="Setembro" itemValue="9" />
-                    <f:selectItem itemLabel="Outubro" itemValue="10" />
-                    <f:selectItem itemLabel="Novembro" itemValue="11" />
-                    <f:selectItem itemLabel="Dezembro" itemValue="12" />
-                    
-                </p:selectOneMenu>
-                &nbsp;&nbsp;
-                <p:outputLabel value="Ativo:"/>&nbsp;<p:selectBooleanCheckbox value="#{cadastroInquilinoController.inquilino.ativo}" /><br/>
-                
-            </p:fieldset>
-            <br/>
-            <p:commandButton  action="#{cadastroInquilinoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="form_inquilino"/>
-            <p:commandButton  action="#{cadastroInquilinoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
         </h:form>
-        
+        <p:fieldset legend="Cadastro de Inquilino" style="margin-left: 15%;width: 70%;">
+            <h:form id="form_inquilino" >
+                <p:growl autoUpdate="true"/>
+                <p:panelGrid style="width: 100%;background: inherit;">
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;width: 60%">
+                            <p:outputLabel value="Nome:"/><br/><p:inputText value="#{cadastroInquilinoController.inquilino.nome}" required="true" style="width:90%;"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="CPF:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.cpf}" mask="999.999.999-99" style="width:60%;"/>
+                        </p:column >
+                        <p:column style="border: none;">
+                            <p:outputLabel value="RG:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.rg}" mask="99999999-99" style="width:57%;"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Email:"/><br/><p:inputText value="#{cadastroInquilinoController.inquilino.email}" size="30" validatorMessage="Formato de email invalido." style="width:90%;">
+                                <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.telefone}" mask="(99)99999-999?9" style="width:60%;"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Data do Boleto:"/><br/>
+                            <p:selectOneMenu value="#{cadastroInquilinoController.inquilino.dataBoleto}">
+                                <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                                <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                                <f:selectItem itemLabel="Março" itemValue="3" />
+                                <f:selectItem itemLabel="Abril" itemValue="4" />
+                                <f:selectItem itemLabel="Maio" itemValue="5" />
+                                <f:selectItem itemLabel="Junho" itemValue="6" />
+                                <f:selectItem itemLabel="Julho" itemValue="7" />
+                                <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                <f:selectItem itemLabel="Setembro" itemValue="9" />
+                                <f:selectItem itemLabel="Outubro" itemValue="10" />
+                                <f:selectItem itemLabel="Novembro" itemValue="11" />
+                                <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Mes do Contrato:" /><br/>
+                            <p:selectOneMenu id="console" value="#{cadastroInquilinoController.inquilino.mesContrato}">
+                                <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                                <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                                <f:selectItem itemLabel="Março" itemValue="3" />
+                                <f:selectItem itemLabel="Abril" itemValue="4" />
+                                <f:selectItem itemLabel="Maio" itemValue="5" />
+                                <f:selectItem itemLabel="Junho" itemValue="6" />
+                                <f:selectItem itemLabel="Julho" itemValue="7" />
+                                <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                <f:selectItem itemLabel="Setembro" itemValue="9" />
+                                <f:selectItem itemLabel="Outubro" itemValue="10" />
+                                <f:selectItem itemLabel="Novembro" itemValue="11" />
+                                <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column style="border: none;">
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Ativo:"/><br/><p:selectBooleanCheckbox value="#{cadastroInquilinoController.inquilino.ativo}" />
+                        </p:column>
+                    </p:row >
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:commandButton action="#{cadastroInquilinoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="form_inquilino"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:commandButton  action="#{cadastroInquilinoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+        </p:fieldset>
+
         <p:dialog widgetVar="myDialog">  
             <h:outputText value="#{cadastroInquilinoController.legenda}" />  
         </p:dialog>
-        
+
     </h:body>
 </html>

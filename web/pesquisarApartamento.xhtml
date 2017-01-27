@@ -1,33 +1,45 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <p:fieldset id="legenda" legend="Pesquisar Apartamento">
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:fieldset id="legenda" legend="Pesquisar Apartamento" style="margin-left: 15%;width: 70%;">
             <h:form id="pesquisa">
-                 <p:outputPanel>
-                <p:outputLabel value="Apartamento:" />&nbsp;
-                <p:autoComplete id="apartamento" value="#{pesquisarApartamentoController.apartamento}" completeMethod="#{pesquisarApartamentoController.apartamentos}"
-                                var="item" itemLabel="#{item.descricao}" itemValue="#{item}" converter="converter" forceSelection="true" />
-                 </p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="Apartamento:" /><br/>
+                    <p:autoComplete id="apartamento" value="#{pesquisarApartamentoController.apartamento}" completeMethod="#{pesquisarApartamentoController.apartamentos}"
+                                    var="item" itemLabel="#{item.descricao}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                </p:outputPanel>
                 <br/>
                 <p:outputPanel>
-                    <p:commandButton  action="#{pesquisarApartamentoController.pesquisar()}" value="Pesquisar" icon="ui-icon-search" update="legenda"/>&nbsp;&nbsp;
+                    <p:commandButton  action="#{pesquisarApartamentoController.pesquisar()}" value="Pesquisar" icon="ui-icon-search" update="legenda"/>
                     <p:commandButton id="btCadastro" action="#{pesquisarApartamentoController.cadastrar()}" value="Novo" icon="ui-icon-circle-plus" update="legenda"/>
                     <p:tooltip id="helpCadastro" for="btCadastro" value="Cadastrar um novo apartamento." position="top"/>
                 </p:outputPanel>
-            <br/>
-            <p:fieldset>
+                <br/>
+                <p:fieldset>
                     <p:dataTable var="item" value="#{pesquisarApartamentoController.list}" paginator="true" scrollable="true" rows="5"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-                        <p:column headerText="Ação" style="width: 10%">
+                        <p:column headerText="Ação" style="width: 10%;text-align: center;">
                             <p:commandButton id="btEditar" action="#{pesquisarApartamentoController.editar(item)}" icon="ui-icon-pencil" >
                                 <f:setPropertyActionListener target="#{cadastroApartamentoController.apartamento}" value="#{item}"/>
                             </p:commandButton>
@@ -48,10 +60,10 @@
                         <p:column headerText="Inquilino">
                             <h:outputText value="#{pesquisarApartamentoController.obterInquilino(item.inquilino)}"/>
                         </p:column>
-                     </p:dataTable>
-            </p:fieldset>
-            <br/>
-            <p:commandButton  action="#{pesquisarApartamentoController.voltar()}" value="Voltar" style="Float:right;"/>
+                    </p:dataTable>
+                </p:fieldset>
+                <br/>
+                <p:commandButton  action="#{pesquisarApartamentoController.voltar()}" value="Voltar" style="Float:right;"/>
             </h:form>
         </p:fieldset>
     </h:body>

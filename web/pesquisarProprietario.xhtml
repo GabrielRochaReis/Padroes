@@ -1,25 +1,37 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <p:fieldset id="legenda" legend="Pesquisar Proprietário">
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:fieldset id="legenda" legend="Pesquisar Proprietário" style="margin-left: 15%;width: 70%;">
             <h:form id="pesquisa">
-                 <p:outputPanel>
-                <p:outputLabel value="Proprietário:" />&nbsp;
-                <p:autoComplete id="proprietario" value="#{pesquisarProprietarioController.proprietario}" completeMethod="#{pesquisarProprietarioController.proprietarios}"
-                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
-                 </p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="Proprietário:" /><br/>
+                    <p:autoComplete id="proprietario" value="#{pesquisarProprietarioController.proprietario}" completeMethod="#{pesquisarProprietarioController.proprietarios}"
+                                    var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                </p:outputPanel>
                 <br/>
                 <p:outputPanel>
-                    <p:commandButton  action="#{pesquisarProprietarioController.pesquisar()}" value="Pesquisar" update="legenda"/>&nbsp;&nbsp;
+                    <p:commandButton  action="#{pesquisarProprietarioController.pesquisar()}" value="Pesquisar" update="legenda"/>
                     <p:commandButton id="btCadastro" action="#{pesquisarProprietarioController.cadastrar()}" value="Novo" icon="ui-icon-circle-plus"/>
                     <p:tooltip id="helpCadastro" for="btCadastro" value="Cadastrar um novo proprietário." position="top"/>
                 </p:outputPanel>
@@ -29,7 +41,7 @@
                 <h:form>
                     <p:dataTable var="item" value="#{pesquisarProprietarioController.list}" paginator="true" scrollable="true" rows="5"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-                        <p:column headerText="Ação" style="width: 5%">
+                        <p:column headerText="Ação" style="width: 10%;text-align: center;">
                             <p:commandButton id="btEditar" action="#{pesquisarProprietarioController.editar(item)}" icon="ui-icon-pencil" >
                                 <f:setPropertyActionListener target="#{cadastroProprietarioController.proprietario}" value="#{item}"/>
                             </p:commandButton>
@@ -41,15 +53,15 @@
                         <p:column headerText="Telefone">
                             <h:outputText value="#{item.telefone}"/>
                         </p:column>
-                        <p:column headerText="Ativo">
+                        <p:column headerText="Ativo" style="width: 10%;text-align: center;">
                             <p:selectBooleanCheckbox value="#{item.ativo}" disabled="true">
                             </p:selectBooleanCheckbox>
                         </p:column>
-                     </p:dataTable>
+                    </p:dataTable>
                 </h:form>
             </p:fieldset>
-                <br/>
-                <p:commandButton  action="#{pesquisarProprietarioController.voltar()}" value="Voltar" style="Float:right;"/>
+            <br/>
+            <p:commandButton  action="#{pesquisarProprietarioController.voltar()}" value="Voltar" style="Float:right;"/>
         </p:fieldset>
     </h:body>
 </html>

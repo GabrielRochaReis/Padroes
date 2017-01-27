@@ -2,6 +2,9 @@ body {
      margin: 0px;  
      padding: 0;  
      color: #616161;  
+     background-image: url(0000000002013.jpg) ;
+     background-repeat: no-repeat;
+     background-size: 100%;
  }  
  h1, h2, h3 {  
      margin-top: 0;  
@@ -205,4 +208,4 @@ body {
  }  
  .ui-widget {  
    font-size: 12px !important;  
- }  
+ }

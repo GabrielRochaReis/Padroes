@@ -8,25 +8,20 @@
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <h1 style="font-size: 40pt;text-align: center;border: 1px solid #c4c4c4 ;background-color: #f5f3e5;padding: 0;margin: 0;"><b>Figueiredo Imobiliária</b></h1>
-        <p:panelGrid>
-            <p:column style="border: none;padding: 0;margin: 0;">
-                <h:form >
-                    <p:menu style="height: 500px;padding: 0;margin: 0;">
-                        <p:submenu label="Relatorios">
-                            <p:menuitem  value="Pagamentos" disabled="true" />
-                        </p:submenu>
-                        <p:submenu label="Consultar" >
-                            <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
-                            <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
-                            <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
-                        </p:submenu>
-                    </p:menu>
-                </h:form>
-            </p:column>
-            <p:column style="border: none;position:absolute;top:70px;">
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
 
-            </p:column>
-        </p:panelGrid>
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+
     </h:body>
 </html>

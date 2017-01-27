@@ -1,45 +1,57 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-       <h:form id="form_proprietario">
-            <p:growl autoUpdate="true"/>
-            <p:fieldset legend="Cadastro de Proprietario">
-                <p:outputLabel value="Nome:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.nome}" required="true" style="width:35%;"/>&nbsp;&nbsp;
-                
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:fieldset legend="Cadastro de Proprietario" style="margin-left: 15%;width: 70%;">
+            <h:form id="form_proprietario">
+                <p:growl autoUpdate="true"/>
+                <p:outputLabel value="Nome:"/><p:inputText value="#{cadastroProprietarioController.proprietario.nome}" required="true" style="width:35%;"/>
+
                 <br/><br/>
-                
-                <p:outputLabel value="Email:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.email}" size="30" validatorMessage="Formato de email invalido." >
+
+                <p:outputLabel value="Email:"/><p:inputText value="#{cadastroProprietarioController.proprietario.email}" size="30" validatorMessage="Formato de email invalido." >
                     <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
-                    </p:inputText>&nbsp;&nbsp;
-                <p:outputLabel value="Telefone:"/>&nbsp;<p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)9999-9999" size="10"/>&nbsp;&nbsp;
+                </p:inputText>
+                <p:outputLabel value="Telefone:"/><p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)9999-9999" size="10"/>
                 <br /><br />
-                <p:outputLabel value="Endereço:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:50%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Endereço:"/><p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:50%;"/>
                 <br /><br />
-                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> &nbsp;&nbsp;
-                <p:outputLabel value="Ativo:"/>&nbsp;<p:selectBooleanCheckbox value="#{cadastroProprietarioController.proprietario.ativo}" /><br/>
+                <p:outputLabel value="Data do Deposito:"/><p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> 
+                <p:outputLabel value="Ativo:"/><p:selectBooleanCheckbox value="#{cadastroProprietarioController.proprietario.ativo}" /><br/>
                 <br/><br/>
                 <p:fieldset legend="Dados Bancarios">
-                <p:outputLabel value="Instituição Financeira:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.instituicao}" maxlength="20" style="width:20%;"/>&nbsp;&nbsp;
-                <p:outputLabel value="Operação:"/>&nbsp;<p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999"  style="width:3%;"/>&nbsp;&nbsp;
-                <br/><br/>
-                <p:outputLabel value="Numero da Conta:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.numConta}" maxlength="20" style="width:20%;"/>&nbsp;&nbsp;
-                <p:outputLabel value="Agencia:"/>&nbsp;<p:inputText value="#{cadastroProprietarioController.proprietario.agencia}" maxlength="20" style="width:20%;"/>&nbsp;&nbsp;
+                    <p:outputLabel value="Instituição Financeira:"/><p:inputText value="#{cadastroProprietarioController.proprietario.instituicao}" maxlength="20" style="width:20%;"/>
+                    <p:outputLabel value="Operação:"/><p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999"  style="width:3%;"/>
+                    <br/><br/>
+                    <p:outputLabel value="Numero da Conta:"/><p:inputText value="#{cadastroProprietarioController.proprietario.numConta}" maxlength="20" style="width:20%;"/>
+                    <p:outputLabel value="Agencia:"/><p:inputText value="#{cadastroProprietarioController.proprietario.agencia}" maxlength="20" style="width:20%;"/>
                 </p:fieldset>
                 <br/><br/>
-                
-            </p:fieldset>
-            <br/>
-            <p:commandButton  action="#{cadastroProprietarioController.gravar()}" value="Gravar" update="form_proprietario"/>
-            <p:commandButton  action="#{cadastroProprietarioController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
-        </h:form>
+
+                <br/>
+                <p:commandButton  action="#{cadastroProprietarioController.gravar()}" value="Gravar" update="form_proprietario"/>
+                <p:commandButton  action="#{cadastroProprietarioController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>

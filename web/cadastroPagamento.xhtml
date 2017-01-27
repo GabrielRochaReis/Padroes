@@ -1,36 +1,49 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Imobiliaria Figueiredo</title>
         <link type="text/css" rel="stylesheet" href="default.css" />
         <link type="text/css" rel="stylesheet" href="principal.css" />
     </h:head>
     <h:body>
-        <h:form id="pagamento">
-            <p:fieldset legend="Cadastro de Pagamentos">
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:fieldset legend="Cadastro de Pagamentos" style="margin-left: 15%;width: 70%;">
+            <h:form id="pagamento">
                 <br/>
-                <p:outputLabel value="Mes do pagamento:"/>&nbsp;<p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Mes do pagamento:"/><p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>
                 <br/><br/>
-                <p:outputLabel value="Data do Pagamento:"/>&nbsp;<p:calendar showOn="button" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Pagamento:"/><p:calendar showOn="button" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Pagamento:"/>
                 <br/>
                 <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}"/>
                 <br/><br/>
-                <p:outputLabel value="Data do Deposito:"/>&nbsp;<p:calendar showOn="button"  value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>&nbsp;&nbsp;
+                <p:outputLabel value="Data do Deposito:"/><p:calendar showOn="button"  value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>
                 <br/><br/>
                 <p:outputLabel value="Comprovante de Deposito:"/>
                 <br/>
                 <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovanteDeposito}"/>
                 <br/><br/>
-                <p:outputLabel value="Valor do Deposito:"/>&nbsp;<p:inputNumber value="#{cadastroPagamentoController.pagamento.valorDeposito}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
-            </p:fieldset>
-            <p:commandButton  action="#{cadastroPagamentoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="pagamento"/>
-            <p:commandButton  action="#{cadastroPagamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
-        </h:form>
+                <p:outputLabel value="Valor do Deposito:"/><p:inputNumber value="#{cadastroPagamentoController.pagamento.valorDeposito}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
+                <br/>
+                <p:commandButton  action="#{cadastroPagamentoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="pagamento"/>
+                <p:commandButton  action="#{cadastroPagamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>

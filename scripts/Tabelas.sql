@@ -1,0 +1,72 @@
+﻿create table Proprietario 
+(
+id int not null auto_increment,
+nome varchar(150) not null,
+telefone varchar(15),
+email varchar(50),
+num_conta varchar(20) ,
+
+agencia varchar(20),
+instituicao varchar(50) ,
+operacao varchar(3) ,
+
+endereco varchar(200),
+ativo boolean,
+data_deposito date,
+PRIMARY KEY (Id)
+);
+
+create table Inquilino
+(
+id int not null auto_increment,
+nome varchar(150) not null,
+telefone varchar(15),
+email varchar(50),
+cpf varchar(15),
+rg varchar(15),
+data_boleto int,
+mes_contrato int,
+ativo boolean,
+PRIMARY KEY (Id)
+);
+
+create table Apartamento
+(
+id int not null auto_increment,
+edificio varchar(150),
+numero varchar(50) not null,
+id_inquilino int,
+id_proprietario int,
+aluguel float,
+PRIMARY KEY (Id),
+FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id),
+FOREIGN KEY (id_inquilino) REFERENCES Inquilino(id)
+);
+
+create table Pagamento
+(
+id int not null auto_increment,
+mes date ,
+id_apartemento int not null,
+data_pagamento date,
+comprovante_pagamento longblob,
+nome_comprovante_pagamento varchar(50),
+data_deposito date,
+comprovante_deposito longblob,
+nome_comprovante_deposito varchar(50),
+valor_deposito float,
+PRIMARY KEY (Id),
+FOREIGN KEY (id_apartemento) REFERENCES Apartamento(id)
+);
+
+--------------------Controle acesso----------------------------
+
+create table usuario 
+(
+	id int not null auto_increment,
+	nome varchar(150) not null,
+	login varchar(100) unique not null,
+	email varchar(150) ,
+	senha varchar(50) unique not null,
+	PRIMARY KEY (id)
+);
