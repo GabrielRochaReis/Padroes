@@ -53,14 +53,15 @@ public class CadastroPagamentoController implements Serializable{
     public String gravar(){
         try{
             pagamentoRN.iserirAtualizar(pagamento);
+            RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
             limpar();
             if(editar){
-                RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
                 RequestContext.getCurrentInstance().getAttributes().put("mensagem",new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento atualizado com sucesso."));
             } else {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento cadastrado com sucesso."));
             }
         } catch(Exception e){
+            e.printStackTrace();
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: "+e.getMessage()));
         }
             return"pagamentos";
@@ -77,13 +78,13 @@ public class CadastroPagamentoController implements Serializable{
     }
     
     public StreamedContent imgComprovantePagamento(){
-        return new DefaultStreamedContent(new ByteArrayInputStream(pagamento.getComprovanteDeposito()), "application/jpg","img.jpg");
+        return new DefaultStreamedContent(pagamento.getComprovanteDeposito(), "application/jpg","img.jpg");
     }
     
     public void carregarComprovantePagamento(FileUploadEvent event){
         try {
             final UploadedFile file = event.getFile();
-            pagamento.setComprovantePagamento(IOUtils.toByteArray(file.getInputstream()));
+            pagamento.setComprovantePagamento(file.getInputstream());
             pagamento.setNomeComprovantePagamento(file.getFileName());
         } catch (IOException ex) {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel carregar o documento "+event.getFile().getFileName()));
@@ -92,7 +93,7 @@ public class CadastroPagamentoController implements Serializable{
     public void carregarComprovanteDeposito(FileUploadEvent event){
         try {
             final UploadedFile file = event.getFile();
-            pagamento.setComprovanteDeposito(IOUtils.toByteArray(file.getInputstream()));
+            pagamento.setComprovanteDeposito(file.getInputstream());
             pagamento.setNomeComprovanteDeposito(file.getFileName());
         } catch (IOException ex) {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel carregar o documento "+event.getFile().getFileName()));

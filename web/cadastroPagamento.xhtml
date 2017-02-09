@@ -24,23 +24,50 @@
         </h:form>
         <p:fieldset legend="Cadastro de Pagamentos" style="margin-left: 15%;width: 70%;">
             <h:form id="pagamento">
-                <br/>
-                <p:outputLabel value="Mes do pagamento:"/><p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;"/>
-                <br/><br/>
-                <p:outputLabel value="Data do Pagamento:"/><p:calendar showOn="button" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>
-                <br/><br/>
-                <p:outputLabel value="Comprovante de Pagamento:"/>
-                <br/>
-                <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}"/>
-                <br/><br/>
-                <p:outputLabel value="Data do Deposito:"/><p:calendar showOn="button"  value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>
-                <br/><br/>
-                <p:outputLabel value="Comprovante de Deposito:"/>
-                <br/>
-                <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovanteDeposito}"/>
-                <br/><br/>
-                <p:outputLabel value="Valor do Deposito:"/><p:inputNumber value="#{cadastroPagamentoController.pagamento.valorDeposito}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
-                <br/>
+                <p:panelGrid style="width: 60%;background: inherit;">
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Mes do pagamento:" />
+                            <br/>
+                            <p:calendar showOn="button" pattern="MM/yyyy" mask="99/9999" value="#{cadastroPagamentoController.pagamento.mes}" style="width:35%;" required="true" requiredMessage="O mês é obrigatorio."/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Data do Pagamento:"/>
+                            <br/>
+                            <p:calendar showOn="button" value="#{cadastroPagamentoController.pagamento.dataPagamento}" style="width:35%;"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Comprovante de Pagamento:"/>
+                            <br/>
+                            <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}" auto="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Data do Deposito:"/>
+                            <br/>
+                            <p:calendar showOn="button"  value="#{cadastroPagamentoController.pagamento.dataDeposito}" style="width:35%;"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Comprovante de Deposito:"/>
+                            <br/>
+                            <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovanteDeposito}" auto="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Valor do Deposito:"/>
+                            <br/>
+                            <p:inputNumber value="#{cadastroPagamentoController.pagamento.valorDeposito}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
                 <p:commandButton  action="#{cadastroPagamentoController.gravar()}" value="Gravar" icon="ui-icon-disk" update="pagamento"/>
                 <p:commandButton  action="#{cadastroPagamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
             </h:form>

@@ -88,7 +88,7 @@ public class PagamentosController implements Serializable{
     
     public StreamedContent imgComprovanteDeposito(){
         if(item!= null && item.getComprovanteDeposito()!= null)
-            return new DefaultStreamedContent(new ByteArrayInputStream(item.getComprovanteDeposito()));
+            return new DefaultStreamedContent(item.getComprovanteDeposito());
         return null;
     }
     
@@ -124,14 +124,19 @@ public class PagamentosController implements Serializable{
     public StreamedContent imgComprovantePagamento(Pagamento item) {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem=null;
-        if(item!= null && item.getComprovanteDeposito()!= null){
-            InputStream is = new ByteArrayInputStream(item.getComprovanteDeposito());
+        if(item!= null && item.getComprovantePagamento()!= null){
+            InputStream is = item.getComprovantePagamento();
             String nome = "Pagamento-Ap"+item.getApartemento()+"-";
             if(item.getDataDeposito()!=null){
                 nome+=fmt.format(item.getDataPagamento());
             }
             nome+="."+FilenameUtils.getExtension(item.getNomeComprovantePagamento());
-            StreamedContent image = new DefaultStreamedContent(is,"image/jpg",nome);
+            StreamedContent image;
+            if(FilenameUtils.getExtension(item.getNomeComprovantePagamento()).equals("pdf")){
+                image = new DefaultStreamedContent(is,"application/pdf",nome);
+            } else {
+                image = new DefaultStreamedContent(is,"image/jpg",nome);
+            }
         return image;
         }
         return null;
@@ -140,14 +145,19 @@ public class PagamentosController implements Serializable{
     public StreamedContent imgComprovanteDeposito(Pagamento item) {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem=null;
-        if(item!= null && item.getComprovantePagamento()!= null){
-            InputStream is = new ByteArrayInputStream(item.getComprovantePagamento());
+        if(item!= null && item.getComprovanteDeposito()!= null){
+            InputStream is = item.getComprovanteDeposito();
             String nome = "Deposito-Ap"+item.getApartemento()+"-";
             if(item.getDataDeposito()!=null){
                 nome+=fmt.format(item.getDataDeposito());
             }
             nome+="."+FilenameUtils.getExtension(item.getNomeComprovanteDeposito());
-            StreamedContent image = new DefaultStreamedContent(is,"image/jpg",nome);
+            StreamedContent image;
+            if(FilenameUtils.getExtension(item.getNomeComprovantePagamento()).equals("pdf")){
+                image = new DefaultStreamedContent(is,"application/pdf",nome);
+            } else {
+                image = new DefaultStreamedContent(is,"image/jpg",nome);
+            }
         return image;
         }
         return null;

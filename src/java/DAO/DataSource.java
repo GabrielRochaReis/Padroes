@@ -31,7 +31,7 @@ public class DataSource {
            database="figueredobd";
            username="root";
            password="root";
-           String url="jdbc:mysql://"+hostname+":"+porta+"/"+database+"?useTimezone=false"; 
+           String url="jdbc:mysql://"+hostname+":"+porta+"/"+database+"?useTimezone=false&autoReconnect=true&useSSL=false"; 
            
            DriverManager.registerDriver( new Driver());
            conection = DriverManager.getConnection(url,username,password);

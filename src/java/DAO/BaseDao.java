@@ -5,11 +5,13 @@
  */
 package DAO;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Gabriel Rocha
  */
-public abstract class BaseDao {
+public abstract class BaseDao implements Serializable{
     DataSource data;
 
     public BaseDao() {

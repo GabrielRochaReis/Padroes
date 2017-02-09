@@ -28,7 +28,7 @@
                 <p:panelGrid style="width: 100%;background: inherit;">
                     <p:row style="border: none;background: inherit;">
                         <p:column style="border: none;width: 60%">
-                            <p:outputLabel value="Nome:"/><br/><p:inputText value="#{cadastroInquilinoController.inquilino.nome}" required="true" style="width:90%;"/>
+                            <p:outputLabel value="Nome:"/><br/><p:inputText value="#{cadastroInquilinoController.inquilino.nome}" required="true" style="width:90%;" requiredMessage="O nome é obrigatorio."/>
                         </p:column>
                         <p:column style="border: none;">
                             <p:outputLabel value="CPF:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.cpf}" mask="999.999.999-99" style="width:60%;"/>

@@ -25,17 +25,41 @@
         <p:fieldset legend="Cadastro de Apartamento" style="margin-left: 15%;width: 70%;">
             <h:form id="form_apartamento">
                 <p:growl autoUpdate="true"/>
-                <p:outputLabel value="Edificio:"/><p:inputText label="Edificio:" value="#{cadastroApartamentoController.apartamento.edificio}" style="width:20%;"/>
-                <p:outputLabel value="Numero do Apartamento:"/><p:inputText value="#{cadastroApartamentoController.apartamento.numero}" required="true" style="width:20%;"/>
-                <br/><br/>
-                <p:outputLabel value="Proprietario:" for="proprietario" />
-                <p:autoComplete id="proprietario" value="#{cadastroApartamentoController.proprietario}" completeMethod="#{cadastroApartamentoController.proprietarios}"
-                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
-                <p:outputLabel value="Inquilino:" />
-                <p:autoComplete id="inquilino" value="#{cadastroApartamentoController.inquilino}" completeMethod="#{cadastroApartamentoController.inquilinos}"
-                                var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
-                <br/><br/>
-                <p:outputLabel value="Valor do Aluguel:"/><p:inputNumber value="#{cadastroApartamentoController.apartamento.aluguel}" decimalSeparator="," thousandSeparator="." style="width:10%;"/>
+                <p:panelGrid style="width: 40%;background: inherit;">
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Numero do Apartamento:"/>
+                            <br/>
+                            <p:inputText value="#{cadastroApartamentoController.apartamento.numero}" requiredMessage="O Numero do apartamento é obrigatorio." required="true" style="width:100%;"/>
+                        </p:column>
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Edificio:"/>
+                            <br/>
+                            <p:inputText label="Edificio:" value="#{cadastroApartamentoController.apartamento.edificio}" style="width:100%;"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Proprietario:" for="proprietario" />
+                            <br/>
+                            <p:autoComplete id="proprietario" value="#{cadastroApartamentoController.proprietario}" completeMethod="#{cadastroApartamentoController.proprietarios}"
+                                            var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                        </p:column>
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Inquilino:" />
+                            <br/>
+                            <p:autoComplete id="inquilino" value="#{cadastroApartamentoController.inquilino}" completeMethod="#{cadastroApartamentoController.inquilinos}"
+                                            var="item" itemLabel="#{item.nome}" itemValue="#{item}" converter="converter" forceSelection="true" />
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" >
+                            <p:outputLabel value="Valor do Aluguel:"/>
+                            <br/>
+                            <p:inputNumber value="#{cadastroApartamentoController.apartamento.aluguel}" decimalSeparator="," thousandSeparator="." style="width:100%;"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
                 <br/>
                 <p:commandButton  action="#{cadastroApartamentoController.gravar()}" value="Gravar" update="form_apartamento"/>
                 <p:commandButton  action="#{cadastroApartamentoController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>

@@ -25,33 +25,76 @@
         <p:fieldset legend="Cadastro de Proprietario" style="margin-left: 15%;width: 70%;">
             <h:form id="form_proprietario">
                 <p:growl autoUpdate="true"/>
-                <p:outputLabel value="Nome:"/><p:inputText value="#{cadastroProprietarioController.proprietario.nome}" required="true" style="width:35%;"/>
-
-                <br/><br/>
-
-                <p:outputLabel value="Email:"/><p:inputText value="#{cadastroProprietarioController.proprietario.email}" size="30" validatorMessage="Formato de email invalido." >
-                    <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
-                </p:inputText>
-                <p:outputLabel value="Telefone:"/><p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)9999-9999" size="10"/>
-                <br /><br />
-                <p:outputLabel value="Endereço:"/><p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:50%;"/>
-                <br /><br />
-                <p:outputLabel value="Data do Deposito:"/><p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> 
-                <p:outputLabel value="Ativo:"/><p:selectBooleanCheckbox value="#{cadastroProprietarioController.proprietario.ativo}" /><br/>
-                <br/><br/>
+                <p:panelGrid style="width: 100%;background: inherit;">
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" colspan="2">
+                            <p:outputLabel value="Nome:"/>
+                            <br/>
+                            <p:inputText value="#{cadastroProprietarioController.proprietario.nome}" required="true" style="width:100%;" requiredMessage="O nome é obrigatorio."/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Email:"/>
+                            <br/>
+                            <p:inputText value="#{cadastroProprietarioController.proprietario.email}" validatorMessage="Formato de email invalido." style="width:100%;">
+                                <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/>
+                            <br/>
+                            <p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)9999-9999" size="10"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" colspan="2">
+                            <p:outputLabel value="Endereço:"/>
+                            <br/>
+                            <p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:100%;"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Data do Deposito:"/>
+                            <br/>
+                            <p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> 
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Ativo:"/>
+                            <br/>
+                            <p:selectBooleanCheckbox value="#{cadastroProprietarioController.proprietario.ativo}" /><br/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
                 <p:fieldset legend="Dados Bancarios">
-                    <p:outputLabel value="Instituição Financeira:"/><p:inputText value="#{cadastroProprietarioController.proprietario.instituicao}" maxlength="20" style="width:20%;"/>
-                    <p:outputLabel value="Operação:"/><p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999"  style="width:3%;"/>
-                    <br/><br/>
-                    <p:outputLabel value="Numero da Conta:"/><p:inputText value="#{cadastroProprietarioController.proprietario.numConta}" maxlength="20" style="width:20%;"/>
-                    <p:outputLabel value="Agencia:"/><p:inputText value="#{cadastroProprietarioController.proprietario.agencia}" maxlength="20" style="width:20%;"/>
+                    <p:panelGrid style="width: 40%;background: inherit;">
+                        <p:row style="border: none;background: inherit;">
+                            <p:column style="border: none;" >
+                                <p:outputLabel value="Instituição Financeira:"/>
+                                <br/>
+                                <p:inputText value="#{cadastroProprietarioController.proprietario.instituicao}" maxlength="20" style="width:100%;"/>
+                            </p:column>
+                            <p:column style="border: none;">
+                                <p:outputLabel value="Operação:"/>
+                                <br/>
+                                <p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999"  style="width:30%;"/>
+                            </p:column>
+                        </p:row>
+                        <p:row style="border: none;background: inherit;">
+                            <p:column style="border: none;">
+                                <p:outputLabel value="Numero da Conta:"/>
+                                <br/>
+                                <p:inputText value="#{cadastroProprietarioController.proprietario.numConta}" maxlength="20" style="width:100%;"/>
+                            </p:column>
+                            <p:column style="border: none;">
+                                <p:outputLabel value="Agencia:"/>
+                                <br/>
+                                <p:inputText value="#{cadastroProprietarioController.proprietario.agencia}" maxlength="20" style="width:100%;"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
                 </p:fieldset>
-                <br/><br/>
 
-                <br/>
                 <p:commandButton  action="#{cadastroProprietarioController.gravar()}" value="Gravar" update="form_proprietario"/>
                 <p:commandButton  action="#{cadastroProprietarioController.voltar()}" value="Voltar" immediate="true" style="Float:right;"/>
-            </h:form>
+            </h:form>   
         </p:fieldset>
     </h:body>
 </html>
