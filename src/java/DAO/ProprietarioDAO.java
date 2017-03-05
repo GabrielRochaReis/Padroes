@@ -36,18 +36,21 @@ public class ProprietarioDAO extends BaseDao{
        
     public void persistir(Proprietario p) throws SQLException {
         String query;
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");    
-        if(p.getDataDeposito()!=null){
-        String str = fmt.format(p.getDataDeposito());
-            query = "insert into Proprietario (id , nome, telefone, email, num_conta, agencia, instituicao , operacao,endereco, ativo, data_deposito) ";
-            query += "values(null, '"+p.getNome()+"', '"+p.getTelefone()+"', '"+p.getEmail()+"', '"+p.getNumConta()+"', '"+p.getAgencia()+"', '"+p.getOperacao()+"', '"+p.getInstituicao()+"', '"+p.getEndereco()+"', "+p.isAtivo()+", '"+str+"');";
-        } else {
-            query = "insert into Proprietario (id , nome, telefone, email, num_conta, agencia, instituicao , operacao, endereco, ativo) ";
-            query += "values(null, '"+p.getNome()+"', '"+p.getTelefone()+"', '"+p.getEmail()+"', '"+p.getNumConta()+"', '"+p.getAgencia()+"', '"+p.getOperacao()+"', '"+p.getInstituicao()+"', '"+p.getEndereco()+"', "+p.isAtivo()+");";
-        }
+        query = "insert into Proprietario (id , nome, telefone, email, num_conta, agencia, instituicao, operacao, endereco, ativo, data_deposito) ";
+        query += "values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
         PreparedStatement ps = data.getConection().prepareStatement(query);
-        ps.execute(query);
-            
+        ps.setString(1, p.getNome());
+        ps.setString(2, p.getTelefone());
+        ps.setString(3, p.getEmail());
+        ps.setString(4, p.getNumConta());
+        ps.setString(5, p.getAgencia());
+        ps.setString(7, p.getOperacao());
+        ps.setString(6, p.getInstituicao());
+        ps.setString(8, p.getEndereco());
+        ps.setBoolean(9, p.isAtivo());
+        ps.setInt(10, p.getDataDeposito());
+        ps.executeUpdate();
     }
     
     public void atualizar(Proprietario p) throws SQLException {
@@ -80,7 +83,7 @@ public class ProprietarioDAO extends BaseDao{
             i.setId(result.getInt("id"));
             i.setNome(result.getString("nome"));
             i.setAtivo(result.getBoolean("ativo"));
-            i.setDataDeposito(result.getDate("data_deposito"));
+            i.setDataDeposito(result.getInt("data_deposito"));
             i.setEmail(result.getString("email"));
             i.setTelefone(result.getString("telefone"));
             i.setEndereco(result.getString("endereco"));
@@ -107,7 +110,7 @@ public class ProprietarioDAO extends BaseDao{
             i.setId(result.getInt("id"));
             i.setNome(result.getString("nome"));
             i.setAtivo(result.getBoolean("ativo"));
-            i.setDataDeposito(result.getDate("data_deposito"));
+            i.setDataDeposito(result.getInt("data_deposito"));
             i.setEmail(result.getString("email"));
             i.setTelefone(result.getString("telefone"));
             i.setEndereco(result.getString("endereco"));
@@ -133,7 +136,7 @@ public class ProprietarioDAO extends BaseDao{
             i.setId(result.getInt("id"));
             i.setNome(result.getString("nome"));
             i.setAtivo(result.getBoolean("ativo"));
-            i.setDataDeposito(result.getDate("data_deposito"));
+            i.setDataDeposito(result.getInt("data_deposito"));
             i.setEmail(result.getString("email"));
             i.setTelefone(result.getString("telefone"));
             i.setEndereco(result.getString("endereco"));

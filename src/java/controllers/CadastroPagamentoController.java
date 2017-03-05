@@ -8,14 +8,12 @@ package controllers;
 import Model.Apartamento;
 import Model.Pagamento;
 import RNs.PagamentoRN;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -63,6 +61,7 @@ public class CadastroPagamentoController implements Serializable{
         } catch(Exception e){
             e.printStackTrace();
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: "+e.getMessage()));
+            return null;
         }
             return"pagamentos";
     }
@@ -90,6 +89,17 @@ public class CadastroPagamentoController implements Serializable{
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel carregar o documento "+event.getFile().getFileName()));
         }
     }
+    
+    public void removerComprovantePagamento(){
+        pagamento.setComprovantePagamento(null);
+        pagamento.setNomeComprovantePagamento(null);
+    }
+    
+    public void removerComprovanteDeposito(){
+        pagamento.setComprovanteDeposito(null);
+        pagamento.setNomeComprovanteDeposito(null);
+    }
+    
     public void carregarComprovanteDeposito(FileUploadEvent event){
         try {
             final UploadedFile file = event.getFile();

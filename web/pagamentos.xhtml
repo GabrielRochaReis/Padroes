@@ -35,7 +35,6 @@
                         <p:tooltip id="helpInfPro" for="btInfPro" value="Informações do proprietário." position="top"/>
                         <br/>
                         <p:outputLabel value="Data do Deposito : "/><p:outputLabel value="#{pagamentosController.proprietario.dataDeposito}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </p:outputLabel>
                     </p:outputPanel>
                     <p:outputPanel style="float: right; width: 45%;">
@@ -44,7 +43,7 @@
                         <p:tooltip id="helpInfInq" for="btInfInq" value="Cadastrar um novo pagamento." position="top"/>
                         <br/>
                         <p:outputLabel value="Data do Boleto : "/>
-                        <p:outputLabel value="#{pagamentosController.dataBoleto}" />
+                        <p:outputLabel value="#{pagamentosController.inquilino.dataBoleto}" />
                         <br/>
                         <p:outputLabel value="Vencimento do Contrato : "/>
                         <p:outputLabel value="#{pagamentosController.venContrato}" />
@@ -85,7 +84,7 @@
                         </p:column>
                         <p:column headerText="Data Pagamento">
                             <h:outputText value="#{item.dataPagamento}">
-                                <f:convertDateTime pattern="DD/MM/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Comprovante Pagamento">

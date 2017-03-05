@@ -12,7 +12,7 @@ operacao varchar(3) ,
 
 endereco varchar(200),
 ativo boolean,
-data_deposito date,
+data_deposito int,
 PRIMARY KEY (Id)
 );
 
@@ -49,15 +49,20 @@ id int not null auto_increment,
 mes date ,
 id_apartemento int not null,
 data_pagamento date,
-comprovante_pagamento longblob,
+comprovante_pagamento LONGBLOB,
 nome_comprovante_pagamento varchar(50),
 data_deposito date,
-comprovante_deposito longblob,
+comprovante_deposito LONGBLOB,
 nome_comprovante_deposito varchar(50),
 valor_deposito float,
 PRIMARY KEY (Id),
 FOREIGN KEY (id_apartemento) REFERENCES Apartamento(id)
 );
+
+--------------------Updates------------------------------------
+
+ALTER TABLE Proprietario
+ALTER COLUMN data_deposito int
 
 --------------------Controle acesso----------------------------
 

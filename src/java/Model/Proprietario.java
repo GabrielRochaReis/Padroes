@@ -23,7 +23,7 @@ public class Proprietario extends Entidade {
     private String agencia;
     private String endereco;
     private Boolean ativo;
-    private Date dataDeposito;
+    private Integer dataDeposito;
 
     public String getNome() {
         return nome;
@@ -73,11 +73,11 @@ public class Proprietario extends Entidade {
         this.ativo = ativo;
     }
 
-    public Date getDataDeposito() {
+    public Integer getDataDeposito() {
         return dataDeposito;
     }
 
-    public void setDataDeposito(Date dataDeposito) {
+    public void setDataDeposito(Integer dataDeposito) {
         this.dataDeposito = dataDeposito;
     }
 

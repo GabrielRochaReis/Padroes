@@ -122,7 +122,14 @@ public class ApartamentoDAO extends BaseDao{
     public void atualizar(Apartamento apartamento) throws SQLException {
         String query = null;
             query = "update Apartamento ";
-            query += "set edificio="+set(apartamento.getEdificio())+", numero="+set(apartamento.getNumero())+", id_inquilino="+set(apartamento.getInquilino())+", id_proprietario="+set(apartamento.getProprietario())+", aluguel="+set(apartamento.getAluguel())+" where id="+apartamento.getId()+";";
+            query += "set edificio="+set(apartamento.getEdificio())+", numero="+set(apartamento.getNumero());
+            if(apartamento.getInquilino()!=0 && apartamento.getInquilino()!= null){
+                query += ", id_inquilino="+set(apartamento.getInquilino());
+            }
+            if(apartamento.getProprietario()!=0 && apartamento.getProprietario()!= null){
+                query += ", id_proprietario="+set(apartamento.getProprietario());
+            }
+            query += ", aluguel="+set(apartamento.getAluguel())+" where id="+apartamento.getId()+";";
             PreparedStatement ps = data.getConection().prepareStatement(query);
             
             ps.execute(query);

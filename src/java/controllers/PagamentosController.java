@@ -188,14 +188,14 @@ public class PagamentosController implements Serializable{
         Map parameters = new HashMap();
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         parameters.put("apartamento", "Apartamento "+apartamento.getNumero());
-        parameters.put("inquilino", inquilino.getNome());
-        parameters.put("dataVencimento", MesesEnum.getMes(inquilino.getDataBoleto()));
+        parameters.put("inquilino", inquilino==null?"":inquilino.getNome());
+        parameters.put("dataVencimento", inquilino.getDataBoleto().toString());
         parameters.put("valorAluguel", apartamento.getAluguel()+"");
-        parameters.put("proprietario", proprietario.getNome());
+        parameters.put("proprietario", proprietario==null?"":proprietario.getNome());
         parameters.put("telefone", inquilino.getTelefone());
         parameters.put("vencimentoContrato", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("obs", obs);
-        parameters.put("dataDeposito", proprietario.getDataDeposito()==null?null:fmt.format(proprietario.getDataDeposito()));
+        parameters.put("dataDeposito", proprietario.getDataDeposito().toString());
         
         JasperReport report = JasperCompileManager.compileReport("C:/Users/Gabriel Rocha/Documents/Systema IMOBI/Teste/relatorios/RelatorioPagamentosPorApartamentp.jrxml");
         JasperPrint print = JasperFillManager.fillReport(report, parameters,
@@ -208,6 +208,7 @@ public class PagamentosController implements Serializable{
             try {
                 return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()),"application/pdf","Relatorio.pdf");
             } catch (JRException ex) {
+                ex.printStackTrace();
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gerar o relatorio.")); 
                 return null;
             }

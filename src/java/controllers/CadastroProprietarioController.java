@@ -52,6 +52,7 @@ public class CadastroProprietarioController {
         }
         } catch(Exception e){
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: "+e.getMessage()));
+            return null;
         }
             return"pesquisarProprietario.xhtml";
     }

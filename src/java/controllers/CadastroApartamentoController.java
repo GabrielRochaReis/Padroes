@@ -48,8 +48,12 @@ public class CadastroApartamentoController {
         if(apartamento.getId()!=null){
             editar=true;
             try {
-                proprietario=proprietarioDAO.obterProprietarioPorId(apartamento.getProprietario()+"");
-                inquilino=inquilinoDAO.obterInquilinoPorId(apartamento.getInquilino()+"");
+                if(apartamento.getProprietario()!=0){
+                    proprietario=proprietarioDAO.obterProprietarioPorId(apartamento.getProprietario()+"");
+                }
+                if(apartamento.getInquilino()!=0){
+                    inquilino=inquilinoDAO.obterInquilinoPorId(apartamento.getInquilino()+"");
+                }
             } catch (SQLException ex) {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: "+ex.getMessage())); 
             }
@@ -78,6 +82,7 @@ public class CadastroApartamentoController {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Apartamento cadastrado com sucesso."));
         } catch (SQLException ex) {
            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: "+ex.getMessage())); 
+           return null;
         }
         return "pesquisarApartamento";
     }

@@ -54,7 +54,7 @@
                         <p:column style="border: none;">
                             <p:outputLabel value="Data do Deposito:"/>
                             <br/>
-                            <p:calendar showOn="button" value="#{cadastroProprietarioController.proprietario.dataDeposito}" pattern="dd-MM-yyyy" mask="99/99/9999" size="8"/> 
+                            <p:inputNumber value="#{cadastroProprietarioController.proprietario.dataDeposito}" maxlength="2" decimalPlaces="0" maxValue="31" size="4"/> 
                         </p:column>
                         <p:column style="border: none;">
                             <p:outputLabel value="Ativo:"/>
@@ -74,7 +74,7 @@
                             <p:column style="border: none;">
                                 <p:outputLabel value="Operação:"/>
                                 <br/>
-                                <p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999"  style="width:30%;"/>
+                                <p:inputMask value="#{cadastroProprietarioController.proprietario.operacao}" mask="999" style="width:30%;"/>
                             </p:column>
                         </p:row>
                         <p:row style="border: none;background: inherit;">
