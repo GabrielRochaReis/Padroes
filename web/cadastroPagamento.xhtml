@@ -46,7 +46,7 @@
                             <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovantePagamento}" update="nomePagamento" auto="true"/>
                             <br/>
                             <p:outputLabel value="#{cadastroPagamentoController.pagamento.nomeComprovantePagamento}" id="nomePagamento"/>
-                            <p:commandButton id="btRemovPag" update="pagamentos" process="@this" action="#{cadastroPagamentoController.removerComprovantePagamento()}" rendered="#{cadastroPagamentoController.pagamento.comprovantePagamento != null}" icon="ui-icon-trash"/>
+                            <p:commandButton id="btRemovPag" update="pagamentos" process="@this" action="#{cadastroPagamentoController.removerComprovantePagamento()}" rendered="#{cadastroPagamentoController.pagamento.nomeComprovantePagamento != null}" icon="ui-icon-trash"/>
                         </p:column>
                     </p:row>
                     <p:row style="border: none;background: inherit;">
@@ -63,7 +63,7 @@
                             <p:fileUpload fileUploadListener="#{cadastroPagamentoController.carregarComprovanteDeposito}" auto="true" update="nomeDeposito"/>
                             <br/>
                             <p:outputLabel value="#{cadastroPagamentoController.pagamento.nomeComprovanteDeposito}" id="nomeDeposito"/>
-                            <p:commandButton id="btRemovDep" process="@this" update="depositos" action="#{cadastroPagamentoController.removerComprovanteDeposito()}" rendered="#{cadastroPagamentoController.pagamento.comprovanteDeposito != null}" icon="ui-icon-trash"/>
+                            <p:commandButton id="btRemovDep" process="@this" update="depositos" action="#{cadastroPagamentoController.removerComprovanteDeposito()}" rendered="#{cadastroPagamentoController.pagamento.nomeComprovanteDeposito != null}" icon="ui-icon-trash"/>
                         </p:column>
                     </p:row>
                     <p:row style="border: none;background: inherit;">

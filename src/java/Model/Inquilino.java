@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -16,6 +15,8 @@ public class Inquilino extends Entidade{
 
     private String nome;
     private String telefone;
+    private String telefone1;
+    private String telefone2;
     private String email;
     private String cpf;
     private String rg;
@@ -89,6 +90,22 @@ public class Inquilino extends Entidade{
 
     public Boolean getAtivo() {
         return ativo;
+    }
+
+    public String getTelefone1() {
+        return telefone1;
+    }
+
+    public void setTelefone1(String telefone1) {
+        this.telefone1 = telefone1;
+    }
+
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    public void setTelefone2(String telefone2) {
+        this.telefone2 = telefone2;
     }
 
     public enum Filds{

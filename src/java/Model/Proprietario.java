@@ -16,6 +16,8 @@ public class Proprietario extends Entidade {
     
     private String nome;
     private String telefone;
+    private String telefone1;
+    private String telefone2;
     private String email;
     private String numConta;
     private String instituicao;
@@ -23,7 +25,8 @@ public class Proprietario extends Entidade {
     private String agencia;
     private String endereco;
     private Boolean ativo;
-    private Integer dataDeposito;
+    private String dataDeposito;
+    private String tipoConta;
 
     public String getNome() {
         return nome;
@@ -73,16 +76,39 @@ public class Proprietario extends Entidade {
         this.ativo = ativo;
     }
 
-    public Integer getDataDeposito() {
+    public String getDataDeposito() {
         return dataDeposito;
     }
 
-    public void setDataDeposito(Integer dataDeposito) {
+    public void setDataDeposito(String dataDeposito) {
         this.dataDeposito = dataDeposito;
     }
-
     public Boolean getAtivo() {
         return ativo;
+    }
+
+    public String getTipoConta() {
+        return tipoConta;
+    }
+
+    public String getTelefone1() {
+        return telefone1;
+    }
+
+    public void setTelefone1(String telefone1) {
+        this.telefone1 = telefone1;
+    }
+
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    public void setTelefone2(String telefone2) {
+        this.telefone2 = telefone2;
+    }
+
+    public void setTipoConta(String tipoConta) {
+        this.tipoConta = tipoConta;
     }
 
     @Override
@@ -154,6 +180,4 @@ public class Proprietario extends Entidade {
     public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
-    
-        
 }

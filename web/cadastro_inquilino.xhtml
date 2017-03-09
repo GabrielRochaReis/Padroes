@@ -44,11 +44,21 @@
                             </p:inputText>
                         </p:column>
                         <p:column style="border: none;">
-                            <p:outputLabel value="Telefone:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.telefone}" mask="(99)99999-999?9" style="width:60%;"/>
-                        </p:column>
-                        <p:column style="border: none;">
                             <p:outputLabel value="Data do Boleto:"/><br/>
                             <p:inputMask mask="9?9" value="#{cadastroInquilinoController.inquilino.dataBoleto}" size="2"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.telefone}" mask="(99)99999-999?9" size="15"/>
+                        </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;">
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.telefone1}" mask="(99)99999-999?9" size="15"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/><br/><p:inputMask value="#{cadastroInquilinoController.inquilino.telefone2}" mask="(99)99999-999?9" size="15"/>
                         </p:column>
                     </p:row>
                     <p:row style="border: none;background: inherit;">

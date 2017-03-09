@@ -3,16 +3,16 @@
 id int not null auto_increment,
 nome varchar(150) not null,
 telefone varchar(15),
+telefone1 varchar(15),
+telefone2 varchar(15),
 email varchar(50),
 num_conta varchar(20) ,
-
 agencia varchar(20),
 instituicao varchar(50) ,
 operacao varchar(3) ,
-
 endereco varchar(200),
 ativo boolean,
-data_deposito int,
+data_deposito varchar(2),
 PRIMARY KEY (Id)
 );
 
@@ -21,6 +21,8 @@ create table Inquilino
 id int not null auto_increment,
 nome varchar(150) not null,
 telefone varchar(15),
+telefone1 varchar(15),
+telefone2 varchar(15),
 email varchar(50),
 cpf varchar(15),
 rg varchar(15),
@@ -62,7 +64,17 @@ FOREIGN KEY (id_apartemento) REFERENCES Apartamento(id)
 --------------------Updates------------------------------------
 
 ALTER TABLE Proprietario
-ALTER COLUMN data_deposito int
+add data_deposito varchar(2)
+
+ALTER TABLE Proprietario
+add telefone1 varchar(15);
+ALTER TABLE Proprietario
+add telefone2 varchar(15);
+
+ALTER TABLE Inquilino
+add telefone1 varchar(15);
+ALTER TABLE Inquilino
+add telefone2 varchar(15);
 
 --------------------Controle acesso----------------------------
 

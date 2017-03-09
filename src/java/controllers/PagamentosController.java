@@ -197,7 +197,7 @@ public class PagamentosController implements Serializable{
         parameters.put("obs", obs);
         parameters.put("dataDeposito", proprietario.getDataDeposito().toString());
         
-        JasperReport report = JasperCompileManager.compileReport("C:/Users/Gabriel Rocha/Documents/Systema IMOBI/Teste/relatorios/RelatorioPagamentosPorApartamentp.jrxml");
+        JasperReport report = JasperCompileManager.compileReport("relatorios/RelatorioPagamentosPorApartamentp.jrxml");
         JasperPrint print = JasperFillManager.fillReport(report, parameters,
         new JRBeanCollectionDataSource(pagamento));
         return JasperExportManager.exportReportToPdf(print);

@@ -28,8 +28,8 @@ public class InquilinoDAO extends BaseDao{
     
     public void persistir(Inquilino i) throws SQLException {
         
-        String query = "insert into Inquilino (id , nome, telefone, email, cpf, rg, data_boleto, mes_contrato, ativo) ";
-            query += "values(null, '"+i.getNome()+"', '"+i.getTelefone()+"', '"+i.getEmail()+"', '"+i.getCpf()+"', '"+i.getRg()+"', "+i.getDataBoleto()+", '"+i.getMesContrato()+"', "+i.isAtivo()+");";
+        String query = "insert into Inquilino (id , nome, telefone, telefone1, telefone2, email, cpf, rg, data_boleto, mes_contrato, ativo) ";
+            query += "values(null, '"+i.getNome()+"', '"+i.getTelefone()+"', '"+i.getTelefone1()+"', '"+i.getTelefone2()+"', '"+i.getEmail()+"', '"+i.getCpf()+"', '"+i.getRg()+"', "+i.getDataBoleto()+", '"+i.getMesContrato()+"', "+i.isAtivo()+");";
             PreparedStatement ps = data.getConection().prepareStatement(query);
             
             ps.execute(query);
@@ -42,6 +42,8 @@ public class InquilinoDAO extends BaseDao{
         query += "set"  ;
         query += " nome="+set(i.getNome());
         query += ", telefone="+set(i.getTelefone());
+        query += ", telefone1="+set(i.getTelefone1());
+        query += ", telefone2="+set(i.getTelefone2());
         query += ", email="+set(i.getEmail());
         query += ", cpf="+set(i.getCpf());
         query += ", rg="+set(i.getRg());
@@ -73,18 +75,24 @@ public class InquilinoDAO extends BaseDao{
             ArrayList<Inquilino> retorno = new ArrayList<>();
             while(result.next()){
                 Inquilino i = new Inquilino();
-                i.setId(result.getInt("id"));
-                i.setNome(result.getString("nome"));
-                i.setCpf(result.getString("cpf"));
-                i.setEmail(result.getString("email"));
-                i.setTelefone(result.getString("telefone"));
-                i.setDataBoleto(result.getInt("data_boleto"));
-                i.setMesContrato(result.getInt("mes_contrato"));
-                i.setRg(result.getString("rg"));
-                i.setAtivo(result.getBoolean("ativo"));
+                montarInquilino(i, result);
                 retorno.add(i);
             }
             return retorno;
+    }
+
+    private void montarInquilino(Inquilino i, ResultSet result) throws SQLException {
+        i.setId(result.getInt("id"));
+        i.setNome(result.getString("nome"));
+        i.setCpf(result.getString("cpf"));
+        i.setEmail(result.getString("email"));
+        i.setTelefone(result.getString("telefone"));
+        i.setTelefone1(result.getString("telefone1"));
+        i.setTelefone2(result.getString("telefone2"));
+        i.setDataBoleto(result.getInt("data_boleto"));
+        i.setMesContrato(result.getInt("mes_contrato"));
+        i.setRg(result.getString("rg"));
+        i.setAtivo(result.getBoolean("ativo"));
     }
     
     public List<Inquilino> obterInquilinoAtivoPorNome(String nome) throws SQLException {
@@ -98,15 +106,7 @@ public class InquilinoDAO extends BaseDao{
             ArrayList<Inquilino> retorno = new ArrayList<>();
             while(result.next()){
                 Inquilino i = new Inquilino();
-                i.setId(result.getInt("id"));
-                i.setNome(result.getString("nome"));
-                i.setCpf(result.getString("cpf"));
-                i.setEmail(result.getString("email"));
-                i.setTelefone(result.getString("telefone"));
-                i.setDataBoleto(result.getInt("data_boleto"));
-                i.setMesContrato(result.getInt("mes_contrato"));
-                i.setRg(result.getString("rg"));
-                i.setAtivo(result.getBoolean("ativo"));
+                montarInquilino(i, result);
                 retorno.add(i);
             }
             return retorno;
@@ -122,15 +122,7 @@ public class InquilinoDAO extends BaseDao{
             ResultSet result = ps.executeQuery(query);
             result.next();
             Inquilino i = new Inquilino();
-            i.setId(result.getInt("id"));
-            i.setNome(result.getString("nome"));
-            i.setCpf(result.getString("cpf"));
-            i.setEmail(result.getString("email"));
-            i.setTelefone(result.getString("telefone"));
-            i.setDataBoleto(result.getInt("data_boleto"));
-            i.setMesContrato(result.getInt("mes_contrato"));
-            i.setRg(result.getString("rg"));
-            i.setAtivo(result.getBoolean("ativo"));
+            montarInquilino(i, result);
             return i;
     }
     

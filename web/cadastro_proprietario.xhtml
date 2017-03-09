@@ -25,28 +25,40 @@
         <p:fieldset legend="Cadastro de Proprietario" style="margin-left: 15%;width: 70%;">
             <h:form id="form_proprietario">
                 <p:growl autoUpdate="true"/>
-                <p:panelGrid style="width: 100%;background: inherit;">
+                <p:panelGrid style="width: 60%;background: inherit;">
                     <p:row style="border: none;background: inherit;">
-                        <p:column style="border: none;" colspan="2">
+                        <p:column style="border: none;" colspan="3">
                             <p:outputLabel value="Nome:"/>
                             <br/>
                             <p:inputText value="#{cadastroProprietarioController.proprietario.nome}" required="true" style="width:100%;" requiredMessage="O nome é obrigatorio."/>
                         </p:column>
-                        <p:column style="border: none;">
+                        <p:column style="border: none;" colspan="2">
                             <p:outputLabel value="Email:"/>
                             <br/>
                             <p:inputText value="#{cadastroProprietarioController.proprietario.email}" validatorMessage="Formato de email invalido." style="width:100%;">
                                 <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
                             </p:inputText>
                         </p:column>
+                    </p:row>
+                    <p:row style="border: none;background: inherit;">
                         <p:column style="border: none;">
                             <p:outputLabel value="Telefone:"/>
                             <br/>
-                            <p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)9999-9999" size="10"/>
+                            <p:inputMask value="#{cadastroProprietarioController.proprietario.telefone}" mask="(99)99999-999?9" size="15"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/>
+                            <br/>
+                            <p:inputMask value="#{cadastroProprietarioController.proprietario.telefone1}" mask="(99)99999-999?9" size="15"/>
+                        </p:column>
+                        <p:column style="border: none;">
+                            <p:outputLabel value="Telefone:"/>
+                            <br/>
+                            <p:inputMask value="#{cadastroProprietarioController.proprietario.telefone2}" mask="(99)9999-9999?9" size="15"/>
                         </p:column>
                     </p:row>
                     <p:row style="border: none;background: inherit;">
-                        <p:column style="border: none;" colspan="2">
+                        <p:column style="border: none;" colspan="3">
                             <p:outputLabel value="Endereço:"/>
                             <br/>
                             <p:inputText value="#{cadastroProprietarioController.proprietario.endereco}" style="width:100%;"/>
@@ -54,7 +66,7 @@
                         <p:column style="border: none;">
                             <p:outputLabel value="Data do Deposito:"/>
                             <br/>
-                            <p:inputNumber value="#{cadastroProprietarioController.proprietario.dataDeposito}" maxlength="2" decimalPlaces="0" maxValue="31" size="4"/> 
+                            <p:inputMask value="#{cadastroProprietarioController.proprietario.dataDeposito}" maxlength="2" mask="9?9" size="4"/> 
                         </p:column>
                         <p:column style="border: none;">
                             <p:outputLabel value="Ativo:"/>
