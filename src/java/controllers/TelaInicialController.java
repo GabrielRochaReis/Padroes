@@ -37,4 +37,8 @@ public class TelaInicialController {
     public String pesquisarApartamento(){
         return "pesquisarApartamento";
     }
+    
+    public String relatorioApartamento(){
+        return "relatorioApartamento";
+    }
 }

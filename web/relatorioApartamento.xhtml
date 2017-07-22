@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Imobiliaria Figueiredo</title>
+        <link type="text/css" rel="stylesheet" href="default.css" />
+        <link type="text/css" rel="stylesheet" href="principal.css" />
+    </h:head>
+    <h:body>
+        <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+        <h:form >
+            <p:menubar style="width:100%;padding: 0;margin: 0;" >
+                <p:submenu label="Relatorios">
+                    <p:menuitem  value="Pagamentos" disabled="true" />
+                </p:submenu>
+                <p:submenu label="Consultar" >
+                    <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                    <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                    <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:fieldset id="ap" style="margin-left: 15%;width: 70%;">
+            <h:form id="form_apartamento">
+                <p:commandButton id="btNext" actionListener="#{relatorioApartamentoController.next()}" style="position: absolute;margin:9% 0 0 70%;width: 40px;height:40px;border: 3px outset lightslategray;"             
+                    icon="ui-icon-carat-1-e" update="@form ap modalDialogObs modalDialogInq modalDialogPro"/>
+                <p:commandButton id="btBack" actionListener="#{relatorioApartamentoController.back()}" style="position: absolute;margin:9% 0 0 -3%;width: 40px;height:40px;border: 3px outset lightslategray;"
+                    icon="ui-icon-carat-1-w" update="@form ap modalDialogObs modalDialogInq modalDialogPro"/>
+                <p:fieldset>
+                    <p:outputLabel value="Apartamento : "/><p:outputLabel value="#{relatorioApartamentoController.apartamento.numero}"/>
+                    <br/>
+                    <p:outputLabel value="Aluguel : R$"/><p:outputLabel value="#{relatorioApartamentoController.apartamento.aluguel}"/>
+                    <br/><br/>
+                    <p:outputPanel style="float:left;width: 45%;">
+                        <p:outputLabel value="Proprietário : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.nome}"/>
+                        <p:commandButton id="btInfPro" onclick="PF('dialogProprietario').show()" icon="ui-icon-info" />
+                        <p:tooltip id="helpInfPro" for="btInfPro" value="Informações do proprietário." position="top"/>
+                        <br/>
+                        <p:outputLabel value="Data do Deposito : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.dataDeposito}">
+                        </p:outputLabel>
+                    </p:outputPanel>
+                    <p:outputPanel style="float: right; width: 45%;">
+                        <p:outputLabel value="Inquilino : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.nome}"/>
+                        <p:commandButton id="btInfInq" onclick="PF('dialogInquilino').show()" icon="ui-icon-info" />
+                        <p:tooltip id="helpInfInq" for="btInfInq" value="Cadastrar um novo pagamento." position="top"/>
+                        <br/>
+                        <p:outputLabel value="Data do Boleto : "/>
+                        <p:outputLabel value="#{relatorioApartamentoController.inquilino.dataBoleto}" />
+                        <br/>
+                        <p:outputLabel value="Vencimento do Contrato : "/>
+                        <p:outputLabel value="#{relatorioApartamentoController.venContrato}" />
+                    </p:outputPanel>
+                    <br/><br/>
+                </p:fieldset>
+                <br/>
+                <p:fieldset>
+                    <p:outputLabel value="Mes pagamento"/><br/>
+                    <p:outputLabel value="Inicio:"/><p:calendar value="#{relatorioApartamentoController.filtro.mesInicial}" pattern="MM/yyyy"/>
+                    <p:outputLabel value="Final:"/><p:calendar value="#{relatorioApartamentoController.filtro.mesFinal}" pattern="MM/yyyy"/>
+                    <br/> <br/>
+                    <p:commandButton  action="#{relatorioApartamentoController.pesquisar()}" value="Pesquisar" icon="ui-icon-search" update="tablePagamento"/>
+                </p:fieldset>
+                <br/>
+                <p:commandButton id="btCadastro" action="#{relatorioApartamentoController.cadastrar()}" value="Novo" icon="ui-icon-circle-plus"/>
+                <p:tooltip id="helpCadastro" for="btCadastro" value="Cadastrar um novo pagamento." position="top"/>
+
+                <p:commandButton id="btRelatorio" value="Relatorio" onclick="PF('dialogObs').show()" icon="ui-icon-arrowthickstop-1-s">
+                </p:commandButton>
+                <p:tooltip id="helpRelatorio" for="btRelatorio" value="Relatorio de pagamentos do Apartamento." position="top"/>
+                <br/><br/>
+            </h:form>
+
+            <p:fieldset id="tablePagamento">
+                <h:form>
+                    <p:dataTable var="item" value="#{relatorioApartamentoController.pagamento}" paginator="true" scrollable="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                        <p:column headerText="Ação" style="width: 5%">
+                            <p:commandButton action="#{relatorioApartamentoController.editar(item)}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{relatorioApartamentoController.item}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Mes">
+                            <h:outputText value="#{item.mes}">
+                                <f:convertDateTime pattern="MMMMM yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Data Pagamento">
+                            <h:outputText value="#{item.dataPagamento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Comprovante Pagamento">
+                            <p:commandButton ajax="false" rendered="#{item.comprovantePagamento != null}" icon="ui-icon-arrowthickstop-1-s">
+                                <p:fileDownload value="#{relatorioApartamentoController.imgComprovantePagamento(item)}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Data Deposito">
+                            <h:outputText value="#{item.dataDeposito}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Comprovante Deposito" >
+                            <p:commandButton ajax="false" rendered="#{item.comprovanteDeposito != null}" icon="ui-icon-arrowthickstop-1-s">
+                                <p:fileDownload value="#{relatorioApartamentoController.imgComprovanteDeposito(item)}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Valor do Deposito" >
+                            <h:outputText value="#{item.valorDeposito}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <p:commandButton  action="#{relatorioApartamentoController.voltar()}" value="Voltar" style="Float:right;"/>
+                </h:form>
+            </p:fieldset>
+        </p:fieldset>
+
+        <p:dialog id="modalDialogPro" header="Informações do proprietario"  draggable="false"
+                  widgetVar="dialogProprietario" modal="true">
+            <p:outputLabel value="Nome : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.nome}"/>
+            <br/>
+            <p:outputLabel value="Tel : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.telefone}"/>
+            <br/>
+            <p:outputLabel value="Email : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.email}"/>
+            <br/>
+            <p:outputLabel value="Endereço : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.endereco}"/>
+            <br/><br/>
+            <p:outputLabel value="Dados Bancarios"/>
+            <br/><br/>
+            <p:outputLabel value="Banco : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.instituicao}"/>
+            <br/>
+            <p:outputLabel value="Operação : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.operacao}"/>
+            <br/>
+            <p:outputLabel value="Agencia : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.agencia}"/>
+            <br/>
+            <p:outputLabel value="Conta : "/><p:outputLabel value="#{relatorioApartamentoController.proprietario.numConta}"/>
+        </p:dialog>
+
+
+        <p:dialog id="modalDialogInq" header="Informações do inquilino"  draggable="false"
+                  widgetVar="dialogInquilino" modal="true">
+            <p:outputLabel value="Nome : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.nome}"/>
+            <br/>
+            <p:outputLabel value="Tel : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.telefone}"/>
+            <br/>
+            <p:outputLabel value="Email : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.email}"/>
+            <br/>
+            <p:outputLabel value="CPF : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.cpf}"/>
+            <br/>
+            <p:outputLabel value="RG : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.rg}"/>
+            <br/>
+            <p:outputLabel value="Data do Boleto : "/><p:outputLabel value="#{relatorioApartamentoController.inquilino.dataBoleto}"/>
+            <br/><br/>
+        </p:dialog>
+
+        <p:dialog id="modalDialogObs" header="Observações"  draggable="false"
+                  widgetVar="dialogObs" modal="true" width="40%" resizable="false">
+            <h:form>
+                <p:outputLabel value="Observações : "/>
+                <br/>
+                <p:inputTextarea value="#{relatorioApartamentoController.obs}" style="width: 100%;height: 100%;"/>
+                <br/><br/>
+                <p:commandButton value="Gerar" ajax="false" onclick="PF('dialogObs').hide();">
+                    <p:fileDownload value="#{relatorioApartamentoController.donwloadRelatorio()}"/>
+                </p:commandButton>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
