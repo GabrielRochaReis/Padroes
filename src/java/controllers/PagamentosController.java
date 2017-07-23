@@ -38,6 +38,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
@@ -196,11 +197,9 @@ public class PagamentosController implements Serializable{
         parameters.put("telefone", inquilino.getTelefone());
         parameters.put("vencimentoContrato", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("obs", obs);
-        parameters.put("dataDeposito", proprietario.getDataDeposito().toString());
-        String pathRelatorio = FacesContext.getCurrentInstance()
-                   .getExternalContext().getRealPath("/WEB-INF/report/")
-                   + "/";
-        JasperReport report = JasperCompileManager.compileReport(pathRelatorio+"RelatorioPagamentosPorApartamentp.jasper");
+        parameters.put("dataDeposito", proprietario.getDataDeposito());
+        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("relatorios/reports/RelatorioPagamentosPorApartamentp.jasper");
+        JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(realPath);
         JasperPrint print = JasperFillManager.fillReport(report, parameters,
         new JRBeanCollectionDataSource(pagamento));
         return JasperExportManager.exportReportToPdf(print);

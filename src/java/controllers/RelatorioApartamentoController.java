@@ -16,7 +16,6 @@ import Model.Pagamento;
 import Model.Proprietario;
 import filtros.FiltroPagamento;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -38,6 +37,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
@@ -231,11 +231,9 @@ public class RelatorioApartamentoController implements Serializable {
         parameters.put("telefone", inquilino.getTelefone());
         parameters.put("vencimentoContrato", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("obs", obs);
-        parameters.put("dataDeposito", proprietario.getDataDeposito().toString());
-        String pathRelatorio = FacesContext.getCurrentInstance()
-                .getExternalContext().getRealPath("/WEB-INF/report/")
-                + "/";
-        JasperReport report = JasperCompileManager.compileReport(pathRelatorio + "RelatorioPagamentosPorApartamentp.jasper");
+        parameters.put("dataDeposito", proprietario.getDataDeposito());
+        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("relatorios/reports/RelatorioPagamentosPorApartamentp.jasper");
+        JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(realPath);
         JasperPrint print = JasperFillManager.fillReport(report, parameters,
                 new JRBeanCollectionDataSource(pagamento));
         return JasperExportManager.exportReportToPdf(print);
@@ -246,7 +244,7 @@ public class RelatorioApartamentoController implements Serializable {
             try {
                 return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()), "application/pdf", "Relatorio.pdf");
             } catch (JRException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", new File("oi").getAbsolutePath()));
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Erro ao gerar relatorio : "+ex.getMessage()));
                 return null;
             }
         } else {

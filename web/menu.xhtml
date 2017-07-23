@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h1 style="color: black;font-size: 40pt;text-align: center;border: 1px solid #dfd9c3;padding: 0;margin: 0;border-radius: 3px;background: #f5f3e5 url(/Figueredo/faces/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png?ln=primefaces-south-street) 50% top repeat-x;"><b>Figueiredo Imobiliária</b></h1>
+
+    <h:form >
+        <p:menubar style="width:100%;padding: 0;margin: 0;" >
+            <p:submenu label="Relatorios">
+                <p:menuitem  value="Pagamentos" disabled="true" />
+                <p:menuitem  value="Apartamentos" action="#{telaInicialController.relatorioApartamento()}" />
+            </p:submenu>
+            <p:submenu label="Consultar" >
+                <p:menuitem value="Inquilino" action="#{telaInicialController.pesquisarInquilino()}" />
+                <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
+                <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
+            </p:submenu>
+        </p:menubar>
+    </h:form>
+</ui:composition>
