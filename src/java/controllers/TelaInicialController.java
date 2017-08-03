@@ -38,6 +38,10 @@ public class TelaInicialController {
         return "pesquisarApartamento";
     }
     
+    public String relatorioPagamento(){
+        return "relatorioPagamento";
+    }
+    
     public String relatorioApartamento(){
         return "relatorioApartamento";
     }

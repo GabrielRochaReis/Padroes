@@ -11,15 +11,15 @@ import DAO.PagamentoDAO;
 import DAO.ProprietarioDAO;
 import Enum.MesesEnum;
 import Model.Apartamento;
-import Model.Inquilino;
 import Model.Pagamento;
-import Model.Proprietario;
 import filtros.FiltroPagamento;
+import filtros.FiltroRelatorioPagamento;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,17 +48,11 @@ import org.primefaces.model.StreamedContent;
  * @author Gabriel Rocha
  */
 @ViewScoped
-@ManagedBean(name = "relatorioApartamentoController")
-public class RelatorioApartamentoController implements Serializable {
-
-    private List<Apartamento> list;
-    private int index;
+@ManagedBean(name = "relatorioPagamentoController")
+public class RelatorioPagamentoController implements Serializable {
 
     private InquilinoDAO inquilinoDAO;
-    private Inquilino inquilino;
-    private Proprietario proprietario;
     private ProprietarioDAO proprietarioDAO;
-    private Apartamento apartamento;
     private ApartamentoDAO apartamentoDAO;
     private List<Pagamento> pagamento;
     private PagamentoDAO pagamentoDAO;
@@ -72,53 +66,13 @@ public class RelatorioApartamentoController implements Serializable {
     }
 
     private void iniciar() {
-        try {
-            list = apartamentoDAO.obterApartamentoTodos();
-        } catch (SQLException ex) {
-            Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        apartamento = list.get(index);
         filtro = new FiltroPagamento();
-        if (apartamento != null) {
-            try {
-                pagamento = pagamentoDAO.obterPagamentos(apartamento.getId());
-                if (apartamento.getProprietario() != 0) {
-                    proprietario = proprietarioDAO.obterProprietarioPorId(apartamento.getProprietario() + "");
-                } else {
-                    proprietario = null;
-                }
-                if (apartamento.getInquilino() != 0) {
-                    inquilino = inquilinoDAO.obterInquilinoPorId(apartamento.getInquilino() + "");
-                } else {
-                    inquilino = null;
-                }
-            } catch (SQLException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao carregar as informações. "));
-            }
-        }
-    }
+        try {
+            pagamento = pagamentoDAO.obterPagamentosPorDatas(filtro);
 
-    public void next() {
-        if (list.size() - 1 == index) {
-            index = 0;
-        } else {
-            index++;
+        } catch (SQLException ex) {
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao carregar as informações. "));
         }
-        iniciar();
-    }
-
-    public void back() {
-        if (index == 0) {
-            index = list.size() - 1;
-        } else {
-            index--;
-        }
-        iniciar();
-    }
-
-    public String cadastrar() {
-        RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
-        return "cadastroPagamento";
     }
 
     public StreamedContent imgComprovanteDeposito() {
@@ -128,32 +82,77 @@ public class RelatorioApartamentoController implements Serializable {
         return null;
     }
 
-    public String getDataBoleto() {
-        if (inquilino != null && inquilino.getDataBoleto() != null) {
-            return MesesEnum.getMes(inquilino.getDataBoleto());
+    public String getDataBoleto(Integer mes) {
+        if (mes != null) {
+            return MesesEnum.getMes(mes);
         }
         return null;
     }
 
-    public String getVenContrato() {
-        if (inquilino != null && inquilino.getMesContrato() != null) {
-            return MesesEnum.getMes(inquilino.getMesContrato());
+    public String obterApartamento(Integer apartamento) {
+        if (apartamento != null) {
+            try {
+                return apartamentoDAO.obterApartamentoPorId(apartamento.toString()).getNumero();
+            } catch (SQLException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public String obterProprietario(Integer apartamento) {
+        Apartamento ap = null;
+        if (apartamento != null) {
+            try {
+                ap = apartamentoDAO.obterApartamentoPorId(apartamento.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (ap.getProprietario() != null) {
+            try {
+                return proprietarioDAO.obterProprietarioPorId(ap.getProprietario().toString()).getNome();
+            } catch (SQLException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public String obterInquilino(Integer apartamento) {
+        Apartamento ap = null;
+        if (apartamento != null) {
+            try {
+                ap = apartamentoDAO.obterApartamentoPorId(apartamento.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (ap.getInquilino() != null) {
+            try {
+                return inquilinoDAO.obterInquilinoPorId(ap.getInquilino().toString()).getNome();
+            } catch (SQLException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
 
     public String editar(Pagamento a) {
-        RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+        try {
+            RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamentoDAO.obterApartamentoPorId(a.getApartemento().toString()));
+        } catch (SQLException ex) {
+            Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         RequestContext.getCurrentInstance().getAttributes().put("pagamento", a);
         return "cadastroPagamento";
     }
 
     public void pesquisar() {
         try {
-            filtro.setApartamento(apartamento.getId());
             pagamento = pagamentoDAO.obterPagamentosPorDatas(filtro);
         } catch (SQLException ex) {
-            Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -199,7 +198,7 @@ public class RelatorioApartamentoController implements Serializable {
         return null;
     }
 
-    public RelatorioApartamentoController() {
+    public RelatorioPagamentoController() {
         inquilinoDAO = InquilinoDAO.getInstance();
         proprietarioDAO = ProprietarioDAO.getInstance();
         apartamentoDAO = ApartamentoDAO.getInstance();
@@ -212,40 +211,41 @@ public class RelatorioApartamentoController implements Serializable {
 
     public String infProprietario() {
         String inf = "";
-        inf += "Nome: " + proprietario.getNome() + " Tel: " + proprietario.getTelefone() + "Email: " + proprietario.getEmail() + "\n";
-        inf += "Endereço: " + proprietario.getEndereco();
-        inf += "Dados Bancarios \n" + "Banco: " + proprietario.getInstituicao() + "Operacao: " + proprietario.getOperacao() + "\n";
-        inf += "N Conta: " + proprietario.getNumConta();
-        inf += "Agencia: " + proprietario.getAgencia();
+//        inf += "Nome: " + proprietario.getNome() + " Tel: " + proprietario.getTelefone() + "Email: " + proprietario.getEmail() + "\n";
+//        inf += "Endereço: " + proprietario.getEndereco();
+//        inf += "Dados Bancarios \n" + "Banco: " + proprietario.getInstituicao() + "Operacao: " + proprietario.getOperacao() + "\n";
+//        inf += "N Conta: " + proprietario.getNumConta();
+//        inf += "Agencia: " + proprietario.getAgencia();
         return inf;
     }
 
     private byte[] gerarRelatorio() throws JRException {
         Map parameters = new HashMap();
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        parameters.put("apartamento", "Apartamento " + apartamento.getNumero());
-        parameters.put("inquilino", inquilino == null ? "" : inquilino.getNome());
-        parameters.put("dataVencimento", inquilino.getDataBoleto().toString());
-        parameters.put("valorAluguel", apartamento.getAluguel() + "");
-        parameters.put("proprietario", proprietario == null ? "" : proprietario.getNome());
-        parameters.put("telefone", inquilino.getTelefone());
-        parameters.put("vencimentoContrato", MesesEnum.getMes(inquilino.getMesContrato()));
         parameters.put("obs", obs);
-        parameters.put("dataDeposito", proprietario.getDataDeposito());
-        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("relatorios/reports/RelatorioPagamentosPorApartamentp.jasper");
+        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("relatorios/reports/RelatorioPagamentos.jasper");
         JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(realPath);
         JasperPrint print = JasperFillManager.fillReport(report, parameters,
-                new JRBeanCollectionDataSource(pagamento));
+                new JRBeanCollectionDataSource(montarListaRelatorio()));
         return JasperExportManager.exportReportToPdf(print);
+    }
+
+    public List<FiltroRelatorioPagamento> montarListaRelatorio() {
+        List<FiltroRelatorioPagamento> list = new ArrayList<FiltroRelatorioPagamento>();
+
+        for (Pagamento pag : pagamento) {
+            FiltroRelatorioPagamento fil = new FiltroRelatorioPagamento(pag, obterApartamento(pag.getApartemento()), obterInquilino(pag.getApartemento()), obterProprietario(pag.getApartemento()));
+            list.add(fil);
+        }
+        return list;
     }
 
     public DefaultStreamedContent donwloadRelatorio() {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         if (pagamento != null && !pagamento.isEmpty()) {
             try {
-                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()), "application/pdf", "Relatorio-Apartamento-"+fmt.format(new Date())+".pdf");
+                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()), "application/pdf", "Relatorio-Pagamentos-" + fmt.format(new Date()) + ".pdf");
             } catch (JRException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Erro ao gerar relatorio : "+ex.getMessage()));
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Erro ao gerar relatorio : " + ex.getMessage()));
                 return null;
             }
         } else {
@@ -258,7 +258,7 @@ public class RelatorioApartamentoController implements Serializable {
         if (!pagamento.isEmpty()) {
             RequestContext.getCurrentInstance().execute("PF('dialogObs').show()");
         } else {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não possui pagamentos cadastrados para o apartamento " + apartamento.getNumero() + "para gerar o relatorio. "));
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não possui pagamentos cadastrados para gerar o relatorio. "));
         }
     }
 
@@ -267,33 +267,9 @@ public class RelatorioApartamentoController implements Serializable {
     }
 
     public void limpar() {
-        apartamento = new Apartamento();
-        inquilino = null;
-        proprietario = null;
-    }
-
-    public Inquilino getInquilino() {
-        return inquilino;
-    }
-
-    public void setInquilino(Inquilino inquilino) {
-        this.inquilino = inquilino;
-    }
-
-    public Proprietario getProprietario() {
-        return proprietario;
-    }
-
-    public void setProprietario(Proprietario proprietario) {
-        this.proprietario = proprietario;
-    }
-
-    public Apartamento getApartamento() {
-        return apartamento;
-    }
-
-    public void setApartamento(Apartamento apartamento) {
-        this.apartamento = apartamento;
+//        apartamento = new Apartamento();
+//        inquilino = null;
+//        proprietario = null;
     }
 
     public List<Pagamento> getPagamento() {
@@ -327,4 +303,5 @@ public class RelatorioApartamentoController implements Serializable {
     public void setObs(String obs) {
         this.obs = obs;
     }
+
 }

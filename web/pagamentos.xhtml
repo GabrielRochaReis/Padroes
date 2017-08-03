@@ -20,7 +20,7 @@
                     <p:outputLabel value="Aluguel : R$"/><p:outputLabel value="#{pagamentosController.apartamento.aluguel}"/>
                     <br/><br/>
                     <p:outputPanel style="float:left;width: 45%;">
-                        <p:outputLabel value="Proprietário : "/><p:outputLabel value="#{pagamentosController.proprietario.nome}"/>
+                        <p:outputLabel value="Proprietário : "/><p:outputLabel value="#{pagamentosController.proprietario.nome}" style="margin-right: 10px;"/>
                         <p:commandButton id="btInfPro" onclick="PF('dialogProprietario').show()" icon="ui-icon-info" />
                         <p:tooltip id="helpInfPro" for="btInfPro" value="Informações do proprietário." position="top"/>
                         <br/>
@@ -28,7 +28,7 @@
                         </p:outputLabel>
                     </p:outputPanel>
                     <p:outputPanel style="float: right; width: 45%;">
-                        <p:outputLabel value="Inquilino : "/><p:outputLabel value="#{pagamentosController.inquilino.nome}"/>
+                        <p:outputLabel value="Inquilino : "/><p:outputLabel value="#{pagamentosController.inquilino.nome}" style="margin-right: 10px;"/>
                         <p:commandButton id="btInfInq" onclick="PF('dialogInquilino').show()" icon="ui-icon-info" />
                         <p:tooltip id="helpInfInq" for="btInfInq" value="Cadastrar um novo pagamento." position="top"/>
                         <br/>

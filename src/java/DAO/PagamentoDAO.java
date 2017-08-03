@@ -12,78 +12,81 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author Gabriel Rocha
  */
-public class PagamentoDAO extends BaseDao{
+public class PagamentoDAO extends BaseDao {
+
     private static PagamentoDAO pagamentoDAO;
-    
-    public static PagamentoDAO getInstance(){
-        if(pagamentoDAO==null){
-            pagamentoDAO=new PagamentoDAO();
+
+    public static PagamentoDAO getInstance() {
+        if (pagamentoDAO == null) {
+            pagamentoDAO = new PagamentoDAO();
         }
         return pagamentoDAO;
     }
-    
+
     private PagamentoDAO() {
         super();
     }
-    
+
     public void persistir(Pagamento pag) throws SQLException {
         String query;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         String dataPagamento = null;
         String dataDeposito = null;
         String mes = null;
-        
-        if(pag.getMes()!=null){
+
+        if (pag.getMes() != null) {
             pag.getMes().setDate(15);
-            mes=fmt.format(pag.getMes());
+            mes = fmt.format(pag.getMes());
         }
-        if(pag.getDataDeposito()!=null){
-            dataDeposito=fmt.format(pag.getDataDeposito());
+        if (pag.getDataDeposito() != null) {
+            dataDeposito = fmt.format(pag.getDataDeposito());
         }
-        if(pag.getDataPagamento()!=null){
-            dataPagamento=fmt.format(pag.getDataPagamento());
+        if (pag.getDataPagamento() != null) {
+            dataPagamento = fmt.format(pag.getDataPagamento());
         }
-        
+
         query = "insert into pagamento (id , mes, id_apartemento, data_pagamento, comprovante_pagamento, nome_comprovante_pagamento, data_deposito, comprovante_deposito, nome_comprovante_deposito, valor_deposito)";
         query += "values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = data.getConection().prepareStatement(query);
-        ps.setString(1, mes );
-        ps.setInt(2, pag.getApartemento() );
-        ps.setString(3, dataPagamento );
-        ps.setBinaryStream(4, pag.getComprovantePagamento() );
+        ps.setString(1, mes);
+        ps.setInt(2, pag.getApartemento());
+        ps.setString(3, dataPagamento);
+        ps.setBinaryStream(4, pag.getComprovantePagamento());
         ps.setString(5, pag.getNomeComprovantePagamento());
-        ps.setString(6, dataDeposito );
-        ps.setBinaryStream(7, pag.getComprovanteDeposito() );
+        ps.setString(6, dataDeposito);
+        ps.setBinaryStream(7, pag.getComprovanteDeposito());
         ps.setString(8, pag.getNomeComprovanteDeposito());
-        ps.setDouble(9, pag.getValorDeposito() );
+        ps.setDouble(9, pag.getValorDeposito());
         ps.executeUpdate();
     }
-    
+
     public void atualizar(Pagamento pag) throws SQLException {
         String query;
-        query = "delete from pagamento where id="+pag.getId();
+        query = "delete from pagamento where id=" + pag.getId();
         PreparedStatement ps = data.getConection().prepareStatement(query);
         ps.execute();
         persistir(pag);
     }
-    
-    public List<Pagamento> obterPagamentos(Integer apartamento) throws SQLException{
-        String query = "SELECT * FROM pagamento" ;
-         query+=" where id_apartemento="+apartamento+" ";
-        query+=" order by mes;";
+
+    public List<Pagamento> obterPagamentos(Integer apartamento) throws SQLException {
+        String query = "SELECT * FROM pagamento";
+        query += " where id_apartemento=" + apartamento + " ";
+        query += " order by mes;";
         PreparedStatement ps = data.getConection().prepareStatement(query);
-        
+
         ResultSet result = ps.executeQuery(query);
         ArrayList<Pagamento> retorno = new ArrayList<>();
-        while(result.next()){
+        while (result.next()) {
             Pagamento pag = new Pagamento();
             pag.setId(result.getInt("id"));
             pag.setMes(result.getDate("mes"));
@@ -99,27 +102,45 @@ public class PagamentoDAO extends BaseDao{
         }
         return retorno;
     }
-    
-    public List<Pagamento> obterPagamentosPorDatas(FiltroPagamento filtro) throws SQLException{
+
+    public List<Pagamento> obterPagamentosPorDatas(FiltroPagamento filtro) throws SQLException {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        String query = "SELECT * FROM pagamento" ;
-                query+=" where id_apartemento="+filtro.getApartamento();
-        if(filtro.getMesInicial()!=null)
-            filtro.getMesInicial().setDate(1);
-            query+=" and mes >= '"+fmt.format(filtro.getMesInicial())+"'";
-        if(filtro.getMesFinal()!=null)
-            filtro.getMesFinal().setDate(30);
-            query+=" and mes <= '"+fmt.format(filtro.getMesFinal())+"'";
-        if(filtro.getPagamentoInicial()!=null)
-            query+=" and data_pagamento BETWEEN "+filtro.getPagamentoInicial()+" AND "+filtro.getPagamentoFinal()+" ";
-        if(filtro.getDepositoFinal()!=null)
-            query+=" and data_deposito BETWEEN "+filtro.getDepositoInicial()+" AND "+filtro.getDepositoFinal()+" ";
-        query+=" order by mes;";
+        Calendar c = Calendar.getInstance();
+        String query = "SELECT * FROM pagamento";
+        query += " where 1=1 ";
+        if (filtro.getApartamento() != null) {
+            query += " id_apartemento=" + filtro.getApartamento();
+        }
+        if (filtro.getMesInicial() != null) {
+            c.setTime(filtro.getMesInicial());
+            c.set(Calendar.DAY_OF_MONTH, 1);
+            filtro.setMesInicial(c.getTime());
+            query += " and mes >= '" + fmt.format(filtro.getMesInicial()) + "'";
+        }
+        if (filtro.getMesFinal() != null) {
+            c.setTime(filtro.getMesFinal());
+            c.set(Calendar.DAY_OF_MONTH, c.getMaximum(Calendar.DAY_OF_MONTH));
+            filtro.setMesFinal(c.getTime());
+            query += " and mes <= '" + fmt.format(filtro.getMesFinal()) + "'";
+        }
+        if (filtro.getPagamentoInicial() != null ) {
+            query += " and data_pagamento >= '" + fmt.format(filtro.getPagamentoInicial()) + "' ";
+        }
+        if (filtro.getPagamentoFinal()!= null ) {
+            query += " and data_pagamento <= '" + fmt.format(filtro.getPagamentoFinal()) + "' ";
+        }
+        if (filtro.getDepositoInicial()!= null) {
+            query += " and data_deposito >= '" + fmt.format(filtro.getDepositoInicial()) + "' ";
+        }
+        if (filtro.getDepositoFinal() != null) {
+            query += " and data_deposito <= '" + fmt.format(filtro.getDepositoFinal()) + "' ";
+        }
+        query += " order by mes;";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ResultSet result = ps.executeQuery(query);
         ArrayList<Pagamento> retorno = new ArrayList<>();
-        while(result.next()){
+        while (result.next()) {
             Pagamento pag = new Pagamento();
             pag.setId(result.getInt("id"));
             pag.setMes(result.getDate("mes"));

@@ -8,7 +8,7 @@
     <h:form >
         <p:menubar style="width:100%;padding: 0;margin: 0;" >
             <p:submenu label="Relatorios">
-                <p:menuitem  value="Pagamentos" disabled="true" />
+                <p:menuitem  value="Pagamentos" action="#{telaInicialController.relatorioPagamento}"/>
                 <p:menuitem  value="Apartamentos" action="#{telaInicialController.relatorioApartamento()}" />
             </p:submenu>
             <p:submenu label="Consultar" >

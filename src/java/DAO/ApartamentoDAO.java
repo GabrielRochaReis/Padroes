@@ -103,8 +103,8 @@ public class ApartamentoDAO extends BaseDao{
             a.setId(result.getInt("id"));
             a.setEdificio(result.getString("edificio"));
             a.setNumero(result.getString("numero"));
-            a.setInquilino(result.getInt("inquilino"));
-            a.setProprietario(result.getInt("proprietario"));
+            a.setInquilino(result.getInt("id_inquilino"));
+            a.setProprietario(result.getInt("id_proprietario"));
             a.setAluguel(result.getDouble("aluguel"));
             
             return a;

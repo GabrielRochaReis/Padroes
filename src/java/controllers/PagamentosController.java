@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -206,9 +206,10 @@ public class PagamentosController implements Serializable{
     }
     
     public DefaultStreamedContent donwloadRelatorio(){
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         if(pagamento!=null && !pagamento.isEmpty()){
             try {
-                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()),"application/pdf","Relatorio.pdf");
+                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()),"application/pdf","Relatorio-Apartamento-"+fmt.format(new Date())+".pdf");
             } catch (JRException ex) {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", new File("oi").getAbsolutePath()));
                 return null;

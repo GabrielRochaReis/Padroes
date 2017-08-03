@@ -141,9 +141,9 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="42" splitType="Stretch">
+		<band height="73" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="0b9dc72b-df18-4032-9992-2a32048ee4c4" mode="Opaque" x="0" y="21" width="135" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<reportElement uuid="0b9dc72b-df18-4032-9992-2a32048ee4c4" mode="Opaque" x="0" y="21" width="114" height="52" forecolor="#FFFFFF" backcolor="#00CC00"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -152,12 +152,12 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial Black" size="8" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Meses]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ad20a0e-4836-43c7-9843-1ffd447a0ff9" mode="Opaque" x="135" y="21" width="145" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<reportElement uuid="1ad20a0e-4836-43c7-9843-1ffd447a0ff9" mode="Opaque" x="114" y="21" width="156" height="52" forecolor="#FFFFFF" backcolor="#00CC00"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -166,12 +166,12 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial Black" size="8" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pagamento do Inquilino]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b4bd1105-06f2-4371-8a76-85902613104b" mode="Opaque" x="280" y="21" width="159" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<reportElement uuid="b4bd1105-06f2-4371-8a76-85902613104b" mode="Opaque" x="445" y="21" width="110" height="52" forecolor="#FFFFFF" backcolor="#00CC00"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -180,30 +180,30 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial Black" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Pagamento ao Proprietário]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b4bd1105-06f2-4371-8a76-85902613104b" mode="Opaque" x="439" y="21" width="116" height="21" forecolor="#FFFFFF" backcolor="#00CC00"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineWidth="1.0" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial Black" size="8" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor Depositado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ad20a0e-4836-43c7-9843-1ffd447a0ff9" mode="Opaque" x="270" y="21" width="175" height="52" forecolor="#FFFFFF" backcolor="#00CC00"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial Black" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento ao Proprietário]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField pattern="MMMMM yyyy" isBlankWhenNull="true">
-				<reportElement uuid="834096b6-affd-4b7a-b898-d3145add2cc2" x="0" y="0" width="135" height="20"/>
+				<reportElement uuid="834096b6-affd-4b7a-b898-d3145add2cc2" x="0" y="0" width="114" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -215,32 +215,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="eca8339b-f617-43e6-b698-1aa77613443d" x="135" y="0" width="145" height="20"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font isStrikeThrough="false"/>
-				</textElement>
-			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="6db7c139-8320-4a79-81f2-4e41cbb46fde" x="280" y="0" width="159" height="20"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font isStrikeThrough="false"/>
-				</textElement>
-			</textField>
 			<textField>
-				<reportElement uuid="1bbbe448-bbb2-4efb-8d0d-b0eccf18c801" x="439" y="0" width="116" height="20"/>
+				<reportElement uuid="1bbbe448-bbb2-4efb-8d0d-b0eccf18c801" x="445" y="0" width="110" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -249,6 +225,28 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{valorDeposito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="acc66142-f1f8-4598-b422-746a470375ab" x="114" y="0" width="156" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataPagamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="e6e54e1b-7e1b-4dc5-980f-b674cff4198c" x="270" y="0" width="175" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataDeposito}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
