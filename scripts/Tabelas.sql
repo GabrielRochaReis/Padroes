@@ -1,4 +1,6 @@
-﻿create table Proprietario 
+﻿
+
+create table Proprietario 
 (
 id int not null auto_increment,
 nome varchar(150) not null,
@@ -64,7 +66,7 @@ FOREIGN KEY (id_apartemento) REFERENCES Apartamento(id)
 --------------------Updates------------------------------------
 
 ALTER TABLE Proprietario
-add data_deposito varchar(2)
+add data_deposito varchar(2);
 
 ALTER TABLE Proprietario
 add telefone1 varchar(15);
