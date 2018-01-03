@@ -12,6 +12,7 @@ public class Apartamento extends Entidade{
     private String edificio;
     private String numero;
     private double aluguel;
+    private String observacao
 
     public Integer getInquilino() {
         return inquilino;
@@ -59,6 +60,14 @@ public class Apartamento extends Entidade{
 
     public void setAluguel(double aluguel) {
         this.aluguel = aluguel;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
     @Override

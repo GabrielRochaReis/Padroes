@@ -19,7 +19,9 @@
                 <p:commandButton id="btBack" actionListener="#{relatorioApartamentoController.back()}" style="position: absolute;margin:9% 0 0 -3%;width: 40px;height:40px;border: 3px outset lightslategray;"
                                  icon="ui-icon-carat-1-w" update="@form ap modalDialogObs modalDialogInq modalDialogPro"/>
                 <p:fieldset>
-                    <p:outputLabel value="Apartamento : "/><p:outputLabel value="#{relatorioApartamentoController.apartamento.numero}"/>
+                    <div style="text-align: center">
+                    <p:outputLabel style="font-size: 22pt !important;" value="Apartamento : "/><p:outputLabel style="font-size: 22pt !important;" value="#{relatorioApartamentoController.apartamento.numero}"/>
+                    </div>
                     <br/>
                     <p:outputLabel value="Aluguel : R$"/><p:outputLabel value="#{relatorioApartamentoController.apartamento.aluguel}"/>
                     <br/><br/>
