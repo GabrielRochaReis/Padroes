@@ -50,6 +50,10 @@
                         <p:column headerText="Inquilino">
                             <h:outputText value="#{pesquisarApartamentoController.obterInquilino(item.inquilino)}"/>
                         </p:column>
+                        <p:column headerText="OBS">
+                            <p:commandButton id="obs" icon="ui-icon-circle-plus" />
+                            <p:tooltip id="helpObs" for="obs" value="#{item.observacao}" position="top"/>
+                        </p:column>
                     </p:dataTable>
                 </p:fieldset>
                 <br/>

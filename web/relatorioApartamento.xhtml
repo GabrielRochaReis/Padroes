@@ -43,12 +43,18 @@
                         <p:outputLabel value="#{relatorioApartamentoController.venContrato}" />
                     </p:outputPanel>
                     <br/><br/>
+                    <p:outputPanel style="float: right; width: 100%;">
+                        <p:outputLabel value="Observção : "/>
+                        <p:outputLabel value="#{relatorioApartamentoController.apartamento.observacao}" />
+                    </p:outputPanel>
+                    <br/><br/>
                 </p:fieldset>
                 <br/>
                 <p:fieldset>
-                    <p:outputLabel value="Mes pagamento"/><br/>
-                    <p:outputLabel value="Inicio:"/><p:calendar value="#{relatorioApartamentoController.filtro.mesInicial}" pattern="MM/yyyy"/>
-                    <p:outputLabel value="Final:"/><p:calendar value="#{relatorioApartamentoController.filtro.mesFinal}" pattern="MM/yyyy"/>
+                    <p:outputLabel value=" Mes pagamento "/><br/>
+                    <br/>
+                    <p:outputLabel value=" Inicio: "/><p:calendar value="#{relatorioApartamentoController.filtro.mesInicial}" pattern="MM/yyyy"/>
+                    <p:outputLabel value=" Final: "/><p:calendar value="#{relatorioApartamentoController.filtro.mesFinal}" pattern="MM/yyyy"/>
                     <br/> <br/>
                     <p:commandButton  action="#{relatorioApartamentoController.pesquisar()}" value="Pesquisar" icon="ui-icon-search" update="tablePagamento"/>
                 </p:fieldset>
@@ -61,7 +67,6 @@
                 <p:tooltip id="helpRelatorio" for="btRelatorio" value="Relatorio de pagamentos do Apartamento." position="top"/>
                 <br/><br/>
             </h:form>
-
             <p:fieldset id="tablePagamento">
                 <h:form>
                     <p:dataTable var="item" value="#{relatorioApartamentoController.pagamento}" paginator="true" scrollable="true" rows="5"
