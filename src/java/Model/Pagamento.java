@@ -5,9 +5,9 @@
  */
 package Model;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.Objects;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -18,10 +18,10 @@ public class Pagamento extends Entidade {
     private Date mes;
     private  Integer apartemento;
     private Date dataPagamento;
-    private InputStream comprovantePagamento;
+    private UploadedFile comprovantePagamento;
     private String nomeComprovantePagamento;
     private Date  dataDeposito;
-    private InputStream comprovanteDeposito;
+    private UploadedFile comprovanteDeposito;
     private String nomeComprovanteDeposito;
     private double valorDeposito;
 
@@ -85,19 +85,19 @@ public class Pagamento extends Entidade {
         }
     }
 
-    public InputStream getComprovantePagamento() {
+    public UploadedFile getComprovantePagamento() {
         return comprovantePagamento;
     }
 
-    public void setComprovantePagamento(InputStream comprovantePagamento) {
+    public void setComprovantePagamento(UploadedFile comprovantePagamento) {
         this.comprovantePagamento = comprovantePagamento;
     }
 
-    public InputStream getComprovanteDeposito() {
+    public UploadedFile getComprovanteDeposito() {
         return comprovanteDeposito;
     }
 
-    public void setComprovanteDeposito(InputStream comprovanteDeposito) {
+    public void setComprovanteDeposito(UploadedFile comprovanteDeposito) {
         this.comprovanteDeposito = comprovanteDeposito;
     }
 

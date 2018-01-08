@@ -15,6 +15,7 @@ import Model.Pagamento;
 import filtros.FiltroPagamento;
 import filtros.FiltroRelatorioPagamento;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -77,7 +78,11 @@ public class RelatorioPagamentoController implements Serializable {
 
     public StreamedContent imgComprovanteDeposito() {
         if (item != null && item.getComprovanteDeposito() != null) {
-            return new DefaultStreamedContent(item.getComprovanteDeposito());
+            try {
+                return new DefaultStreamedContent(item.getComprovanteDeposito().getInputstream());
+            } catch (IOException ex) {
+                Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
@@ -160,7 +165,12 @@ public class RelatorioPagamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem = null;
         if (item != null && item.getComprovantePagamento() != null) {
-            InputStream is = item.getComprovantePagamento();
+            InputStream is = null;
+            try {
+                is = item.getComprovantePagamento().getInputstream();
+            } catch (IOException ex) {
+                Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String nome = "Pagamento-Ap" + item.getApartemento() + "-";
             if (item.getDataDeposito() != null) {
                 nome += fmt.format(item.getDataPagamento());
@@ -181,7 +191,12 @@ public class RelatorioPagamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem = null;
         if (item != null && item.getComprovanteDeposito() != null) {
-            InputStream is = item.getComprovanteDeposito();
+            InputStream is = null;
+            try {
+                is = item.getComprovanteDeposito().getInputstream();
+            } catch (IOException ex) {
+                Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String nome = "Deposito-Ap" + item.getApartemento() + "-";
             if (item.getDataDeposito() != null) {
                 nome += fmt.format(item.getDataDeposito());

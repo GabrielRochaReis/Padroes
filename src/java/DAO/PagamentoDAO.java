@@ -54,19 +54,17 @@ public class PagamentoDAO extends BaseDao {
             dataPagamento = fmt.format(pag.getDataPagamento());
         }
 
-        query = "insert into pagamento (id , mes, id_apartemento, data_pagamento, comprovante_pagamento, nome_comprovante_pagamento, data_deposito, comprovante_deposito, nome_comprovante_deposito, valor_deposito)";
-        query += "values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        query = "insert into pagamento (id , mes, id_apartemento, data_pagamento, nome_comprovante_pagamento, data_deposito, nome_comprovante_deposito, valor_deposito)";
+        query += "values(null, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = data.getConection().prepareStatement(query);
         ps.setString(1, mes);
         ps.setInt(2, pag.getApartemento());
         ps.setString(3, dataPagamento);
-        ps.setBinaryStream(4, pag.getComprovantePagamento());
-        ps.setString(5, pag.getNomeComprovantePagamento());
-        ps.setString(6, dataDeposito);
-        ps.setBinaryStream(7, pag.getComprovanteDeposito());
-        ps.setString(8, pag.getNomeComprovanteDeposito());
-        ps.setDouble(9, pag.getValorDeposito());
+        ps.setString(4, pag.getNomeComprovantePagamento());
+        ps.setString(5, dataDeposito);
+        ps.setString(6, pag.getNomeComprovanteDeposito());
+        ps.setDouble(7, pag.getValorDeposito());
         ps.executeUpdate();
     }
 
@@ -85,6 +83,11 @@ public class PagamentoDAO extends BaseDao {
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ResultSet result = ps.executeQuery(query);
+        ArrayList<Pagamento> retorno = carregarPagamento(result);
+        return retorno;
+    }
+
+    private ArrayList<Pagamento> carregarPagamento(ResultSet result) throws SQLException {
         ArrayList<Pagamento> retorno = new ArrayList<>();
         while (result.next()) {
             Pagamento pag = new Pagamento();
@@ -92,10 +95,8 @@ public class PagamentoDAO extends BaseDao {
             pag.setMes(result.getDate("mes"));
             pag.setApartemento(result.getInt("id_apartemento"));
             pag.setDataPagamento(result.getDate("data_pagamento"));
-            pag.setComprovantePagamento(result.getBinaryStream("comprovante_pagamento"));
             pag.setNomeComprovantePagamento(result.getString("nome_comprovante_pagamento"));
             pag.setDataDeposito(result.getDate("data_deposito"));
-            pag.setComprovanteDeposito(result.getBinaryStream("comprovante_deposito"));
             pag.setNomeComprovanteDeposito(result.getString("nome_comprovante_deposito"));
             pag.setValorDeposito(result.getDouble("valor_deposito"));
             retorno.add(pag);
@@ -139,21 +140,7 @@ public class PagamentoDAO extends BaseDao {
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ResultSet result = ps.executeQuery(query);
-        ArrayList<Pagamento> retorno = new ArrayList<>();
-        while (result.next()) {
-            Pagamento pag = new Pagamento();
-            pag.setId(result.getInt("id"));
-            pag.setMes(result.getDate("mes"));
-            pag.setApartemento(result.getInt("id_apartemento"));
-            pag.setDataPagamento(result.getDate("data_pagamento"));
-            pag.setComprovantePagamento(result.getBinaryStream("comprovante_pagamento"));
-            pag.setNomeComprovantePagamento(result.getString("nome_comprovante_pagamento"));
-            pag.setDataDeposito(result.getDate("data_deposito"));
-            pag.setComprovanteDeposito(result.getBinaryStream("comprovante_deposito"));
-            pag.setNomeComprovanteDeposito(result.getString("nome_comprovante_deposito"));
-            pag.setValorDeposito(result.getDouble("valor_deposito"));
-            retorno.add(pag);
-        }
+        ArrayList<Pagamento> retorno = carregarPagamento(result);
         return retorno;
     }
 }
