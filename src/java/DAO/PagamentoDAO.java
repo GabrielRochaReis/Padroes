@@ -7,14 +7,25 @@ package DAO;
 
 import Model.Pagamento;
 import filtros.FiltroPagamento;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -33,6 +44,59 @@ public class PagamentoDAO extends BaseDao {
 
     private PagamentoDAO() {
         super();
+    }
+    
+    public boolean gravarComprovante(Pagamento pagamento) {
+        if (pagamento.getComprovanteDeposito() != null) {
+            try {
+                InputStream file = pagamento.getComprovanteDeposito();
+                String suffix = "pdf";
+                File files = null;
+                String path = getPathComprovateDeposito();
+                File diretorio = new File(path); // ajfilho é uma pasta!
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs(); //mkdir() cria somente um diretório, mkdirs() cria diretórios e subdiretórios.
+                }
+                files = new File(path + pagamento.getNomeComprovanteDeposito());
+                OutputStream outputStream = new FileOutputStream(files);
+                IOUtils.copy(file, outputStream);
+                outputStream.close();
+            } catch (Exception ex) {
+                RequestContext.getCurrentInstance()
+                        .showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel salvar o Comprovante de deposito. Erro :" + ex.getMessage()));
+                return false;
+            }
+        }
+        if (pagamento.getComprovantePagamento() != null) {
+            try {
+                InputStream file = pagamento.getComprovantePagamento();
+                String suffix = ".pdf";
+                File files = null;
+                Writer output = null;
+                String path = getPathComprovatePagamento();
+                File diretorio = new File(path); // ajfilho é uma pasta!
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs(); //mkdir() cria somente um diretório, mkdirs() cria diretórios e subdiretórios.
+                }
+                files = new File(path + pagamento.getNomeComprovantePagamento());
+                OutputStream outputStream = new FileOutputStream(files);
+                IOUtils.copy(file, outputStream);
+                outputStream.close();
+            } catch (Exception ex) {
+                RequestContext.getCurrentInstance()
+                        .showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel salvar o Comprovante de pagamento. Erro :" + ex.getMessage()));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static String getPathComprovatePagamento() {
+        return getPath() + "Documentos\\ComprovatePagamento\\";
+    }
+
+    private static String getPathComprovateDeposito() {
+        return getPath() + "Documentos\\ComprovateDeposito\\";
     }
 
     public void persistir(Pagamento pag) throws SQLException {
@@ -66,6 +130,30 @@ public class PagamentoDAO extends BaseDao {
         ps.setString(6, pag.getNomeComprovanteDeposito());
         ps.setDouble(7, pag.getValorDeposito());
         ps.executeUpdate();
+        gravarComprovante(pag);
+    }
+
+    private static String getPath() {
+        return "C:\\Users\\Gabriel Rocha\\Documents\\";
+    }
+
+    private void loadComprovantes(Pagamento pag) {
+        if (pag.getNomeComprovanteDeposito() != null) {
+            try {
+                InputStream inputStream = new FileInputStream(getPathComprovateDeposito() + pag.getNomeComprovanteDeposito());
+                pag.setComprovanteDeposito(inputStream);
+            } catch (FileNotFoundException ex) {
+                pag.setNomeComprovanteDeposito(null);
+            }
+        }
+        if (pag.getNomeComprovantePagamento() != null) {
+            try {
+                InputStream inputStream = new FileInputStream(getPathComprovatePagamento() + pag.getNomeComprovantePagamento());
+                pag.setComprovantePagamento(inputStream);
+            } catch (FileNotFoundException ex) {
+                pag.setNomeComprovantePagamento(null);
+            }
+        }
     }
 
     public void atualizar(Pagamento pag) throws SQLException {
@@ -99,6 +187,7 @@ public class PagamentoDAO extends BaseDao {
             pag.setDataDeposito(result.getDate("data_deposito"));
             pag.setNomeComprovanteDeposito(result.getString("nome_comprovante_deposito"));
             pag.setValorDeposito(result.getDouble("valor_deposito"));
+            loadComprovantes(pag);
             retorno.add(pag);
         }
         return retorno;
@@ -124,13 +213,13 @@ public class PagamentoDAO extends BaseDao {
             filtro.setMesFinal(c.getTime());
             query += " and mes <= '" + fmt.format(filtro.getMesFinal()) + "'";
         }
-        if (filtro.getPagamentoInicial() != null ) {
+        if (filtro.getPagamentoInicial() != null) {
             query += " and data_pagamento >= '" + fmt.format(filtro.getPagamentoInicial()) + "' ";
         }
-        if (filtro.getPagamentoFinal()!= null ) {
+        if (filtro.getPagamentoFinal() != null) {
             query += " and data_pagamento <= '" + fmt.format(filtro.getPagamentoFinal()) + "' ";
         }
-        if (filtro.getDepositoInicial()!= null) {
+        if (filtro.getDepositoInicial() != null) {
             query += " and data_deposito >= '" + fmt.format(filtro.getDepositoInicial()) + "' ";
         }
         if (filtro.getDepositoFinal() != null) {

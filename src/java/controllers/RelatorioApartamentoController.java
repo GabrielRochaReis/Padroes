@@ -124,11 +124,7 @@ public class RelatorioApartamentoController implements Serializable {
 
     public StreamedContent imgComprovanteDeposito() {
         if (item != null && item.getComprovanteDeposito() != null) {
-            try {
-                return new DefaultStreamedContent(item.getComprovanteDeposito().getInputstream());
-            } catch (IOException ex) {
-                Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            return new DefaultStreamedContent(item.getComprovanteDeposito());
         }
         return null;
     }
@@ -166,12 +162,7 @@ public class RelatorioApartamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem = null;
         if (item != null && item.getComprovantePagamento() != null) {
-            InputStream is = null;
-            try {
-                is = item.getComprovantePagamento().getInputstream();
-            } catch (IOException ex) {
-                Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            InputStream is = item.getComprovantePagamento();
             String nome = "Pagamento-Ap" + item.getApartemento() + "-";
             if (item.getDataDeposito() != null) {
                 nome += fmt.format(item.getDataPagamento());
@@ -192,12 +183,7 @@ public class RelatorioApartamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         StreamedContent imagem = null;
         if (item != null && item.getComprovanteDeposito() != null) {
-            InputStream is = null;
-            try {
-                is = item.getComprovanteDeposito().getInputstream();
-            } catch (IOException ex) {
-                Logger.getLogger(RelatorioApartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            InputStream is = item.getComprovanteDeposito();
             String nome = "Deposito-Ap" + item.getApartemento() + "-";
             if (item.getDataDeposito() != null) {
                 nome += fmt.format(item.getDataDeposito());
@@ -258,9 +244,9 @@ public class RelatorioApartamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         if (pagamento != null && !pagamento.isEmpty()) {
             try {
-                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()), "application/pdf", "Relatorio-Apartamento-"+fmt.format(new Date())+".pdf");
+                return new DefaultStreamedContent(new ByteArrayInputStream(gerarRelatorio()), "application/pdf", "Relatorio-Apartamento-" + fmt.format(new Date()) + ".pdf");
             } catch (JRException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Erro ao gerar relatorio : "+ex.getMessage()));
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", "Erro ao gerar relatorio : " + ex.getMessage()));
                 return null;
             }
         } else {

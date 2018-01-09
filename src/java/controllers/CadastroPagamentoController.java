@@ -8,11 +8,14 @@ package controllers;
 import Model.Apartamento;
 import Model.Pagamento;
 import RNs.PagamentoRN;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -55,15 +58,13 @@ public class CadastroPagamentoController implements Serializable {
 
     public String gravar() {
         try {
-            if (gravarComprovante()) {
-                pagamentoRN.iserirAtualizar(pagamento);
-                RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
-                limpar();
-                if (editar) {
-                    RequestContext.getCurrentInstance().getAttributes().put("mensagem", new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento atualizado com sucesso."));
-                } else {
-                    RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento cadastrado com sucesso."));
-                }
+            pagamentoRN.iserirAtualizar(pagamento);
+            RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+            limpar();
+            if (editar) {
+                RequestContext.getCurrentInstance().getAttributes().put("mensagem", new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento atualizado com sucesso."));
+            } else {
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento cadastrado com sucesso."));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,58 +82,8 @@ public class CadastroPagamentoController implements Serializable {
         return "";
     }
 
-    public boolean gravarComprovante() {
-        if (pagamento.getComprovanteDeposito() != null) {
-            try {
-                UploadedFile file = pagamento.getComprovanteDeposito();
-                String prefix = FilenameUtils.getBaseName(file.getFileName());
-                String suffix = FilenameUtils.getExtension(file.getFileName());
-                File files = null;
-                OutputStream output = null;
-                String pathRoot = "C:\\Users\\Gabriel Rocha\\Documents\\";
-                String path = pathRoot + "Documentos\\ComprovateDeposito\\";
-                File diretorio = new File(path); // ajfilho é uma pasta!
-                if (!diretorio.exists()) {
-                    diretorio.mkdirs(); //mkdir() cria somente um diretório, mkdirs() cria diretórios e subdiretórios.
-                }
-                files = new File(path+apartamento.getEdificio() + "-" + apartamento.getNumero() + "-" + formatarData(pagamento.getDataDeposito()) + "-Deposito", "." + suffix);
-                output = new FileOutputStream(files);
-                IOUtils.copy(file.getInputstream(), output);
-                String fileName;
-                fileName = files.getName();
-            } catch (Exception ex) {
-                RequestContext.getCurrentInstance()
-                        .showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel salvar o Comprovante de deposito. Erro :" + ex.getMessage()));
-                return false;
-            }
-        }
-        if (pagamento.getComprovantePagamento() != null) {
-            try {
-                UploadedFile file = pagamento.getComprovantePagamento();
-                String prefix = FilenameUtils.getBaseName(file.getFileName());
-                String suffix = FilenameUtils.getExtension(file.getFileName());
-                File files = null;
-                OutputStream output = null;
-                String pathRoot = "C:\\Users\\Gabriel Rocha\\Documents\\";
-                String path = pathRoot + "Documentos\\ComprovatePagamento\\";
-                File diretorio = new File(path); // ajfilho é uma pasta!
-                if (!diretorio.exists()) {
-                    diretorio.mkdirs(); //mkdir() cria somente um diretório, mkdirs() cria diretórios e subdiretórios.
-                }
-                files = new File(path + apartamento.getEdificio() + "-" + apartamento.getNumero() + "-" + formatarData(pagamento.getDataPagamento()) + "-Pagamento" + "." + suffix);
-                files.createNewFile();
-                files.renameTo(new File(apartamento.getEdificio() + "-" + apartamento.getNumero() + "-" + formatarData(pagamento.getDataPagamento()) + "-Pagamento", "." + suffix));
-                output = new FileOutputStream(files);
-                IOUtils.copy(file.getInputstream(), output);
-                String fileName;
-                fileName = files.getName();
-            } catch (Exception ex) {
-                RequestContext.getCurrentInstance()
-                        .showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel salvar o Comprovante de pagamento. Erro :" + ex.getMessage()));
-                return false;
-            }
-        }
-        return true;
+    private static String getPath() {
+        return "C:\\Users\\Gabriel Rocha\\Documents\\";
     }
 
     public String voltar() {
@@ -150,8 +101,8 @@ public class CadastroPagamentoController implements Serializable {
             final UploadedFile file = event.getFile();
             String suffix = FilenameUtils.getExtension(file.getFileName());
             if (suffix.equals("pdf")) {
-                pagamento.setComprovantePagamento(file);
-                pagamento.setNomeComprovantePagamento(apartamento.getEdificio() + "-" + apartamento.getNumero() + "-Pagamento-" + new Date() + "." + suffix);
+                pagamento.setComprovantePagamento(file.getInputstream());
+                pagamento.setNomeComprovantePagamento(apartamento.getNumero() + "-" + apartamento.getEdificio() + "-" + formatarData(pagamento.getDataPagamento()) + "-Pagamento" + "." + suffix);
             } else {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Apenas documentos em pdf são permitidos"));
             }
@@ -176,8 +127,8 @@ public class CadastroPagamentoController implements Serializable {
             UploadedFile file = event.getFile();
             String suffix = FilenameUtils.getExtension(file.getFileName());
             if (suffix.equals("pdf")) {
-                pagamento.setComprovanteDeposito(file);
-                pagamento.setNomeComprovanteDeposito(apartamento.getEdificio() + "-" + apartamento.getNumero() + "-Deposito-" + new Date() + "." + suffix);
+                pagamento.setComprovanteDeposito(file.getInputstream());
+                pagamento.setNomeComprovanteDeposito(apartamento.getNumero() + "-" + apartamento.getEdificio() + "-" + formatarData(pagamento.getDataDeposito()) + "-Deposito" + "." + suffix);
             } else {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Apenas documentos em pdf são permitidos"));
             }
