@@ -19,14 +19,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author Gabriel Rocha
  */
-@ManagedBean(name="pesquisarApartamentoController")
+@ManagedBean(name = "pesquisarApartamentoController")
 @ViewScoped
-public class PesquisarApartamentoController implements Serializable{
+public class PesquisarApartamentoController implements Serializable {
+
     private List<Apartamento> list;
     private ApartamentoDAO apartamentoDAO;
     private Apartamento apartamento;
@@ -34,92 +37,101 @@ public class PesquisarApartamentoController implements Serializable{
     private ProprietarioDAO proprietarioDAO;
 
     @PostConstruct
-    public void init(){
-    apartamentoDAO = ApartamentoDAO.getInstance();
-    proprietarioDAO = ProprietarioDAO.getInstance();
-    inquilinoDAO = InquilinoDAO.getInstance();
-    FacesMessage mensagem =(FacesMessage) RequestContext.getCurrentInstance().getAttributes().get("mensagem");
+    public void init() {
+        apartamentoDAO = ApartamentoDAO.getInstance();
+        proprietarioDAO = ProprietarioDAO.getInstance();
+        inquilinoDAO = InquilinoDAO.getInstance();
+        FacesMessage mensagem = (FacesMessage) RequestContext.getCurrentInstance().getAttributes().get("mensagem");
 
-    if(mensagem!=null) {
-         RequestContext.getCurrentInstance().showMessageInDialog(mensagem);
-    }
+        if (mensagem != null) {
+            RequestContext.getCurrentInstance().showMessageInDialog(mensagem);
+        }
         try {
             list = apartamentoDAO.obterApartamentoTodos();
         } catch (SQLException ex) {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
-        }
-    }
-    
-    public String cadastrar(){
-        return "cadastro_apartamento";
-    }
-    
-    public PesquisarApartamentoController() {
-    }
-    
-    public String obterProprietario(String p){
-        if(!p.equals("0")){
-            Proprietario prop;
-            try {
-                prop = proprietarioDAO.obterProprietarioPorId(p);
-            if(prop==null)
-                return null;
-            return prop.getNome();
-            } catch (SQLException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
-            }
-        }
-        return null;
-    }
-    
-    public String obterInquilino(String p){
-        if(!p.equals("0")){
-            Inquilino prop;
-            try {
-                prop = inquilinoDAO.obterInquilinoPorId(p);
-            if(prop==null)
-                return null;
-            return prop.getNome();
-            } catch (SQLException ex) {
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
-            }
-        }
-        return null;
-    }
-    
-    public void pesquisar(){
-        try {
-            list = apartamentoDAO.obterApartamentoAutoComplete(apartamento==null?null:apartamento);
-        } catch (SQLException ex) {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : " + ex.getMessage()));
         }
     }
 
-    public List<Apartamento> apartamentos(String nome){
+    public String cadastrar() {
+        return "cadastro_apartamento";
+    }
+
+    public PesquisarApartamentoController() {
+    }
+
+    public String obterProprietario(String p) {
+        if (!p.equals("0")) {
+            Proprietario prop;
+            try {
+                prop = proprietarioDAO.obterProprietarioPorId(p);
+                if (prop == null) {
+                    return null;
+                }
+                return prop.getNome();
+            } catch (SQLException ex) {
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : " + ex.getMessage()));
+            }
+        }
+        return null;
+    }
+
+    public String obterInquilino(String p) {
+        if (!p.equals("0")) {
+            Inquilino prop;
+            try {
+                prop = inquilinoDAO.obterInquilinoPorId(p);
+                if (prop == null) {
+                    return null;
+                }
+                return prop.getNome();
+            } catch (SQLException ex) {
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : " + ex.getMessage()));
+            }
+        }
+        return null;
+    }
+
+    public void pesquisar() {
+        try {
+            list = apartamentoDAO.obterApartamentoAutoComplete(apartamento == null ? null : apartamento);
+        } catch (SQLException ex) {
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : " + ex.getMessage()));
+        }
+    }
+
+    public List<Apartamento> apartamentos(String nome) {
         try {
             Apartamento ap = new Apartamento();
             ap.setNumero(nome);
             return apartamentoDAO.obterApartamentoAutoComplete(ap);
         } catch (SQLException ex) {
-            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : "+ex.getMessage()));
+            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro : " + ex.getMessage()));
             return null;
         }
     }
 
-    public String voltar(){
+    public StreamedContent imgContrato(Apartamento apartamento) {
+        if (apartamento != null && apartamento.getContrato() != null) {
+            return new DefaultStreamedContent(apartamento.getContrato(), "application/pdf", apartamento.getNomeContrato());
+        }
+        return null;
+    }
+
+    public String voltar() {
         return "tela_inicial.xhtml";
     }
-    
-    public String editar(Apartamento a){
+
+    public String editar(Apartamento a) {
         RequestContext.getCurrentInstance().getAttributes().put("apartamento", a);
         return "cadastro_apartamento";
     }
-    
-    public String pagamentos(Apartamento a){
+
+    public String pagamentos(Apartamento a) {
         RequestContext.getCurrentInstance().getAttributes().put("apartamento", a);
         return "pagamentos";
     }
-    
+
     public List<Apartamento> getList() {
         return list;
     }
@@ -135,5 +147,5 @@ public class PesquisarApartamentoController implements Serializable{
     public void setApartamento(Apartamento apartamento) {
         this.apartamento = apartamento;
     }
-    
+
 }

@@ -20,7 +20,7 @@
                                  icon="ui-icon-carat-1-w" update="@form ap modalDialogObs modalDialogInq modalDialogPro"/>
                 <p:fieldset>
                     <div style="text-align: center">
-                    <p:outputLabel style="font-size: 22pt !important;" value="Apartamento : "/><p:outputLabel style="font-size: 22pt !important;" value="#{relatorioApartamentoController.apartamento.numero}"/>
+                        <p:outputLabel style="font-size: 22pt !important;" value="Apartamento : "/><p:outputLabel style="font-size: 22pt !important;" value="#{relatorioApartamentoController.apartamento.numero}"/>
                     </div>
                     <br/>
                     <p:outputLabel value="Aluguel : R$"/><p:outputLabel value="#{relatorioApartamentoController.apartamento.aluguel}"/>
@@ -50,6 +50,10 @@
                         <p:outputLabel value="#{relatorioApartamentoController.apartamento.observacao}" />
                     </p:outputPanel>
                     <br/><br/>
+                    <p:commandButton id="btContrato" style="float:right;" ajax="false" rendered="#{relatorioApartamentoController.apartamento.contrato != null}" icon="ui-icon-arrowthickstop-1-s">
+                        <p:fileDownload value="#{relatorioApartamentoController.imgContrato()}"/>
+                    </p:commandButton>
+                    <p:tooltip id="helpContrato" for="btContrato" value="Contrato de aluguel" position="top"/>
                 </p:fieldset>
                 <br/>
                 <p:fieldset>

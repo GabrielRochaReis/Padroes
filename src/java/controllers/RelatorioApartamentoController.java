@@ -262,6 +262,13 @@ public class RelatorioApartamentoController implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não possui pagamentos cadastrados para o apartamento " + apartamento.getNumero() + "para gerar o relatorio. "));
         }
     }
+    
+    public StreamedContent imgContrato() {
+        if (apartamento != null && apartamento.getContrato() != null) {
+            return new DefaultStreamedContent(apartamento.getContrato(), "application/pdf", apartamento.getNomeContrato());
+        }
+        return null;
+    }
 
     public void chamarRelatorio() {
         RequestContext.getCurrentInstance().execute("PF('dialogObs').show()");

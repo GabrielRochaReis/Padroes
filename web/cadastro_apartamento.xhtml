@@ -48,6 +48,16 @@
                             <p:inputNumber value="#{cadastroApartamentoController.apartamento.aluguel}" decimalSeparator="," thousandSeparator="." style="width:100%;"/>
                         </p:column>
                     </p:row>
+                    <p:row style="border: none;background: inherit;">
+                        <p:column style="border: none;" id="contrato" >
+                            <p:outputLabel value="Contrato :"/>
+                            <br/>
+                            <p:fileUpload fileUploadListener="#{cadastroApartamentoController.carregarContrato}" auto="true" update="nomeContrato"/>
+                            <br/>
+                            <p:outputLabel value="#{cadastroApartamentoController.apartamento.nomeContrato}" id="nomeContrato"/>
+                            <p:commandButton id="btRemovDep" process="@this" update="contrato" action="#{cadastroApartamentoController.removerContrato()}" rendered="#{cadastroApartamentoController.apartamento.nomeContrato != null}" icon="ui-icon-trash"/>
+                        </p:column>
+                    </p:row>
                 </p:panelGrid>
                 <br/>
                 <p:commandButton  action="#{cadastroApartamentoController.gravar()}" value="Gravar" update="form_apartamento"/>

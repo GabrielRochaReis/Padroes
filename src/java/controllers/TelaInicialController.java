@@ -5,44 +5,56 @@
  */
 package controllers;
 
+import RNs.BackupRN;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author Gabriel Rocha
  */
-@ManagedBean(name="telaInicialController")
+@ManagedBean(name = "telaInicialController")
 public class TelaInicialController {
-    
-    public String inquilino(){
+
+    public String inquilino() {
         return "cadastro_inquilino";
     }
-    
-    public String proprietario(){
+
+    public String proprietario() {
         return "cadastro_proprietario";
     }
-    
-    public String apartamento(){
+
+    public String apartamento() {
         return "cadastro_apartamento";
     }
-    
-    public String pesquisarInquilino(){
+
+    public String pesquisarInquilino() {
         return "pesquisarInquilino";
     }
-    
-    public String pesquisarProprietario(){
+
+    public String pesquisarProprietario() {
         return "pesquisarProprietario";
     }
-    
-    public String pesquisarApartamento(){
+
+    public String pesquisarApartamento() {
         return "pesquisarApartamento";
     }
-    
-    public String relatorioPagamento(){
+
+    public String relatorioPagamento() {
         return "relatorioPagamento";
     }
-    
-    public String relatorioApartamento(){
+
+    public String relatorioApartamento() {
         return "relatorioApartamento";
+    }
+
+    public StreamedContent backup() {
+        System.out.println("controllers.TelaInicialController.backup()");
+       return BackupRN.downloadBackup();
     }
 }

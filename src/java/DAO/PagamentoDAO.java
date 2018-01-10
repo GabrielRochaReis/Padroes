@@ -21,8 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
@@ -45,7 +43,7 @@ public class PagamentoDAO extends BaseDao {
     private PagamentoDAO() {
         super();
     }
-    
+
     public boolean gravarComprovante(Pagamento pagamento) {
         if (pagamento.getComprovanteDeposito() != null) {
             try {
@@ -232,4 +230,5 @@ public class PagamentoDAO extends BaseDao {
         ArrayList<Pagamento> retorno = carregarPagamento(result);
         return retorno;
     }
+
 }

@@ -16,6 +16,13 @@
                 <p:menuitem value="Proprietario" action="#{telaInicialController.pesquisarProprietario()}" />
                 <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
             </p:submenu>
+            <p:submenu label="Sistema" >
+                <p:menuitem value="Backup" >
+                    <p:commandButton id="btContrato">
+                        <p:fileDownload value="#{telaInicialController.backup()}"/>
+                    </p:commandButton>
+                </p:menuitem>
+            </p:submenu>
         </p:menubar>
     </h:form>
 </ui:composition>

@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -13,6 +14,8 @@ public class Apartamento extends Entidade{
     private String numero;
     private double aluguel;
     private String observacao;
+    private InputStream contrato;
+    private String nomeContrato;
 
     public Integer getInquilino() {
         return inquilino;
@@ -68,6 +71,22 @@ public class Apartamento extends Entidade{
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public InputStream getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(InputStream contrato) {
+        this.contrato = contrato;
+    }
+
+    public String getNomeContrato() {
+        return nomeContrato;
+    }
+
+    public void setNomeContrato(String nomeContrato) {
+        this.nomeContrato = nomeContrato;
     }
 
     @Override

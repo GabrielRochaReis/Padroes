@@ -39,10 +39,10 @@ create table Apartamento
 id int not null auto_increment,
 edificio varchar(150),
 numero varchar(50) not null,
-contrato varchar(10),
 id_inquilino int,
 id_proprietario int,
 aluguel float,
+contrato varchar(150),
 PRIMARY KEY (Id),
 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id),
 FOREIGN KEY (id_inquilino) REFERENCES Inquilino(id)

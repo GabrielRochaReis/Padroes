@@ -6,11 +6,20 @@
 package DAO;
 
 import Model.Apartamento;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -68,9 +77,11 @@ public class ApartamentoDAO extends BaseDao {
         a.setProprietario(result.getInt("id_proprietario"));
         a.setAluguel(result.getDouble("aluguel"));
         a.setObservacao(result.getString("observacao"));
+        a.setNomeContrato(result.getString("nome_contrato"));
+        loadContrato(a);
         return a;
     }
-    
+
     private ArrayList<Apartamento> resultList(ResultSet result) throws SQLException {
         ArrayList<Apartamento> retorno = new ArrayList<>();
         while (result.next()) {
@@ -82,6 +93,8 @@ public class ApartamentoDAO extends BaseDao {
             a.setProprietario(result.getInt("id_proprietario"));
             a.setAluguel(result.getDouble("aluguel"));
             a.setObservacao(result.getString("observacao"));
+            a.setNomeContrato(result.getString("nome_contrato"));
+            loadContrato(a);
             retorno.add(a);
         }
         return retorno;
@@ -111,13 +124,13 @@ public class ApartamentoDAO extends BaseDao {
         return a;
     }
 
-
     public void persistir(Apartamento apartamento) throws SQLException {
         String query = null;
-        query = "insert into Apartamento ( edificio, numero, id_inquilino, id_proprietario, aluguel, observacao)";
+        gravarContrato(apartamento);
+        query = "insert into Apartamento ( edificio, numero, id_inquilino, id_proprietario, aluguel, observacao, nome_contrato)";
         query += "values( '" + apartamento.getEdificio() + "', '" + apartamento.getNumero() + "', "
                 + set(apartamento.getInquilino()) + ", " + set(apartamento.getProprietario()) + ", "
-                + apartamento.getAluguel() + ", '" + apartamento.getObservacao() + "' );";
+                + apartamento.getAluguel() + ", '" + (apartamento.getObservacao() == null ? "Sem Observações" : apartamento.getObservacao()) + "', '" + apartamento.getNomeContrato() + "' );";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ps.execute(query);
@@ -125,9 +138,11 @@ public class ApartamentoDAO extends BaseDao {
 
     public void atualizar(Apartamento apartamento) throws SQLException {
         String query = null;
+        gravarContrato(apartamento);
         query = "update Apartamento ";
         query += "set edificio=" + set(apartamento.getEdificio()) + ", numero=" + set(apartamento.getNumero());
         query += ", observacao=" + set(apartamento.getObservacao());
+        query += ", nome_contrato=" + set(apartamento.getNomeContrato());
         if (apartamento.getInquilino() != 0 && apartamento.getInquilino() != null) {
             query += ", id_inquilino=" + set(apartamento.getInquilino());
         }
@@ -138,5 +153,49 @@ public class ApartamentoDAO extends BaseDao {
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ps.execute(query);
+    }
+
+    public boolean gravarContrato(Apartamento apartamento) {
+        if (apartamento.getContrato() != null) {
+            try {
+                InputStream file = apartamento.getContrato();
+                String suffix = "pdf";
+                apartamento.setNomeContrato(apartamento.getNumero() + "-" + (apartamento.getEdificio() == null ? "" : apartamento.getEdificio()) + "." + suffix);
+                File files = null;
+                String path = getPathContrato();
+                File diretorio = new File(path); // ajfilho é uma pasta!
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs(); //mkdir() cria somente um diretório, mkdirs() cria diretórios e subdiretórios.
+                }
+                files = new File(path + apartamento.getNomeContrato());
+                OutputStream outputStream = new FileOutputStream(files);
+                IOUtils.copy(file, outputStream);
+                outputStream.close();
+            } catch (Exception ex) {
+                RequestContext.getCurrentInstance()
+                        .showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possivel salvar o Comprovante de deposito. Erro :" + ex.getMessage()));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static String getPath() {
+        return "C:\\Users\\Gabriel Rocha\\Documents\\";
+    }
+
+    private void loadContrato(Apartamento apartamento) {
+        if (apartamento.getNomeContrato() != null) {
+            try {
+                InputStream inputStream = new FileInputStream(getPathContrato() + apartamento.getNomeContrato());
+                apartamento.setContrato(inputStream);
+            } catch (FileNotFoundException ex) {
+                apartamento.setNomeContrato(null);
+            }
+        }
+    }
+
+    private static String getPathContrato() {
+        return getPath() + "Documentos\\Contrato\\";
     }
 }
