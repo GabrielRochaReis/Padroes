@@ -40,9 +40,11 @@ public class CadastroPagamentoController implements Serializable {
     private Apartamento apartamento;
     private PagamentoRN pagamentoRN;
     private boolean editar;
+    private String voltar;
 
     @PostConstruct
     public void inicializar() {
+        voltar = (String) RequestContext.getCurrentInstance().getAttributes().get("voltar");
         apartamento = (Apartamento) RequestContext.getCurrentInstance().getAttributes().get("apartamento");
         pagamentoRN = PagamentoRN.getInstance();
         pagamento = (Pagamento) RequestContext.getCurrentInstance().getAttributes().get("pagamento");
@@ -87,8 +89,12 @@ public class CadastroPagamentoController implements Serializable {
     }
 
     public String voltar() {
-        if (editar) {
-            RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+        if (voltar != null) {
+            return voltar;
+        } else {
+            if (editar) {
+                RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+            }
         }
         return "pagamentos";
     }

@@ -15,7 +15,9 @@ import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import org.apache.commons.io.IOUtils;
@@ -102,6 +104,20 @@ public class ApartamentoDAO extends BaseDao {
 
     public List<Apartamento> obterApartamentoTodos() throws SQLException {
         String query = "SELECT * FROM apartamento ";
+        query += "order by numero;";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ResultSet result = ps.executeQuery(query);
+        ArrayList<Apartamento> retorno = resultList(result);
+        return retorno;
+    }
+
+    public List<Apartamento> obterApartamentoVencidos() throws SQLException {
+        Date date = new Date();
+        String query = "SELECT * FROM apartamento ";
+        query += " where apartamento.id not in ( ";
+        query += " SELECT pagamento.id_apartemento FROM pagamento ";
+        query += " where  EXTRACT(MONTH FROM pagamento.mes) = EXTRACT(MONTH FROM CURDATE())) ";
         query += "order by numero;";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
@@ -197,5 +213,23 @@ public class ApartamentoDAO extends BaseDao {
 
     private static String getPathContrato() {
         return getPath() + "Documentos\\Contrato\\";
+    }
+
+    public String insertsApartamento() throws SQLException {
+        List<Apartamento> list = obterApartamentoTodos();
+        String query = "";
+        query = "insert into Apartamento ( edificio, numero, id_inquilino, id_proprietario, aluguel, observacao, nome_contrato)";
+        query += " \n ";
+        query += "values";
+        for (Apartamento apartamento : list) {
+            query += "( " + set(apartamento.getEdificio()) + ", " + set(apartamento.getNumero()) + ", "
+                    + set(apartamento.getInquilino()) + ", " + set(apartamento.getProprietario()) + ", "
+                    + set(apartamento.getAluguel()) + ", '" + (apartamento.getObservacao() == null ? "Sem Observações" : apartamento.getObservacao()) + "', "
+                    + set(apartamento.getNomeContrato()) + " ), ";
+            query += " \n ";
+        }
+        query = query.substring(0, query.length() - 5);
+        query += ";\n";
+        return query;
     }
 }

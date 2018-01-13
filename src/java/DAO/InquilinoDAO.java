@@ -9,7 +9,6 @@ import Model.Inquilino;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,68 +16,69 @@ import java.util.List;
  *
  * @author Gabriel Rocha
  */
-public class InquilinoDAO extends BaseDao{
+public class InquilinoDAO extends BaseDao {
 
-    public static InquilinoDAO getInstance(){
-        if(inquilinoDAO==null){
-            inquilinoDAO= new InquilinoDAO();
+    public static InquilinoDAO getInstance() {
+        if (inquilinoDAO == null) {
+            inquilinoDAO = new InquilinoDAO();
         }
         return inquilinoDAO;
     }
-    
-    public void persistir(Inquilino i) throws SQLException {
-        
-        String query = "insert into Inquilino (id , nome, telefone, telefone1, telefone2, email, cpf, rg, data_boleto, mes_contrato, ativo) ";
-            query += "values(null, '"+i.getNome()+"', '"+i.getTelefone()+"', '"+i.getTelefone1()+"', '"+i.getTelefone2()+"', '"+i.getEmail()+"', '"+i.getCpf()+"', '"+i.getRg()+"', "+i.getDataBoleto()+", '"+i.getMesContrato()+"', "+i.isAtivo()+");";
-            PreparedStatement ps = data.getConection().prepareStatement(query);
-            
-            ps.execute(query);
-    }
 
-    public void atualizar(Inquilino i) throws SQLException {
-        String query;
-        
-        query = "update Inquilino ";
-        query += "set"  ;
-        query += " nome="+set(i.getNome());
-        query += ", telefone="+set(i.getTelefone());
-        query += ", telefone1="+set(i.getTelefone1());
-        query += ", telefone2="+set(i.getTelefone2());
-        query += ", email="+set(i.getEmail());
-        query += ", cpf="+set(i.getCpf());
-        query += ", rg="+set(i.getRg());
-        query += ", data_boleto="+i.getDataBoleto();
-        query += ", mes_contrato="+i.getMesContrato();
-        query += ", ativo="+i.isAtivo();
-        query += " where id="+i.getId()+";";
+    public void persistir(Inquilino i) throws SQLException {
+
+        String query = "insert into Inquilino (id , nome, telefone, telefone1, telefone2, email, cpf, rg, data_boleto, mes_contrato, ativo) ";
+        query += "values(null, '" + i.getNome() + "', '" + i.getTelefone() + "', '" + i.getTelefone1() + "', '" + i.getTelefone2() + "', '" + i.getEmail() + "', '" + i.getCpf() + "', '" + i.getRg() + "', " + i.getDataBoleto() + ", '" + i.getMesContrato() + "', " + i.isAtivo() + ");";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ps.execute(query);
     }
-    
-    public void remover(int id) throws SQLException{
+
+    public void atualizar(Inquilino i) throws SQLException {
         String query;
-        query = "DELETE from Inquilino where id = "+id+";";
+
+        query = "update Inquilino ";
+        query += "set";
+        query += " nome=" + set(i.getNome());
+        query += ", telefone=" + set(i.getTelefone());
+        query += ", telefone1=" + set(i.getTelefone1());
+        query += ", telefone2=" + set(i.getTelefone2());
+        query += ", email=" + set(i.getEmail());
+        query += ", cpf=" + set(i.getCpf());
+        query += ", rg=" + set(i.getRg());
+        query += ", data_boleto=" + i.getDataBoleto();
+        query += ", mes_contrato=" + i.getMesContrato();
+        query += ", ativo=" + i.isAtivo();
+        query += " where id=" + i.getId() + ";";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ps.execute(query);
+    }
+
+    public void remover(int id) throws SQLException {
+        String query;
+        query = "DELETE from Inquilino where id = " + id + ";";
 
         PreparedStatement ps = data.getConection().prepareStatement(query);
         ps.execute(query);
     }
 
     public List<Inquilino> obterInquilinoPorNome(String nome) throws SQLException {
-        String query = "SELECT * FROM inquilino" ;
-                if(nome!=null)
-                    query+=" WHERE UCASE(nome) like '%"+nome.toUpperCase()+"%'";
-                query+=";";
-            PreparedStatement ps = data.getConection().prepareStatement(query);
-            
-            ResultSet result = ps.executeQuery(query);
-            ArrayList<Inquilino> retorno = new ArrayList<>();
-            while(result.next()){
-                Inquilino i = new Inquilino();
-                montarInquilino(i, result);
-                retorno.add(i);
-            }
-            return retorno;
+        String query = "SELECT * FROM inquilino";
+        if (nome != null) {
+            query += " WHERE UCASE(nome) like '%" + nome.toUpperCase() + "%'";
+        }
+        query += ";";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ResultSet result = ps.executeQuery(query);
+        ArrayList<Inquilino> retorno = new ArrayList<>();
+        while (result.next()) {
+            Inquilino i = new Inquilino();
+            montarInquilino(i, result);
+            retorno.add(i);
+        }
+        return retorno;
     }
 
     private void montarInquilino(Inquilino i, ResultSet result) throws SQLException {
@@ -94,42 +94,58 @@ public class InquilinoDAO extends BaseDao{
         i.setRg(result.getString("rg"));
         i.setAtivo(result.getBoolean("ativo"));
     }
-    
+
     public List<Inquilino> obterInquilinoAtivoPorNome(String nome) throws SQLException {
-        String query = "SELECT * FROM inquilino" ;
-                if(nome!=null)
-                    query+=" WHERE UCASE(nome) like '%"+nome.toUpperCase()+"%'";
-                query+=";";
-            PreparedStatement ps = data.getConection().prepareStatement(query);
-            
-            ResultSet result = ps.executeQuery(query);
-            ArrayList<Inquilino> retorno = new ArrayList<>();
-            while(result.next()){
-                Inquilino i = new Inquilino();
-                montarInquilino(i, result);
-                retorno.add(i);
-            }
-            return retorno;
-    }
-    
-    public Inquilino obterInquilinoPorId(String id) throws SQLException {
-        String query = "SELECT * FROM inquilino" ;
-                if(id!=null)
-                    query+=" WHERE id like "+id+"";
-                query+=";";
-            PreparedStatement ps = data.getConection().prepareStatement(query);
-            
-            ResultSet result = ps.executeQuery(query);
-            result.next();
+        String query = "SELECT * FROM inquilino";
+        if (nome != null) {
+            query += " WHERE UCASE(nome) like '%" + nome.toUpperCase() + "%'";
+        }
+        query += ";";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ResultSet result = ps.executeQuery(query);
+        ArrayList<Inquilino> retorno = new ArrayList<>();
+        while (result.next()) {
             Inquilino i = new Inquilino();
             montarInquilino(i, result);
-            return i;
+            retorno.add(i);
+        }
+        return retorno;
     }
-    
+
+    public Inquilino obterInquilinoPorId(String id) throws SQLException {
+        String query = "SELECT * FROM inquilino";
+        if (id != null) {
+            query += " WHERE id like " + id + "";
+        }
+        query += ";";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ResultSet result = ps.executeQuery(query);
+        result.next();
+        Inquilino i = new Inquilino();
+        montarInquilino(i, result);
+        return i;
+    }
+
+    public String insertsInquilino() throws SQLException {
+        List<Inquilino> list = obterInquilinoAtivoPorNome(null);
+        String query = "insert into Inquilino (id , nome, telefone, telefone1, telefone2, email, cpf, rg, data_boleto, mes_contrato, ativo)";
+        query += " \n ";
+        query += "values";
+        for (Inquilino i : list) {
+            query += "(null, " + set(i.getNome()) + ", " + set(i.getTelefone()) + ", " + set(i.getTelefone1()) + ", " + set(i.getTelefone2()) + ", " + set(i.getEmail()) + ", "
+                    + set(i.getCpf()) + ", " + set(i.getRg()) + ", " + set(i.getDataBoleto()) + ", " + set(i.getMesContrato()) + ", " + i.isAtivo() + "),";
+            query += " \n ";
+        }
+        query = query.substring(0, query.length() - 4);
+        query += ";\n";
+        return query;
+    }
+
     private InquilinoDAO() {
         super();
     }
-    
+
     private static InquilinoDAO inquilinoDAO;
 }
-

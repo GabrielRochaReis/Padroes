@@ -12,5 +12,14 @@
         <ui:insert name="commonHeader">
             <ui:include src="menu.xhtml" />
         </ui:insert>
+        <p:dataTable var="item" value="#{telaInicialController.vencidos}" style="width:350px;margin: 1%;">
+            <p:column headerText="Apartamentos" style="width: 40%;text-align: center;">
+                <h:outputText value="#{item.numero}"/>-
+                <h:outputText value="#{item.edificio}"/>
+            </p:column>
+            <p:column headerText="Situação" style="width: 60%;text-align: center;">
+                 <h:outputText value="#{telaInicialController.dias(item.inquilino)}"/>
+            </p:column>
+        </p:dataTable>
     </h:body>
 </html>

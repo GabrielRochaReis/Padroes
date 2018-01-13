@@ -17,10 +17,8 @@
                 <p:menuitem value="Apartamento" action="#{telaInicialController.pesquisarApartamento()}" />
             </p:submenu>
             <p:submenu label="Sistema" >
-                <p:menuitem value="Backup" >
-                    <p:commandButton id="btContrato">
-                        <p:fileDownload value="#{telaInicialController.backup()}"/>
-                    </p:commandButton>
+                <p:menuitem value="Backup" ajax="false">
+                    <p:fileDownload value="#{telaInicialController.backup()}"/>
                 </p:menuitem>
             </p:submenu>
         </p:menubar>

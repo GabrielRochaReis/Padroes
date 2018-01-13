@@ -17,23 +17,21 @@ import java.util.List;
  *
  * @author Gabriel Rocha
  */
-
-
-public class ProprietarioDAO extends BaseDao{
+public class ProprietarioDAO extends BaseDao {
 
     private static ProprietarioDAO proprietarioDAO;
-    
-    public static ProprietarioDAO getInstance(){
-        if(proprietarioDAO==null){
-            proprietarioDAO=new ProprietarioDAO();
+
+    public static ProprietarioDAO getInstance() {
+        if (proprietarioDAO == null) {
+            proprietarioDAO = new ProprietarioDAO();
         }
         return proprietarioDAO;
     }
-    
+
     private ProprietarioDAO() {
         super();
     }
-       
+
     public void persistir(Proprietario p) throws SQLException {
         String query;
         query = "insert into Proprietario (id , nome, telefone, email, num_conta, agencia, instituicao, operacao, endereco, ativo, data_deposito, tipo_conta, telefone1, telefone2) ";
@@ -55,14 +53,14 @@ public class ProprietarioDAO extends BaseDao{
         ps.setString(13, p.getTelefone2());
         ps.executeUpdate();
     }
-    
+
     public void atualizar(Proprietario p) throws SQLException {
         String query;
         PreparedStatement ps;
-        
+
         query = "update Proprietario ";
         query += "SET nome= ?, telefone= ?, email= ?, num_conta= ?, operacao= ?, instituicao= ?, agencia= ?, endereco= ?, ativo= ?, data_deposito= ?, tipo_conta= ?, telefone1= ?, telefone2= ?"
-                +" where id="+p.getId()+";";
+                + " where id=" + p.getId() + ";";
         ps = data.getConection().prepareStatement(query);
         ps.setString(1, p.getNome());
         ps.setString(2, p.getTelefone());
@@ -77,20 +75,21 @@ public class ProprietarioDAO extends BaseDao{
         ps.setString(11, p.getTipoConta());
         ps.setString(12, p.getTelefone1());
         ps.setString(13, p.getTelefone2());
-        
+
         ps.executeUpdate();
     }
 
-    public List<Proprietario> obterProprietarioPorNome(String nome) throws SQLException{
-        String query = "SELECT * FROM proprietario" ;
-        if(nome!=null)
-            query+=" WHERE UCASE(nome) like '%"+nome.toUpperCase()+"%'";
-        query+=";";
+    public List<Proprietario> obterProprietarioPorNome(String nome) throws SQLException {
+        String query = "SELECT * FROM proprietario";
+        if (nome != null) {
+            query += " WHERE UCASE(nome) like '%" + nome.toUpperCase() + "%'";
+        }
+        query += ";";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ResultSet result = ps.executeQuery(query);
         ArrayList<Proprietario> retorno = new ArrayList<>();
-        while(result.next()){
+        while (result.next()) {
             Proprietario i = new Proprietario();
             montarProprietario(i, result);
             retorno.add(i);
@@ -114,36 +113,53 @@ public class ProprietarioDAO extends BaseDao{
         i.setAgencia(result.getString("agencia"));
         i.setTipoConta(result.getString("tipo_conta"));
     }
-    
-    public List<Proprietario> obterProprietarioAtivoPorNome(String nome) throws SQLException{
-        String query = "SELECT * FROM proprietario" ;
-        if(nome!=null)
-            query+=" WHERE UCASE(nome) like '%"+nome.toUpperCase()+"%'";
-        query+=";";
+
+    public List<Proprietario> obterProprietarioAtivoPorNome(String nome) throws SQLException {
+        String query = "SELECT * FROM proprietario";
+        if (nome != null) {
+            query += " WHERE UCASE(nome) like '%" + nome.toUpperCase() + "%'";
+        }
+        query += ";";
         PreparedStatement ps = data.getConection().prepareStatement(query);
 
         ResultSet result = ps.executeQuery(query);
         ArrayList<Proprietario> retorno = new ArrayList<>();
-        while(result.next()){
+        while (result.next()) {
             Proprietario i = new Proprietario();
             montarProprietario(i, result);
             retorno.add(i);
         }
         return retorno;
     }
-    
-    public Proprietario obterProprietarioPorId(String id) throws SQLException{
-        String query = "SELECT * FROM proprietario" ;
-                if(id!=null)
-                    query+=" WHERE id like "+id+"";
-                query+=";";
-            PreparedStatement ps = data.getConection().prepareStatement(query);
-            
-            ResultSet result = ps.executeQuery(query);
-            result.next();
-            Proprietario i=new Proprietario();
-            montarProprietario(i, result);
-            return i;
+
+    public Proprietario obterProprietarioPorId(String id) throws SQLException {
+        String query = "SELECT * FROM proprietario";
+        if (id != null) {
+            query += " WHERE id like " + id + "";
+        }
+        query += ";";
+        PreparedStatement ps = data.getConection().prepareStatement(query);
+
+        ResultSet result = ps.executeQuery(query);
+        result.next();
+        Proprietario i = new Proprietario();
+        montarProprietario(i, result);
+        return i;
     }
-    
+
+    public String insertsProprietario() throws SQLException {
+        List<Proprietario> list = obterProprietarioPorNome(null);
+        String query = "";
+        query = "insert into Proprietario (id , nome, telefone, email, num_conta, agencia, instituicao, operacao, endereco, ativo, data_deposito, tipo_conta, telefone1, telefone2) ";
+        query += " \n ";
+        query += "values";
+        for (Proprietario p : list) {
+            query += "(null, " + set(p.getNome()) + ", " + set(p.getTelefone()) + ", " + set(p.getEmail()) + ", " + set(p.getNumConta()) + ", " + set(p.getAgencia()) + ", " + set(p.getInstituicao()) + ", "
+                    + set(p.getOperacao()) + ", " + set(p.getEndereco()) + ", " + p.getAtivo() + ", " + set(p.getDataDeposito()) + ", " + set(p.getTipoConta()) + ", " + set(p.getTelefone1()) + ", " + set(p.getTelefone2()) + "),";
+            query += " \n ";
+        }
+        query = query.substring(0, query.length() - 4);
+        query += ";\n";
+        return query;
+    }
 }

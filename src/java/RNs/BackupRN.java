@@ -5,13 +5,22 @@
  */
 package RNs;
 
+import DAO.ApartamentoDAO;
+import DAO.InquilinoDAO;
+import DAO.PagamentoDAO;
+import DAO.ProprietarioDAO;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,9 +51,10 @@ public class BackupRN {
 
     public static StreamedContent downloadBackup() {
         fazerBackup();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         try {
             InputStream inputStream = new FileInputStream(OUTPUT_ZIP_FILE);
-            return new DefaultStreamedContent(inputStream);
+            return new DefaultStreamedContent(inputStream, "application/zip", "Backup-"+fmt.format(new Date())+".zip");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BackupRN.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,6 +62,13 @@ public class BackupRN {
     }
 
     public void zipIt(String zipFile) {
+        try {
+            inserts();
+        } catch (SQLException ex) {
+            Logger.getLogger(BackupRN.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BackupRN.class.getName()).log(Level.SEVERE, null, ex);
+        }
         File delete = new File(OUTPUT_ZIP_FILE);
         delete.delete();
         byte[] buffer = new byte[16094];
@@ -102,4 +119,23 @@ public class BackupRN {
     private String generateZipEntry(String file) {
         return file.substring(SOURCE_FOLDER.length() + 1, file.length());
     }
+
+    public void inserts() throws SQLException, IOException {
+        String backup = "";
+        InquilinoDAO inquilinoDAO = InquilinoDAO.getInstance();
+        backup += inquilinoDAO.insertsInquilino();
+        ProprietarioDAO proprietarioDAO = ProprietarioDAO.getInstance();
+        backup += proprietarioDAO.insertsProprietario();
+        ApartamentoDAO apartamentoDAO = ApartamentoDAO.getInstance();
+        backup += apartamentoDAO.insertsApartamento();
+        PagamentoDAO pagamentoDAO = PagamentoDAO.getInstance();
+        backup += pagamentoDAO.insertsPagamento();
+        File arquivo = new File(SOURCE_FOLDER + "\\inserts.txt");
+        FileWriter fw = new FileWriter(arquivo);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(backup);
+        bw.flush();
+        bw.close();
+    }
+
 }

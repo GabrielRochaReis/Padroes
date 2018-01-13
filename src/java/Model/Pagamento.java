@@ -8,7 +8,6 @@ package Model;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Objects;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -17,7 +16,7 @@ import org.primefaces.model.UploadedFile;
 public class Pagamento extends Entidade {
     
     private Date mes;
-    private  Integer apartemento;
+    private Integer apartemento;
     private Date dataPagamento;
     private InputStream comprovantePagamento;
     private String nomeComprovantePagamento;

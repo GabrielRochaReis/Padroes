@@ -146,6 +146,7 @@ public class RelatorioPagamentoController implements Serializable {
             Logger.getLogger(RelatorioPagamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
         RequestContext.getCurrentInstance().getAttributes().put("pagamento", a);
+        RequestContext.getCurrentInstance().getAttributes().put("voltar", "relatorioPagamento");
         return "cadastroPagamento";
     }
 
@@ -207,17 +208,7 @@ public class RelatorioPagamentoController implements Serializable {
     }
 
     public String voltar() {
-        return "pesquisarApartamento";
-    }
-
-    public String infProprietario() {
-        String inf = "";
-//        inf += "Nome: " + proprietario.getNome() + " Tel: " + proprietario.getTelefone() + "Email: " + proprietario.getEmail() + "\n";
-//        inf += "Endereço: " + proprietario.getEndereco();
-//        inf += "Dados Bancarios \n" + "Banco: " + proprietario.getInstituicao() + "Operacao: " + proprietario.getOperacao() + "\n";
-//        inf += "N Conta: " + proprietario.getNumConta();
-//        inf += "Agencia: " + proprietario.getAgencia();
-        return inf;
+        return "tela_inicial";
     }
 
     private byte[] gerarRelatorio() throws JRException {

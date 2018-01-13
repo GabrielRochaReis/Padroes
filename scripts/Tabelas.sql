@@ -1,4 +1,7 @@
-﻿
+﻿drop table pagamento;
+drop table apartamento;
+drop table proprietario;
+drop table inquilino;
 
 create table Proprietario 
 (
@@ -15,6 +18,7 @@ operacao varchar(3) ,
 endereco varchar(200),
 ativo boolean,
 data_deposito varchar(2),
+tipo_conta varchar(50),
 PRIMARY KEY (Id)
 );
 
@@ -42,7 +46,8 @@ numero varchar(50) not null,
 id_inquilino int,
 id_proprietario int,
 aluguel float,
-contrato varchar(150),
+nome_contrato varchar(150),
+observacao varchar(150),
 PRIMARY KEY (Id),
 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id),
 FOREIGN KEY (id_inquilino) REFERENCES Inquilino(id)
@@ -61,23 +66,6 @@ valor_deposito float,
 PRIMARY KEY (Id),
 FOREIGN KEY (id_apartemento) REFERENCES Apartamento(id)
 );
-
---------------------Updates------------------------------------
-
-ALTER TABLE Proprietario
-add data_deposito varchar(2);
-
-ALTER TABLE Proprietario
-add telefone1 varchar(15);
-ALTER TABLE Proprietario
-add telefone2 varchar(15);
-
-ALTER TABLE Inquilino
-add telefone1 varchar(15);
-ALTER TABLE Inquilino
-add telefone2 varchar(15);
-
---------------------Controle acesso----------------------------
 
 create table usuario 
 (

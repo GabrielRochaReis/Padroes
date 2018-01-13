@@ -106,7 +106,6 @@ public class PagamentoDAO extends BaseDao {
         String mes = null;
 
         if (pag.getMes() != null) {
-            pag.getMes().setDate(15);
             mes = fmt.format(pag.getMes());
         }
         if (pag.getDataDeposito() != null) {
@@ -229,6 +228,23 @@ public class PagamentoDAO extends BaseDao {
         ResultSet result = ps.executeQuery(query);
         ArrayList<Pagamento> retorno = carregarPagamento(result);
         return retorno;
+    }
+
+    public String insertsPagamento() throws SQLException {
+        FiltroPagamento filtroPagamento = new FiltroPagamento();
+        List<Pagamento> list = obterPagamentosPorDatas(filtroPagamento);
+        String query = "";
+        query = "insert into pagamento (id , mes, id_apartemento, data_pagamento, nome_comprovante_pagamento, data_deposito, nome_comprovante_deposito, valor_deposito)";
+        query += " \n ";
+        query += "values";
+        for (Pagamento pagamento : list) {
+            query += "(null, " + set(pagamento.getMes()) + "," + set(pagamento.getApartemento()) + ", " + set(pagamento.getDataPagamento()) + ", " + set(pagamento.getNomeComprovantePagamento())
+                    + ", " + set(pagamento.getDataDeposito()) + ", " + set(pagamento.getNomeComprovanteDeposito()) + ", " + set(pagamento.getValorDeposito()) + "),";
+            query += " \n ";
+        }
+        query = query.substring(0, query.length() - 4);
+        query += ";\n";
+        return query;
     }
 
 }

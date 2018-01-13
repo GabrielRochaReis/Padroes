@@ -97,6 +97,7 @@ public class RelatorioApartamentoController implements Serializable {
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao carregar as informações. "));
             }
         }
+        RequestContext.getCurrentInstance().getAttributes().clear();
     }
 
     public void next() {
@@ -119,6 +120,7 @@ public class RelatorioApartamentoController implements Serializable {
 
     public String cadastrar() {
         RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
+        RequestContext.getCurrentInstance().getAttributes().put("voltar", "relatorioApartamento");
         return "cadastroPagamento";
     }
 
@@ -146,6 +148,7 @@ public class RelatorioApartamentoController implements Serializable {
     public String editar(Pagamento a) {
         RequestContext.getCurrentInstance().getAttributes().put("apartamento", apartamento);
         RequestContext.getCurrentInstance().getAttributes().put("pagamento", a);
+        RequestContext.getCurrentInstance().getAttributes().put("voltar", "relatorioApartamento");
         return "cadastroPagamento";
     }
 
@@ -208,7 +211,7 @@ public class RelatorioApartamentoController implements Serializable {
     }
 
     public String voltar() {
-        return "pesquisarApartamento";
+        return "tela_inicial";
     }
 
     public String infProprietario() {
@@ -262,7 +265,7 @@ public class RelatorioApartamentoController implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não possui pagamentos cadastrados para o apartamento " + apartamento.getNumero() + "para gerar o relatorio. "));
         }
     }
-    
+
     public StreamedContent imgContrato() {
         if (apartamento != null && apartamento.getContrato() != null) {
             return new DefaultStreamedContent(apartamento.getContrato(), "application/pdf", apartamento.getNomeContrato());
