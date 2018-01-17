@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/controllers/RelatorioPagamentoController.java</file>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/controllers/RelatorioApartamentoController.java</file>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/DAO/PagamentoDAO.java</file>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/controllers/PagamentosController.java</file>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/Model/Pagamento.java</file>
-            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/controllers/CadastroPagamentoController.java</file>
+            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/Model/Inquilino.java</file>
+            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/web/tela_inicial.xhtml</file>
+            <file>file:/C:/Users/Gabriel%20Rocha/Documents/Systema%20IMOBI/Teste/src/java/controllers/TelaInicialController.java</file>
         </group>
     </open-files>
 </project-private>

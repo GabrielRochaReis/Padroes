@@ -73,7 +73,7 @@ public class CadastroPagamentoController implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao gravar: " + e.getMessage()));
             return null;
         }
-        return "pagamentos";
+        return voltar();
     }
 
     private String formatarData(Date data) {

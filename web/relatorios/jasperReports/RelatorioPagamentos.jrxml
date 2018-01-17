@@ -15,6 +15,17 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="70ae4d42-a914-4560-ba9a-ed941f21d38b" x="0" y="0" width="555" height="79"/>
+				<textElement textAlignment="Center">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Pagamentos]]></text>
+			</staticText>
+		</band>
+	</title>
 	<columnHeader>
 		<band height="33" splitType="Stretch">
 			<staticText>
